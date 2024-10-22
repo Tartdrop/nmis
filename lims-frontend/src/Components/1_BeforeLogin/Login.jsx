@@ -6,8 +6,7 @@ import logo_icon from '../Assets/BlueLogo.png';
 import eyeOpen from '../Assets/EyeOpen.png';
 import eyeClose from '../Assets/EyeClose.png';
 
-const Login = ({ onLogin }) => {
-    console.log('onLogin:', onLogin);
+const Login = () => {
     const navigate = useNavigate(); // Initialize useNavigate hook
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
@@ -17,8 +16,8 @@ const Login = ({ onLogin }) => {
     const handleLogin = async (event) => {
         event.preventDefault(); 
         try {
-            const url = new URL('http://localhost:8080/clientlogin');
-            url.searchParams.append('username', identifier);
+            const url = new URL('http://localhost:8080/login');
+            url.searchParams.append('identifier', identifier);
             url.searchParams.append('password', password);
     
             const response = await fetch(url, {
@@ -26,13 +25,10 @@ const Login = ({ onLogin }) => {
             });
     
             if (response.ok) {
-                if (response.ok && typeof onLogin === 'function') {
-                    onLogin(); // Call the prop function only if it's a function
-                  }
                 // Login successful
-                // const responseData = await response.text();
+                const responseData = await response.text();
                 console.log('Login successful');
-                navigate(`/home-client`);
+                navigate(`/home/${responseData}`);
             } else {
                 // Login failed
                 const errorMessage = await response.text();

@@ -52,13 +52,13 @@ function App() {
             <Route path="/login" element={<PageLogin onLogin={handleLogin} />} />
             <Route path="/tfaverify" element={<PageTFAVerify />} />
 
-            <Route path="/home-client" element={<PageHomeClient />} />
+            <Route path="/home/client/:userId" element={<PageHomeClient />} />
             <Route path="/submit-a-request" element={<PageSubmitRequest />} />
             <Route path="/submit-review" element={<PageSubmitRequestReview />} />
             <Route path="/track-my-request" element={<PageTrackMyRequest />} />
             <Route path="/guide" element={<PageGuide />} />
 
-            <Route path="/home-receive-release" element={<PageHomeRecRel />} />
+            <Route path="/home/staff/:userId" element={<PageHomeRecRel />} />
             <Route path="/pending-requests" element={<PagePendingRequest />} />
             <Route path="/request-details" element={<PageRequestDetails />} />
             <Route path="/show-control-number" element={<PageShowControlNumber />} />
@@ -66,10 +66,11 @@ function App() {
             <Route path="/for-release" element={<PageForReleaseList />} />
             <Route path="/receive-release-database" element={<PageViewDatabaseRR />} />
 
-            <Route path="/home-testing" element={<PageHomeTesting />} />
+            <Route path="/home/tester/:userId" element={<PageHomeTesting />} />
             <Route path="/for-testing" element={<PageForTesting />} />
             <Route path="/test-results" element={<PageTestResults />} />
             <Route path="/testing-database" element={<PageViewDatabaseT />} />
+            <Route path="*" element={<PageLogin />} />
 
       {/* <Route path="*" element={isLoggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />} />  */}
       </Routes>
