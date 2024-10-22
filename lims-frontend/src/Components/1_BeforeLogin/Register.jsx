@@ -67,6 +67,7 @@ const Register = () => {
                 throw new Error(errorData.message || "Registration failed.");
             }
     
+
             const data = await response.json();
             alert("Registration successful!");
             navigateAfterLogin();

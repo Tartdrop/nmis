@@ -34,6 +34,7 @@ const Login = () => {
                 const errorMessage = await response.text();
                 setError(errorMessage);
                 console.log('Login failed:', errorMessage);
+                throw new Error(errorMessage);
             }
         } catch (error) {
             console.error('Error during login:', error);

@@ -53,7 +53,7 @@ function App() {
             <Route path="/tfaverify" element={<PageTFAVerify />} />
 
             <Route path="/home/client/:userId" element={<PageHomeClient />} />
-            <Route path="/submit-a-request" element={<PageSubmitRequest />} />
+            <Route path="/submit-a-request/:userId" element={<PageSubmitRequest />} />
             <Route path="/submit-review" element={<PageSubmitRequestReview />} />
             <Route path="/track-my-request" element={<PageTrackMyRequest />} />
             <Route path="/guide" element={<PageGuide />} />

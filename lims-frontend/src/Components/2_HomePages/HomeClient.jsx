@@ -1,6 +1,6 @@
 import './Home.css';
 import Userfront from "@userfront/core";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import white_logo_icon from '../Assets/WhiteLogo.png';
 
 import submit_icon from '../Assets/Submit.png';
@@ -10,11 +10,12 @@ import guide_icon from '../Assets/Guide.png';
 Userfront.init("jb7ywq8b");
 
 const HomeClient = () => {
+  const { userId } = useParams();
 
   const navigate = useNavigate();
   
   const handleSubmit = () => {
-    navigate("/submit-a-request")
+    navigate(`/submit-a-request/${userId}`);
   };
   const handleTrack = () => {
     navigate("/track-my-request")

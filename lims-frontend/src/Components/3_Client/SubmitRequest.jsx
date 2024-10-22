@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './Submit.css';
 import Userfront from "@userfront/core";
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom'; 
 import blue_line_icon from '../Assets/BlueLine.png';
 import dropdown_icon from '../Assets/DropDown.png';
 import axios from 'axios';
 
-
 Userfront.init("jb7ywq8b");
 
 const Submit = () => {
+    const { userId } = useParams();
     const [dropdownPurpose, setDropdownPurpose] = useState(false);
     const [dropdownTest, setDropdownTest] = useState(false);
     const [dropdownSample, setDropdownSample] = useState(false);
@@ -57,15 +57,7 @@ const Submit = () => {
 
     const navigate = useNavigate();
     // State for client details
-    const [clientDetails, setClientDetails] = useState({
-        username: '',
-        contactNumber: '',
-        email: '',
-        companyName: '',
-        ltoNumber: '',  // Define the missing fields here
-        classification: ''
-    });
-
+    
     // Other form fields
     const [sampleTypeDescription, setSampleTypeDescription] = useState("");
     const [lotBatchNo, setLotBatchNo] = useState("");
@@ -77,12 +69,41 @@ const Submit = () => {
     const [testingPurpose, setTestingPurpose] = useState(""); // Define testing purpose
     const [testSelections, setTestSelections] = useState([]); // Define test selections
 
+    const [clientDetails, setClientDetails] = useState({
+        username: '',
+        contactNumber: '',
+        email: '',
+        companyName: '',
+        ltoNumber: '',  // Define the missing fields here
+        classification: ''
+    });
+
+    useEffect(() => {
+        const fetchClientDetails = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/clientview/${userId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setClientDetails(data);
+                console.log(data);
+
+            } catch (error) {
+                console.error('Error fetching consents:', error);
+            }
+        };
+        fetchClientDetails();
+    }, [userId]);
+
+    /*
     useEffect(() => {
         const clientId = localStorage.getItem('clientId');
         if (clientId) { // Check if clientId exists
-            axios.get(`http://localhost:8080/api/clients/${clientId}`)
+            axios.get(`http://localhost:8080/clientview/${clientId}`)
                 .then(response => {
                     setClientDetails(response.data);
+                    console.log(response.data)
                 })
                 .catch(error => {
                     console.error("Error fetching client data:", error);
@@ -90,52 +111,68 @@ const Submit = () => {
                 });
         }
     }, []);
+    */
 
     const handleRequest = async () => {
+        // Check if all required fields are filled
         if (!clientDetails.username || !clientDetails.contactNumber || !clientDetails.email || !clientDetails.companyName || !sampleTypeDescription) {
             alert("Please fill in all required fields.");
             return;
         }
 
+        if (!testingPurpose || testingPurpose === "") {
+            alert("Please select a valid Testing Purpose.");
+            return;
+        }
+    
         try {
-            const response = await fetch("http://localhost:8080/submitrequest", {
+            const response = await fetch(`http://localhost:8080/requests/submitrequest/${userId}`, {  // Updated endpoint to match your controller
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    client: {
-                        companyName: clientDetails.companyName,
-                        ltoNo: clientDetails.ltoNumber,
-                        classification: clientDetails.classification,
-                    },
-                    username: clientDetails.username,
-                    contactNumber: clientDetails.contactNumber,
-                    email: clientDetails.email,
-                    sampleTypeDescription,
-                    lotBatchNo,
-                    sampleSource,
-                    productionDate,
-                    expiryDate,
-                    samplingDate,
-                    samplerName,
-                    testingPurpose,
-                    testSelections,
-                    requestStatus: "PENDING_REVIEW",
-                    submissionDate: new Date().toISOString(),
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
+                    // Map the request data according to the server's expected format
+                    representativeName: clientDetails.username,          // Representative name
+                    contactNumber: clientDetails.contactNumber,          // Contact number
+                    emailAddress: clientDetails.email,                   // Email address
+                    companyName: clientDetails.companyName,              // Company name
+                    clientClassification: clientDetails.classification,  // Client classification
+                    ltoNumber: clientDetails.ltoNumber,                  // LTO number (license to operate)
+    
+                    // Sample Information
+                    sampleTypeDescription,  // Description of the sample type
+                    lotBatchNo,             // Lot or batch number
+                    sampleSource,           // Source of the sample
+                    productionDate,         // Production date of the sample
+                    expiryDate,             // Expiry date of the sample
+                    samplingDate,           // Sampling date of the sample
+                    samplerName,            // Name of the sampler
+    
+                    // Purpose of Testing (ENUM)
+                    testingPurpose,         // Purpose of testing, matches ENUM on server side
+    
+                    // Test selections (list)
+                    testSelections,         // List of selected tests
+    
+                    // The request status is automatically set to PENDING_REVIEW on the server, so no need to pass it.
+    
+                    submissionDate: new Date().toISOString(),  // Use the current date as submission date
+                    createdAt: new Date().toISOString(),       // Created timestamp
+                    updatedAt: new Date().toISOString(),       // Updated timestamp
                 })
             });
-
+    
+            // Check if the response is not successful
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || "Request submission failed.");
             }
-
+    
+            // If successful, alert the user and navigate to the dashboard
             alert("Request submitted successfully!");
-            navigate('/client-dashboard');  // Correct navigation logic here
+            navigate('/client-dashboard');  // Adjust navigation logic if necessary
         } catch (error) {
             console.error("Error:", error);
-            alert(error.message);
+            alert(error.message);  // Display the error message to the user
         }
     };
 
@@ -292,32 +329,32 @@ const Submit = () => {
                                     <div className="spacer-top">.</div>
                                     <div className="submit-show">
                                         <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Monitoring" onChange={(e) => setPurposeTesting(e.target.value)} />
+                                            <input type="radio" name="purpose-choices" value="Monitoring" onChange={(e) => setTestingPurpose(e.target.value)} />
                                             <span className="checkmark"></span>
                                             Monitoring
                                         </label>
                                         <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Local Trade" onChange={(e) => setPurposeTesting(e.target.value)} />
+                                            <input type="radio" name="purpose-choices" value="Local_Trade" onChange={(e) => setTestingPurpose(e.target.value)} />
                                             <span className="checkmark"></span>
                                             Local Trade
                                         </label>
                                         <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Imported" onChange={(e) => setPurposeTesting(e.target.value)} />
+                                            <input type="radio" name="purpose-choices" value="Imported" onChange={(e) => setTestingPurpose(e.target.value)} />
                                             <span className="checkmark"></span>
                                             Imported
                                         </label>
                                         <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Export" onChange={(e) => setPurposeTesting(e.target.value)} />
+                                            <input type="radio" name="purpose-choices" value="Export" onChange={(e) => setTestingPurpose(e.target.value)} />
                                             <span className="checkmark"></span>
                                             Export
                                         </label>
                                         <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Complaint" onChange={(e) => setPurposeTesting(e.target.value)} />
+                                            <input type="radio" name="purpose-choices" value="Complaint" onChange={(e) => setTestingPurpose(e.target.value)} />
                                             <span className="checkmark"></span>
                                             Complaint
                                         </label>
                                         <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Others" onChange={(e) => setPurposeTesting(e.target.value)} />
+                                            <input type="radio" name="purpose-choices" value="Others" onChange={(e) => setTestingPurpose(e.target.value)} />
                                             <span className="checkmark"></span>
                                             Others:
                                             <input 
