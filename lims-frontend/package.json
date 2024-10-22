@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@userfront/core": "^0.6.8",
     "@userfront/react": "^0.3.4",
+    "axios": "^1.7.7",
     "date-fns": "^3.2.0",
     "dayjs": "^1.11.10",
     "firebase": "^10.7.1",
