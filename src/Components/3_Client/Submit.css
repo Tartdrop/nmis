@@ -1,0 +1,319 @@
+.submit-all-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins';
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1280px;
+    height: 820px;
+    margin-top: 5.5vh;
+    border-radius: 10px;
+    background-color: #ffffffb5;
+    overflow-y: auto;
+}
+
+.submit-title {
+    font-weight: 700;
+    font-size: 64px;
+    color: #2B9DC1;
+}
+
+.submit-1st-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 1200px;
+    height: 125px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.submit-1st-container-column-row {
+    display: flex;
+    gap: 15px;
+}
+
+.submit-1st-container-column-row input {
+    text-align: center;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 15px;
+    border-radius: 100px;
+    border: none;
+    background-color: #2B9DC1;
+    color: #fff;
+}
+
+.submit-1st-container-column-row-column-1,
+.submit-1st-container-column-row-column-2,
+.submit-1st-container-column-row-column-3,
+.submit-1st-container-column-row-column-4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #004e65;
+    gap: 5px;
+}
+
+.submit-1st-container-column-row-column-1 input{
+    width: 275px;
+    height: 30px;
+}
+
+.submit-1st-container-column-row-column-2 input {
+    width: 150px;
+    height: 30px;
+}
+
+.submit-1st-container-column-row-column-3 input {
+    width: 315px;
+    height: 30px;
+}
+
+.submit-1st-container-column-row-column-4 input {
+    width: 315px;
+    height: 30px;
+}
+
+.note {
+    color: #004e65;
+    margin-bottom: -2px;
+}
+
+.submit-row {
+    margin-top: 30px;
+    display: flex;
+    gap: 30px;
+}
+
+.sample-row{
+    display: flex;
+}
+
+.sample-information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 585px;
+    height: 478px;
+    gap: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.sample-information img {
+    width: 500px;
+    object-fit: cover;
+    margin-top: -2vh;
+    margin-bottom: -8vh;
+}
+
+.sample-title {
+    color: #2B9DC1;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.sample-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sample-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 450px;
+}
+
+.sample-row div {
+    font-size: 14px;
+    font-weight: 700;
+    color:#004e65
+}
+
+.sample-row input {
+    width: 200px;
+    height: 25px;
+    border: 3px solid #2B9DC1;
+    border-radius: 10px;
+    font-family: 'Poppins';
+    padding: 0 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #004e65 ;
+}
+
+input:focus {
+    outline: none;
+}
+
+.submit-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    height: 365px;
+    max-height: 520px;
+    overflow: hidden;
+    flex: 1;
+}
+
+.samplecategory img, .sampleinfo img, .purposeoftesting img, .testselection img {
+    width: 40px;
+    transition: transform 0.4s ease;
+}
+
+.rotate-up {
+    transform: rotate(-180deg); /* Rotate 180 degrees */
+}
+
+.rotate-down {
+    transform: rotate(0deg); /* Default */
+}
+
+.sample-info-title, .sample-category-title, .purpose-title, .test-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 485px;
+    height: 85px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'Poppins';
+    color: #2B9DC1;
+    cursor: pointer;
+    padding-left: 50px;
+    padding-right: 50px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-text-button {
+    font-weight: 700;
+    font-family: 'Poppins';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 585px;
+    height: 85px;
+    background-color: #2B9DC1;
+    border-radius: 10px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.submit-button button {
+    border: none;
+    transition: color 0.3s ease, 
+        background 0.3s ease, 
+}
+
+.submit-button button:hover{
+    color: #2B9DC1;
+    background: #fff;
+    border: 4px solid #2B9DC1
+}
+
+.tmp-cont {
+    display: flex;
+    flex-direction: column;
+    margin-top: -15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.tmp-cont img {
+    width: 505px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-bottom: -75px;
+    background-color: #ffffff;
+}
+
+.submit-show {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-right: 45px;
+    padding-left: 55px;
+    color: #004e65;
+    gap: 10px;
+    max-height: 130px;
+    overflow-y: auto;
+}
+
+.spacer-top {
+    color: #ffffff;
+    background-color: #ffffff;
+    margin-bottom: -25px;
+    height: 40px;
+}
+
+.spacer {
+    color: #ffffff;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-top: -5px;
+    height: 30px;
+}
+
+.purposeoftesting_choices {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    color: #004e65;
+}
+
+.purposeoftesting_choices input[type="text"] {
+    font-family: 'Poppins';
+    font-weight: 500;
+    color: #004e65;
+    width: 260px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 0 20px;
+    border: 3px solid #2B9DC1;
+} 
+
+.samplecategory_choices {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    color: #004e65;
+}
+
+.submit-show::-webkit-scrollbar {
+    width: 10px;
+}  
+
+.submit-show::-webkit-scrollbar-thumb {
+    background: #95CFE1;
+    border-radius: 100px;
+}
+  
+.submit-show::-webkit-scrollbar-thumb:hover {
+    background: #47a3c0;
+}
+
+.submit-review-text-button:hover img {
+    content: url('BackButtonBlue.png');
+}
