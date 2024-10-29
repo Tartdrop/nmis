@@ -171,7 +171,7 @@ const Register = () => {
                                             className="font-link"
                                             type="text"
                                             value={contactNumber}
-                                            maxLength={13}
+                                            maxLength={11}
                                             onChange={(e) => setContactNumber(e.target.value)}
                                         />
                                     </div>
