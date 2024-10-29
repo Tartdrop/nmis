@@ -7,7 +7,7 @@ import white_logo_icon from '../Assets/WhiteLogo.png';
 
 import Userfront from "@userfront/core";
 
-const Header = ({ onLogout }) => {
+const Header = ({ onLogout, username }) => {
     const navigate = useNavigate();
 
     const handleLogout = useCallback(async () => {
@@ -32,10 +32,16 @@ const Header = ({ onLogout }) => {
         <div className='header'>
             <div className="left-stuff">
                 <img src={white_logo_icon} alt="Logo" />
-                <div className="title">NIMS</div>
+                <div className="title">NMIS</div>
             </div>
 
             <div className="right-stuff">
+                {Userfront.accessToken() && (
+                    <div className="user-info">
+                        <span>Welcome, {username}</span>
+                    </div>
+                )}
+
                 {Userfront.accessToken() && (
                     <div className="l-o">
                         <button onClick={handleLogout} className="logout-button">
