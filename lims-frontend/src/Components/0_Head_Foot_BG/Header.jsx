@@ -5,15 +5,12 @@ import './Header.css';
 import home_icon from '../Assets/Home.png';
 import white_logo_icon from '../Assets/WhiteLogo.png';
 
-import Userfront from "@userfront/core";
-
 const Header = ({ onLogout, username }) => {
     const navigate = useNavigate();
 
     const handleLogout = useCallback(async () => {
         try {
-            await Userfront.logout({ redirect: false });
-            onLogout(); // Call the onLogout prop to update the app state
+            onLogout();
             navigate('/login');
         } catch (error) {
             console.error("Logout failed:", error);
@@ -21,31 +18,25 @@ const Header = ({ onLogout, username }) => {
     }, [navigate, onLogout]);
 
     const navigateHome = useCallback(() => {
-        if (Userfront.accessToken()) {
+        if (username) {
             navigate('/');
         } else {
             navigate('/login');
         }
-    }, [navigate]);
+    }, [navigate, username]);
 
     return (
         <div className='header'>
-            <div className="left-stuff">
+            <div className="left-stuff" onClick={navigateHome}>
                 <img src={white_logo_icon} alt="Logo" />
-                <div className="title">NMIS</div>
+                <div className="title">NIMS</div>
             </div>
 
             <div className="right-stuff">
-                {Userfront.accessToken() && (
-                    <div className="user-info">
-                        <span>Welcome, {username}</span>
-                    </div>
-                )}
-
-                {Userfront.accessToken() && (
+                {username && (
                     <div className="l-o">
                         <button onClick={handleLogout} className="logout-button">
-                            <span><p className='logout-button-text center'>Log out</p></span>
+                            <span>Log out</span>
                         </button>
                     </div>
                 )}
