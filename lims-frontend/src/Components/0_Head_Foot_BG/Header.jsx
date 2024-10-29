@@ -30,7 +30,7 @@ const Header = ({ onLogout, username }) => {
 
     return (
         <div className='header'>
-            <div className="left-stuff">
+            <div className="left-stuff" onClick={navigateHome}>
                 <img src={white_logo_icon} alt="Logo" />
                 <div className="title">NMIS</div>
             </div>
@@ -50,7 +50,7 @@ const Header = ({ onLogout, username }) => {
                     </div>
                 )}
 
-                <div className="navhome" onClick={navigateHome}>
+                <div className="navhome">
                     <button className="home">
                         <span><img src={home_icon} alt="Home" /></span>
                     </button>
