@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import './Register.css';
-import Userfront from "@userfront/core";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import eyeOpen from '../Assets/EyeOpen.png';
 import eyeClose from '../Assets/EyeClose.png';
-
-Userfront.init("jb7ywq8b");
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -68,7 +65,6 @@ const Register = () => {
             }
     
 
-            const data = await response.json();
             alert("Registration successful!");
             navigateAfterLogin();
         } catch (error) {
@@ -311,7 +307,16 @@ const Register = () => {
                                         </label>
                                     </div>
                                 </div>
+                            </div>
+
+                        <div className="register-note">
+                            <div className="register-note-text">
+                                * Make sure to fill in all the fields
+                                before pressing the register button down below *
+                            </div>
+                            <div className="register-note-text-down"> ↓ </div>
                         </div>
+
                         <div className="register-button" onClick={handleRegister}>
                             <button className="text-button">Register</button>
                         </div>

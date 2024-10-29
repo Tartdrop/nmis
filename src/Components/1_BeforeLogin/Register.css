@@ -62,7 +62,6 @@
     font-weight: 700;
     color: #2B9DC1;
     font-size: 16px;
-    margin-top: 10px;
 }
 
 .l-c-label {
@@ -286,7 +285,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: -100px;
+    margin-top: -20px;
 }
 
 .cli-class {
@@ -352,9 +351,25 @@ input[type="radio"]:checked {
     accent-color: #2B9DC1 ; /* Changes color when checked */
 }
 
+.register-note {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins';
+    padding-top: 30px;
+    color: #004e65;
+    opacity: 30%;
+    transition: opacity 0.3s ease;
+}
+
+.register-note:hover {
+    opacity: 100%;
+}
+
 .register-button{
     margin: 20px;
-    padding-top: 20px;
+    margin-top: 30px;
 }
 
 .register-button button{
