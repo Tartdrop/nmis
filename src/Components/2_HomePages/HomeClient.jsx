@@ -47,7 +47,7 @@ const HomeClient = () => {
           <h2>Welcome to the Client Portal!</h2>
         </div>
 
-        <div className="options-container" >
+        <div className="options-container">
           <div className="option-card" onClick={handleSubmit}>
             <img src={submit_icon} alt="Submit Request" />
             <h2>Submit a Request</h2>
