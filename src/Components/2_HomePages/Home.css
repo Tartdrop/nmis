@@ -88,7 +88,7 @@
 }
 
 .option-card {
-    width: 305px;
+    width: 500px;
     height: 320px;
     background: #2B9DC1;
     border-radius: 8px;
@@ -115,7 +115,7 @@
 }
 
 .option-card img {
-    width: 500px;
+    width: 265px;
     height: 200px;
     margin-top: 20px;
     object-fit: contain;
