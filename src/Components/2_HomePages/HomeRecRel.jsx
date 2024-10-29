@@ -43,7 +43,7 @@ const HomeRecRel = () => {
         </div>
 
         <div className="announcement-box">
-          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+          <h3>Welcome to the Receive and Release Portal!</h3>
         </div>
 
         <div className="options-container" >

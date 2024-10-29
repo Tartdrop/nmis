@@ -43,7 +43,7 @@ const HomeTesting = () => {
         </div>
 
         <div className="announcement-box">
-          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+          <h2>Welcome to the Testing Portal!</h2>
         </div>
 
         <div className="options-container" >
