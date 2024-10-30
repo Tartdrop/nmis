@@ -36,6 +36,7 @@
     padding-right: 331px;
     display: flex;
     align-items: center;
+    gap: 15px; /* Add space between the home and logout buttons */
 }
 
 .title {

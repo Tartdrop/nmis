@@ -5,7 +5,8 @@ import './Header.css';
 import home_icon from '../Assets/Home.png';
 import white_logo_icon from '../Assets/WhiteLogo.png';
 
-const Header = ({ onLogout, username }) => {
+
+const Header = ({ onLogout, userId, user_type }) => {
     const navigate = useNavigate();
 
     const handleLogout = useCallback(async () => {
@@ -17,13 +18,27 @@ const Header = ({ onLogout, username }) => {
         }
     }, [navigate, onLogout]);
 
+
     const navigateHome = useCallback(() => {
-        if (username) {
-            navigate('/');
-        } else {
-            navigate('/login');
+        if (userId) {
+            switch (user_type) {
+                case 'client':
+                    navigate(`/home/client/${userId}`);
+                    break;
+                case 'staff':
+                    navigate(`/home/staff/${userId}`);
+                    break;
+                case 'tester':
+                    navigate(`/home/tester/${userId}`);
+                    break;
+                default:
+                    navigate('/login');
+            }
         }
-    }, [navigate, username]);
+        else{
+            navigate ('/login');
+        }
+    }, [navigate, userId, user_type]);
 
     return (
         <div className='header'>
@@ -33,10 +48,10 @@ const Header = ({ onLogout, username }) => {
             </div>
 
             <div className="right-stuff">
-                {username && (
+                {userId && (
                     <div className="l-o">
                         <button onClick={handleLogout} className="logout-button">
-                            <span>Log out</span>
+                            <span className="logout-button-text">Log out</span>
                         </button>
                     </div>
                 )}
