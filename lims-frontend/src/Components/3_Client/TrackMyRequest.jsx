@@ -19,6 +19,7 @@ const TrackMyRequest = () => {
                     throw new Error('Failed to fetch requests');
                 }
                 const data = await response.json();
+                console.log("Fetched Requests:", data); // Add this line
                 setRequests(data);
                 setLoading(false);
             } catch (err) {
@@ -26,7 +27,7 @@ const TrackMyRequest = () => {
                 setLoading(false);
             }
         };
-
+        
         fetchUserRequests();
     }, []);
 
