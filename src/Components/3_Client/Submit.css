@@ -11,17 +11,20 @@
     justify-content: center;
     align-items: center;
     width: 1280px;
-    height: 820px;
     margin-top: 5.5vh;
     border-radius: 10px;
     background-color: #ffffffb5;
-    overflow-y: auto;
 }
 
 .submit-title {
     font-weight: 700;
     font-size: 64px;
     color: #004e65;
+}
+
+.submit-overflow {
+    height: 750px;
+    overflow: auto;
 }
 
 .submit-1st-container {
@@ -165,9 +168,6 @@ input:focus {
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    height: 365px;
-    max-height: 520px;
-    overflow: hidden;
     flex: 1;
 }
 
@@ -255,8 +255,6 @@ input:focus {
     padding-left: 55px;
     color: #004e65;
     gap: 10px;
-    max-height: 130px;
-    overflow-y: auto;
 }
 
 .spacer-top {

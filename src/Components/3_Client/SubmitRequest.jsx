@@ -201,209 +201,183 @@ const Submit = () => {
         <div className="submit-all-container">
         <div className='submit-container'>
             <div className='submit-title'>Submit a Request</div>
-            <div className="submit-1st-container">
-                <div className='submit-1st-container-column'>
-                    <div className='submit-1st-container-column-row'>
-                        <div className='submit-1st-container-column-row-column-1'>
-                            Username
-                            <input type="text" 
-                                   value={clientDetails.username} 
-                                   readOnly />
-                        </div>
-                        <div className='submit-1st-container-column-row-column-2'>
-                            Contact Number
-                            <input type="text" 
-                                   value={clientDetails.contactNumber} 
-                                   readOnly />
-                        </div>
-                        <div className='submit-1st-container-column-row-column-3'>
-                            Email Address
-                            <input type="text" 
-                                   value={clientDetails.email} 
-                                   readOnly />
-                        </div>
-                        <div className='submit-1st-container-column-row-column-4'>
-                            Company Name
-                            <input type="text" 
-                                   value={clientDetails.companyName} 
-                                   readOnly />
+                <div className="submit-overflow">
+                    <div className="submit-1st-container">
+                        <div className='submit-1st-container-column'>
+                            <div className='submit-1st-container-column-row'>
+                                <div className='submit-1st-container-column-row-column-1'>
+                                    Username
+                                    <input type="text" 
+                                        value={clientDetails.username} 
+                                        readOnly />
+                                </div>
+                                <div className='submit-1st-container-column-row-column-2'>
+                                    Contact Number
+                                    <input type="text" 
+                                        value={clientDetails.contactNumber} 
+                                        readOnly />
+                                </div>
+                                <div className='submit-1st-container-column-row-column-3'>
+                                    Email Address
+                                    <input type="text" 
+                                        value={clientDetails.email} 
+                                        readOnly />
+                                </div>
+                                <div className='submit-1st-container-column-row-column-4'>
+                                    Company Name
+                                    <input type="text" 
+                                        value={clientDetails.companyName} 
+                                        readOnly />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div className="submit-column">
-                <div className='submit-row'>
-                    <div className='submit-column'>
-                        <div className='samplecategory' open={dropdownSample}>
-                            <div className='sample-category-title' onClick={handleSampleToggle}>
-                                Sample Category
-                                <img 
-                                    src={dropdown_icon} 
-                                    alt='dropdown icon'
-                                    className={dropdownSample ? 'rotate-up' : 'rotate-down'}
-                                />
-                            </div>
-                            {dropdownSample && (
-                                <div className="tmp-cont">
-                                    <img src={blue_line_icon} alt="blue line" />
-                                    <div className="spacer-top">.</div>
-                                    <div className="submit-show">
-                                        <label className="samplecategory_choices">
-                                            <input type="radio" name="sample-category-choices" value="Walk-in" onChange={(e) => setSampleCategory(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Walk-in
-                                        </label>
-                                        <label className="samplecategory_choices">
-                                            <input type="radio" name="sample-category-choices" value="Monitoring" onChange={(e) => setSampleCategory(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Monitoring
-                                        </label>
+                    <div className="submit-column">
+                        <div className='submit-row'>
+                            <div className='submit-column'>
+                                <div className='samplecategory'>
+                                    <div className='sample-category-title'>
+                                        Sample Category
                                     </div>
-                                    <div className="spacer">.</div>
-                                </div>
-                            )}
-                        </div>
-                        <div className='sampleinfo' open={dropdownSampleInfo}>
-                            <div className='sample-info-title' onClick={handleSampleInfoToggle}>
-                                Sample Information
-                                <img 
-                                    src={dropdown_icon} 
-                                    alt='dropdown icon'
-                                    className={dropdownSampleInfo ? 'rotate-up' : 'rotate-down'}
-                                />
-                            </div>
-                            {dropdownSampleInfo && (
-                                <div className="tmp-cont">
-                                    <img src={blue_line_icon} alt="blue line" />
-                                    <div className="spacer-top">.</div>
-                                    <div className="submit-show">
-                                        <div className='sample-rows'>
-                                            <div className='sample-row'>
-                                                <div>Sample Type/Description :</div>
-                                                <input type="text" value={sampleTypeDescription} onChange={(e) => setSampleTypeDescription(e.target.value)} />
-                                            </div>
-                                            <div className='sample-row'>
-                                                <div>Lot/Batch Number :</div>
-                                                <input type="text" value={lotBatchNo} onChange={(e) => setLotBatchNo(e.target.value)} />
-                                            </div>
-                                            <div className='sample-row'>
-                                                <div>Sample Source :</div>
-                                                <input type="text" value={sampleSource} onChange={(e) => setSampleSource(e.target.value)} />
-                                            </div>
-                                            <div className='sample-row'>
-                                                <div>Production Date :</div>
-                                                <input type="date" value={productionDate} onChange={(e) => setProductionDate(e.target.value)} />
-                                            </div>
-                                            <div className='sample-row'>
-                                                <div>Expiry Date :</div>
-                                                <input type="date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
-                                            </div>
-                                            <div className='sample-row'>
-                                                <div>Sampling Date :</div>
-                                                <input type="date" value={samplingDate} onChange={(e) => setSamplingDate(e.target.value)} />
-                                            </div>
-                                            <div className='sample-row'>
-                                                <div>Sampler Name :</div>
-                                                <input type="text" value={samplerName} onChange={(e) => setSamplerName(e.target.value)} />
-                                            </div>
+                                    <div className="tmp-cont">
+                                        <img src={blue_line_icon} alt="blue line" />
+                                        <div className="spacer-top">.</div>
+                                        <div className="submit-show">
+                                            <label className="samplecategory_choices">
+                                                <input type="radio" name="sample-category-choices" value="Walk-in" onChange={(e) => setSampleCategory(e.target.value)} />
+                                                <span className="checkmark"></span>
+                                                Walk-in
+                                            </label>
+                                            <label className="samplecategory_choices">
+                                                <input type="radio" name="sample-category-choices" value="Monitoring" onChange={(e) => setSampleCategory(e.target.value)} />
+                                                <span className="checkmark"></span>
+                                                Monitoring
+                                            </label>
                                         </div>
+                                        <div className="spacer">.</div>
                                     </div>
-                                    <div className="spacer">.</div>
                                 </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className='submit-column'>
-                        <div className='purposeoftesting' open={dropdownPurpose}>
-                            <div className='purpose-title' onClick={handlePurposeToggle}>
-                                Purpose of Testing
-                                <img 
-                                    src={dropdown_icon} 
-                                    alt='dropdown icon'
-                                    className={dropdownPurpose ? 'rotate-up' : 'rotate-down'}
-                                />
+                                <div className='sampleinfo'>
+                                    <div className='sample-info-title' onClick={handleSampleInfoToggle}>
+                                        Sample Information
+                                    </div>
+                                        <div className="tmp-cont">
+                                            <img src={blue_line_icon} alt="blue line" />
+                                            <div className="spacer-top">.</div>
+                                            <div className="submit-show">
+                                                <div className='sample-rows'>
+                                                    <div className='sample-row'>
+                                                        <div>Sample Type/Description :</div>
+                                                        <input type="text" value={sampleTypeDescription} onChange={(e) => setSampleTypeDescription(e.target.value)} />
+                                                    </div>
+                                                    <div className='sample-row'>
+                                                        <div>Lot/Batch Number :</div>
+                                                        <input type="text" value={lotBatchNo} onChange={(e) => setLotBatchNo(e.target.value)} />
+                                                    </div>
+                                                    <div className='sample-row'>
+                                                        <div>Sample Source :</div>
+                                                        <input type="text" value={sampleSource} onChange={(e) => setSampleSource(e.target.value)} />
+                                                    </div>
+                                                    <div className='sample-row'>
+                                                        <div>Production Date :</div>
+                                                        <input type="date" value={productionDate} onChange={(e) => setProductionDate(e.target.value)} />
+                                                    </div>
+                                                    <div className='sample-row'>
+                                                        <div>Expiry Date :</div>
+                                                        <input type="date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
+                                                    </div>
+                                                    <div className='sample-row'>
+                                                        <div>Sampling Date :</div>
+                                                        <input type="date" value={samplingDate} onChange={(e) => setSamplingDate(e.target.value)} />
+                                                    </div>
+                                                    <div className='sample-row'>
+                                                        <div>Sampler Name :</div>
+                                                        <input type="text" value={samplerName} onChange={(e) => setSamplerName(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="spacer">.</div>
+                                        </div>
+                                </div>
                             </div>
-                            {dropdownPurpose && (
-                                <div className="tmp-cont">
-                                    <img src={blue_line_icon} alt="blue line" />
-                                    <div className="spacer-top">.</div>
-                                    <div className="submit-show">
-                                        <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Monitoring" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Monitoring
-                                        </label>
-                                        <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Local_Trade" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Local Trade
-                                        </label>
-                                        <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Imported" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Imported
-                                        </label>
-                                        <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Export" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Export
-                                        </label>
-                                        <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Complaint" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Complaint
-                                        </label>
-                                        <label className="purposeoftesting_choices">
-                                            <input type="radio" name="purpose-choices" value="Others" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                            <span className="checkmark"></span>
-                                            Others:
-                                            <input 
-                                                type="text"
-                                                value={otherPurposeTesting}
-                                                onChange={(e) => setOtherPurposeTesting(e.target.value)}
-                                            />
-                                        </label>
+                            <div className='submit-column'>
+                                <div className='purposeoftesting'>
+                                    <div className='purpose-title' onClick={handlePurposeToggle}>
+                                        Purpose of Testing
                                     </div>
-                                    <div className="spacer">.</div>
+                                        <div className="tmp-cont">
+                                            <img src={blue_line_icon} alt="blue line" />
+                                            <div className="spacer-top">.</div>
+                                            <div className="submit-show">
+                                                <label className="purposeoftesting_choices">
+                                                    <input type="radio" name="purpose-choices" value="Monitoring" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                                    <span className="checkmark"></span>
+                                                    Monitoring
+                                                </label>
+                                                <label className="purposeoftesting_choices">
+                                                    <input type="radio" name="purpose-choices" value="Local_Trade" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                                    <span className="checkmark"></span>
+                                                    Local Trade
+                                                </label>
+                                                <label className="purposeoftesting_choices">
+                                                    <input type="radio" name="purpose-choices" value="Imported" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                                    <span className="checkmark"></span>
+                                                    Imported
+                                                </label>
+                                                <label className="purposeoftesting_choices">
+                                                    <input type="radio" name="purpose-choices" value="Export" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                                    <span className="checkmark"></span>
+                                                    Export
+                                                </label>
+                                                <label className="purposeoftesting_choices">
+                                                    <input type="radio" name="purpose-choices" value="Complaint" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                                    <span className="checkmark"></span>
+                                                    Complaint
+                                                </label>
+                                                <label className="purposeoftesting_choices">
+                                                    <input type="radio" name="purpose-choices" value="Others" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                                    <span className="checkmark"></span>
+                                                    Others:
+                                                    <input 
+                                                        type="text"
+                                                        value={otherPurposeTesting}
+                                                        onChange={(e) => setOtherPurposeTesting(e.target.value)}
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div className="spacer">.</div>
+                                        </div>
                                 </div>
-                            )}
-                        </div>
 
-                        <div className='testselection' open={dropdownTest}>
-                            <div className='test-title' onClick={handleTestToggle}>
-                                Test Selection
-                                <img 
-                                    src={dropdown_icon} 
-                                    alt='dropdown icon'
-                                    className={dropdownTest ? 'rotate-up' : 'rotate-down'}
-                                />
-                            </div>
-                            {dropdownTest && (
-                                <main className="tmp-cont">
-                                    <img src={blue_line_icon} alt="blue line" />
-                                    <div className="spacer-top">.</div>
-                                    <div className="submit-show">
-                                        {/* Add inputs for test selection here */}
-                                        <label className="test-selection-choice">
-                                            <input type="checkbox" value="Test 1" onChange={handleTestSelectionChange} />
-                                            Test 1
-                                        </label>
-                                        <label className="test-selection-choice">
-                                            <input type="checkbox" value="Test 2" onChange={handleTestSelectionChange} />
-                                            Test 2
-                                        </label>
-                                        {/* Repeat for other tests */}
+                                <div className='testselection'>
+                                    <div className='test-title' onClick={handleTestToggle}>
+                                        Test Selection
                                     </div>
-                                    <div className="spacer">.</div>
-                                </main>
-                            )}
+                                        <main className="tmp-cont">
+                                            <img src={blue_line_icon} alt="blue line" />
+                                            <div className="spacer-top">.</div>
+                                            <div className="submit-show">
+                                                {/* Add inputs for test selection here */}
+                                                <label className="test-selection-choice">
+                                                    <input type="checkbox" value="Test 1" onChange={handleTestSelectionChange} />
+                                                    Test 1
+                                                </label>
+                                                <label className="test-selection-choice">
+                                                    <input type="checkbox" value="Test 2" onChange={handleTestSelectionChange} />
+                                                    Test 2
+                                                </label>
+                                                {/* Repeat for other tests */}
+                                            </div>
+                                            <div className="spacer">.</div>
+                                        </main>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='submit-button' onClick={handleSubmitRequest}>
+                            <button className="submit-text-button">Submit</button>
                         </div>
                     </div>
                 </div>
-                <div className='submit-button' onClick={handleSubmitRequest}>
-                    <button className="submit-text-button">Submit</button>
-                </div>
-            </div>
         </div>
     </div> 
     );
