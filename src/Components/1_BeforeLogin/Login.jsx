@@ -30,12 +30,13 @@ const Login = () => {
                 console.log(responseData);
                 console.log('Login successful');
     
-                // Clear previous responseData in local storage
-                localStorage.clear(); // Clear all local storage data
+                // Clear previous responseData and store the new one
+                localStorage.clear(); // Clear local storage first
                 localStorage.setItem('responseData', responseData); // Store the new responseData
     
-                // Navigate to the home URL
-                navigate(`/home/${responseData}`);
+                // Redirect to home page
+                const [type, id] = responseData.split('/');
+                navigate(`/home/${type}/${id}`);
             } else {
                 // Login failed
                 const errorMessage = await response.text();
@@ -48,7 +49,7 @@ const Login = () => {
             setError('An error occurred during login');
         }
     };
-
+    
     const handleForgetPassword = () => {
         navigate("/forget")
     };
