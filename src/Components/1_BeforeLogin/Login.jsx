@@ -19,20 +19,22 @@ const Login = () => {
             const url = new URL('http://localhost:8080/login');
             url.searchParams.append('identifier', identifier);
             url.searchParams.append('password', password);
-
+    
             const response = await fetch(url, {
                 method: 'POST',
             });
-
+    
             if (response.ok) {
                 // Login successful
                 const responseData = await response.text(); // Read response as text
                 console.log(responseData);
                 console.log('Login successful');
-
-                // Store the responseData in local storage
-                localStorage.setItem('responseData', responseData);
-
+    
+                // Clear previous responseData in local storage
+                localStorage.clear(); // Clear all local storage data
+                localStorage.setItem('responseData', responseData); // Store the new responseData
+    
+                // Navigate to the home URL
                 navigate(`/home/${responseData}`);
             } else {
                 // Login failed

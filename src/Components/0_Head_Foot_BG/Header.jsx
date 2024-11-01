@@ -27,6 +27,7 @@ const Header = ({ onLogout }) => {
     const handleLogout = useCallback(async () => {
         try {
             await Userfront.logout({ redirect: false });
+            localStorage.removeItem('responseData'); // Clear responseData on logout
             onLogout(); // Call the onLogout prop to update the app state
             navigate('/login');
         } catch (error) {
