@@ -1,6 +1,6 @@
 import './Home.css';
 import Userfront from "@userfront/core";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import white_logo_icon from '../Assets/WhiteLogo.png';
 
 import testing_icon from '../Assets/TestingPage.png';
@@ -11,16 +11,18 @@ Userfront.init("jb7ywq8b");
 
 const HomeTesting = () => {
 
+  const { userId } = useParams();
+
   const navigate = useNavigate();
   
   const handleForTestingPage = () => {
-    navigate("/for-testing")
+    navigate(`/for-testing/${userId}`)
   };
   const handleTestResults = () => {
-    navigate("/test-results")
+    navigate(`/test-results/${userId}`)
   };
   const handleDatabase = () => {
-    navigate("/testing-database")
+    navigate(`/testing-database/${userId}`)
   };
 
   return (

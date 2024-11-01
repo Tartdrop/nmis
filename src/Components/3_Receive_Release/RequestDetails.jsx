@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './RequestDetails.css';
 import { useNavigate, useParams } from 'react-router-dom'; 
-
 import blue_line_icon from '../Assets/BlueLine.png';
 
 const SubmitReview = () => {
-    const { requestId } = useParams();
+    const { userId, requestId } = useParams();
     const [sampleCategory, setSampleCategory] = useState('');
     const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
 
@@ -52,15 +51,15 @@ const SubmitReview = () => {
     const navigate = useNavigate();
 
     const handleApprove = () => {
-        navigate("/show-control-number");
+        navigate(`/approved/${requestId}`);
     };
 
     const handleRequestAdditionalInformation = () => {
-        navigate("/request-add-info");
+        navigate("/request-additional-info");
     };
 
     const handleReject = () => {
-        navigate("/");
+        navigate(`/home/staff/${userId}`);
     };
 
     return (

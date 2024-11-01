@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Submit.css';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import blue_line_icon from '../Assets/BlueLine.png';
-import dropdown_icon from '../Assets/DropDown.png';
-import axios from 'axios';
 
 
 const Submit = () => {
@@ -126,7 +124,7 @@ const Submit = () => {
     
             // If successful, alert the user and navigate to the dashboard
             alert("Request submitted successfully!");
-            navigate('/client-dashboard');  // Adjust navigation logic if necessary
+            navigate(`/home/client/${userId}`);  // Adjust navigation logic if necessary
         } catch (error) {
             console.error("Error:", error);
             alert(error.message);  // Display the error message to the user

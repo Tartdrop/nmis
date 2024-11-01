@@ -18,10 +18,10 @@ const HomeClient = () => {
     navigate(`/submit-a-request/${userId}`);
   };
   const handleTrack = () => {
-    navigate("/track-my-request")
+    navigate(`/track-my-request/${userId}`)
   };
   const handleGuide = () => {
-    navigate("/guide")
+    navigate(`/guide/${userId}`)
   };
 
   return (

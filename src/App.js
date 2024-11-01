@@ -54,22 +54,22 @@ function App() {
 
             <Route path="/home/client/:userId" element={<PageHomeClient />} />
             <Route path="/submit-a-request/:userId" element={<PageSubmitRequest />} />
-            <Route path="/submit-review" element={<PageSubmitRequestReview />} />
-            <Route path="/track-my-request" element={<PageTrackMyRequest />} />
-            <Route path="/guide" element={<PageGuide />} />
+            <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
+            <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
+            <Route path="/guide/:userId" element={<PageGuide />} />
 
             <Route path="/home/staff/:userId" element={<PageHomeRecRel />} />
-            <Route path="/pending-requests" element={<PagePendingRequest />} />
-            <Route path="/request-details/:requestId" element={<PageRequestDetails />} />
-            <Route path="/show-control-number" element={<PageShowControlNumber />} />
-            <Route path="/request-add-info" element={<PageRequestAddInfo />} />
-            <Route path="/for-release" element={<PageForReleaseList />} />
-            <Route path="/receive-release-database" element={<PageViewDatabaseRR />} />
+            <Route path="/pending-requests/:userId" element={<PagePendingRequest />} />
+            <Route path="/request-details/:userId/:requestId" element={<PageRequestDetails />} />
+            <Route path="/approved/:userId" element={<PageShowControlNumber />} />
+            <Route path="/request-additional-info/:userId" element={<PageRequestAddInfo />} />
+            <Route path="/for-release/:userId" element={<PageForReleaseList />} />
+            <Route path="/receive-release-database/:userId" element={<PageViewDatabaseRR />} />
 
             <Route path="/home/tester/:userId" element={<PageHomeTesting />} />
-            <Route path="/for-testing" element={<PageForTesting />} />
-            <Route path="/test-results" element={<PageTestResults />} />
-            <Route path="/testing-database" element={<PageViewDatabaseT />} />
+            <Route path="/for-testing/:userId" element={<PageForTesting />} />
+            <Route path="/test-results/:userId" element={<PageTestResults />} />
+            <Route path="/testing-database/:userId" element={<PageViewDatabaseT />} />
             <Route path="*" element={<PageLogin />} />
 
       {/* <Route path="*" element={isLoggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />} />  */}

@@ -1,17 +1,15 @@
 import React from 'react';
 import './XMessages.css';
-import Userfront from "@userfront/core";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 import logo_icon from '../Assets/BlueLogo.png';
 
-Userfront.init("jb7ywq8b");
 
 const ControlNumber = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate("/")
+        navigate(`home/`)
     };
 
     return (

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './PendingRequest.css';
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
 const PendingRequest = () => {
+    const {userId} = useParams();
     const [requests, setRequests] = useState([]);
     const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ const PendingRequest = () => {
                         <button 
                             key={index} 
                             className="request-button"
-                            onClick={() => navigate(`/request-details/${request.requestId}`)}
+                            onClick={() => navigate(`/request-details/${userId}/${request.requestId}`)}
                         >
                             {request.representativeName} {request.submissionDate}
                         </button>

@@ -1,6 +1,6 @@
 import './Home.css';
 import Userfront from "@userfront/core";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import white_logo_icon from '../Assets/WhiteLogo.png';
 
 import pending_icon from '../Assets/PendingRequests.png';
@@ -11,16 +11,18 @@ Userfront.init("jb7ywq8b");
 
 const HomeRecRel = () => {
 
+  const { userId } = useParams();
+
   const navigate = useNavigate();
   
   const handlePendingRequests = () => {
-    navigate("/pending-requests")
+    navigate(`/pending-requests/${userId}`)
   };
   const handleForRelease = () => {
-    navigate("/for-release")
+    navigate(`/for-release/${userId}`)
   };
   const handleDatabase = () => {
-    navigate("/receive-release-database")
+    navigate(`/receive-release-database/${userId}`)
   };
 
   return (
