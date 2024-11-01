@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 import './Header.css';
 
 import home_icon from '../Assets/Home.png';
@@ -7,8 +7,23 @@ import white_logo_icon from '../Assets/WhiteLogo.png';
 
 import Userfront from "@userfront/core";
 
+Userfront.init("jb7ywq8b");
+
 const Header = ({ onLogout }) => {
     const navigate = useNavigate();
+    const { userId } = useParams(); // Only get userId from params, no change to route paths
+    const [userType, setUserType] = useState(null);
+
+    useEffect(() => {
+        // Get user details from Userfront
+        const userData = Userfront.user;
+        
+        if (userData && userData.data) {
+            // Assume userType is stored in custom attributes or roles
+            const userTypeFromSession = userData.data.userType || userData.data.role || "client"; // Fallback to 'client'
+            setUserType(userTypeFromSession);
+        }
+    }, []);
 
     const handleLogout = useCallback(async () => {
         try {
@@ -21,12 +36,13 @@ const Header = ({ onLogout }) => {
     }, [navigate, onLogout]);
 
     const navigateHome = useCallback(() => {
-        if (Userfront.accessToken()) {
-            navigate('/');
-        } else {
-            navigate('/login');
+        if (userType && userId) { //NOT WORKING PROPERLY. laging undefined HAHAHAH
+            navigate(`/home/${userType}/${userId}`);
         }
-    }, [navigate]);
+        else{
+            navigate('/login')
+        }
+    }, [navigate, userId, userType]);
 
     return (
         <div className='header'>
@@ -52,6 +68,6 @@ const Header = ({ onLogout }) => {
             </div>
         </div>
     );
-}
+};
 
 export default Header;
