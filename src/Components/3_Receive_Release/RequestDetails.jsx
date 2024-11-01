@@ -7,7 +7,6 @@ const SubmitReview = () => {
     const { userId, requestId } = useParams();
     const [sampleCategory, setSampleCategory] = useState('');
     const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
-
     const [sampleTypeDescription, setSampleTypeDescription] = useState("");
     const [lotBatchNo, setLotBatchNo] = useState("");
     const [sampleSource, setSampleSource] = useState("");
@@ -50,16 +49,50 @@ const SubmitReview = () => {
 
     const navigate = useNavigate();
 
-    const handleApprove = () => {
-        navigate(`/approved/${requestId}`);
+    const handleApprove = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/requests/approve/${requestId}`, {
+                method: 'PUT'
+            });
+    
+            if (response.ok) {
+                // Handle successful approval, e.g., show a success message, navigate to a different page
+                alert('Request approved successfully!');
+                navigate(`/home/staff/${userId}`); // Navigate to the staff dashboard
+            } else {
+                // Handle error, e.g., show an error message
+                console.error('Failed to approve request');
+                alert('Error approving request. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error approving request:', error);
+            alert('Error approving request. Please try again.');
+        }
     };
-
+    
+    const handleReject = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/requests/reject/${requestId}`, {
+                method: 'PUT'
+            });
+    
+            if (response.ok) {
+                // Handle successful rejection, e.g., show a success message, navigate to a different page
+                alert('Request rejected successfully!');
+                navigate(`/home/staff/${userId}`); // Navigate to the staff dashboard
+            } else {
+                // Handle error, e.g., show an error message
+                console.error('Failed to reject request');
+                alert('Error rejecting request. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error rejecting request:', error);
+            alert('Error rejecting request. Please try again.');
+        }
+    };
+    
     const handleRequestAdditionalInformation = () => {
         navigate("/request-additional-info");
-    };
-
-    const handleReject = () => {
-        navigate(`/home/staff/${userId}`);
     };
 
     return (
