@@ -2,27 +2,39 @@ import './Home.css';
 import Userfront from "@userfront/core";
 import { useNavigate, useParams } from 'react-router-dom';
 import white_logo_icon from '../Assets/WhiteLogo.png';
-
 import testing_icon from '../Assets/TestingPage.png';
 import test_icon from '../Assets/TestResults.png';
 import database_icon from '../Assets/Database.png';
+import { useEffect, useState } from 'react';
 
 Userfront.init("jb7ywq8b");
 
 const HomeTesting = () => {
-
   const { userId } = useParams();
-
+  const [userType, setUserType] = useState(null); // State to hold userType
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    // Retrieve responseData from local storage
+    const responseData = localStorage.getItem('responseData');
+    
+    // If responseData exists, parse it to get userType
+    if (responseData) {
+      const [type] = responseData.split('/'); // Assuming responseData is like "tester/10"
+      setUserType(type);
+    }
+  }, []);
+
   const handleForTestingPage = () => {
-    navigate(`/for-testing/${userId}`)
+    navigate(`/for-testing/${userId}`);
   };
+
   const handleTestResults = () => {
-    navigate(`/test-results/${userId}`)
+    navigate(`/test-results/${userId}`);
   };
+
   const handleDatabase = () => {
-    navigate(`/testing-database/${userId}`)
+    navigate(`/testing-database/${userId}`);
   };
 
   return (
@@ -45,12 +57,12 @@ const HomeTesting = () => {
         </div>
 
         <div className="announcement-box">
-          <h2>Welcome to the Testing Portal!</h2>
+          <h2>Welcome, {userId} ({userType})!</h2>
         </div>
 
-        <div className="options-container" >
+        <div className="options-container">
           <div className="option-card" onClick={handleForTestingPage}>
-            <img src={testing_icon} alt="For Testing Z" />
+            <img src={testing_icon} alt="For Testing" />
             <h2>For Testing</h2>
           </div>
           <div className="option-card" onClick={handleTestResults}>

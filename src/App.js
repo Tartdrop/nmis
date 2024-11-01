@@ -28,20 +28,26 @@ import PageTestResults from "./PageTestResults";
 import PageTFAVerify from "./PageTFA-Verify-Reg";
 
 function App() {
-  const [, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [userType, setUserType] = useState(null);
 
-  const handleLogin = () => {
-    console.log("handleLogin successful"); 
+  const handleLogin = (id, type) => {
+    console.log("Login successful:", id, type);
     setIsLoggedIn(true);
+    setUserId(id);
+    setUserType(type);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserId(null);
+    setUserType(null);
   };
 
   return (
     <>
-      <Header onLogout={handleLogout} />
+      <Header onLogout={handleLogout} userId={userId} userType={userType} />
       <Routes>
             <Route path="/register" element={<PageRegister />} />
             <Route path="/forget" element={<PageForget />} />

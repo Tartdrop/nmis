@@ -1,27 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './Header.css';
-
 import home_icon from '../Assets/Home.png';
 import white_logo_icon from '../Assets/WhiteLogo.png';
-
 import Userfront from "@userfront/core";
 
 Userfront.init("jb7ywq8b");
 
 const Header = ({ onLogout }) => {
     const navigate = useNavigate();
-    const { userId } = useParams(); // Only get userId from params, no change to route paths
+    const [userId, setUserId] = useState(null);
     const [userType, setUserType] = useState(null);
 
     useEffect(() => {
-        // Get user details from Userfront
-        const userData = Userfront.user;
+        // Retrieve responseData from local storage
+        const responseData = localStorage.getItem('responseData');
         
-        if (userData && userData.data) {
-            // Assume userType is stored in custom attributes or roles
-            const userTypeFromSession = userData.data.userType || userData.data.role || "client"; // Fallback to 'client'
-            setUserType(userTypeFromSession);
+        // If responseData exists, parse it to get userType and userId
+        if (responseData) {
+            const [type, id] = responseData.split('/'); // Assuming responseData is like "client/8"
+            setUserType(type);
+            setUserId(id);
         }
     }, []);
 
@@ -36,11 +35,13 @@ const Header = ({ onLogout }) => {
     }, [navigate, onLogout]);
 
     const navigateHome = useCallback(() => {
-        if (userType && userId) { //NOT WORKING PROPERLY. laging undefined HAHAHAH
+        if (userType && userId) {
+            // Navigate to the home URL once userType and userId are available
+            console.log('Navigating to: ', `/home/${userType}/${userId}`);
             navigate(`/home/${userType}/${userId}`);
-        }
-        else{
-            navigate('/login')
+        } else {
+            console.log('UserType or UserId is missing. Redirecting to login.');
+            navigate('/login');
         }
     }, [navigate, userId, userType]);
 
