@@ -60,7 +60,7 @@ function App() {
 
             <Route path="/home/staff/:userId" element={<PageHomeRecRel />} />
             <Route path="/pending-requests" element={<PagePendingRequest />} />
-            <Route path="/request-details" element={<PageRequestDetails />} />
+            <Route path="/request-details/:requestId" element={<PageRequestDetails />} />
             <Route path="/show-control-number" element={<PageShowControlNumber />} />
             <Route path="/request-add-info" element={<PageRequestAddInfo />} />
             <Route path="/for-release" element={<PageForReleaseList />} />

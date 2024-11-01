@@ -1,59 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './Submit.css';
-import Userfront from "@userfront/core";
 import { useNavigate, useParams } from 'react-router-dom'; 
 import blue_line_icon from '../Assets/BlueLine.png';
 import dropdown_icon from '../Assets/DropDown.png';
 import axios from 'axios';
 
-Userfront.init("jb7ywq8b");
 
 const Submit = () => {
     const { userId } = useParams();
-    const [dropdownPurpose, setDropdownPurpose] = useState(false);
-    const [dropdownTest, setDropdownTest] = useState(false);
-    const [dropdownSample, setDropdownSample] = useState(false);
-    const [dropdownSampleInfo, setDropdownSampleInfo] = useState(false);
-    const [purposeTesting, setPurposeTesting] = useState('');
     const [sampleCategory, setSampleCategory] = useState('');
     const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
 
-    const handlePurposeToggle = () => {
-        setDropdownPurpose(!dropdownPurpose);
-        if (!dropdownPurpose) {
-            setDropdownTest(false);
-        }
-        resetStates();
-    };
-
-    const handleTestToggle = () => {
-        setDropdownTest(!dropdownTest);
-        if (!dropdownTest) {
-            setDropdownPurpose(false);
-        }
-        resetStates();
-    };
-
-    const handleSampleToggle = () => {
-        setDropdownSample(!dropdownSample);
-        if (!dropdownSample) {
-            setDropdownSampleInfo(false);
-        }
-        resetStates();
-    };
-
-    const handleSampleInfoToggle = () => {
-        setDropdownSampleInfo(!dropdownSampleInfo);
-        if (!dropdownSampleInfo) {
-            setDropdownSample(false);
-        }
-        resetStates();
-    };
-
-    const resetStates = () => {
-        setPurposeTesting('');
-        setOtherPurposeTesting('');
-    };
 
     const navigate = useNavigate();
     // State for client details
@@ -258,7 +215,7 @@ const Submit = () => {
                                     </div>
                                 </div>
                                 <div className='sampleinfo'>
-                                    <div className='sample-info-title' onClick={handleSampleInfoToggle}>
+                                    <div className='sample-info-title'>
                                         Sample Information
                                     </div>
                                         <div className="tmp-cont">
@@ -302,7 +259,7 @@ const Submit = () => {
                             </div>
                             <div className='submit-column'>
                                 <div className='purposeoftesting'>
-                                    <div className='purpose-title' onClick={handlePurposeToggle}>
+                                    <div className='purpose-title'>
                                         Purpose of Testing
                                     </div>
                                         <div className="tmp-cont">
@@ -350,7 +307,7 @@ const Submit = () => {
                                 </div>
 
                                 <div className='testselection'>
-                                    <div className='test-title' onClick={handleTestToggle}>
+                                    <div className='test-title'>
                                         Test Selection
                                     </div>
                                         <main className="tmp-cont">
