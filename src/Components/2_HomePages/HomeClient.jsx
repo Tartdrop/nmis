@@ -2,26 +2,39 @@ import './Home.css';
 import Userfront from "@userfront/core";
 import { useNavigate, useParams } from 'react-router-dom';
 import white_logo_icon from '../Assets/WhiteLogo.png';
-
 import submit_icon from '../Assets/Submit.png';
 import track_icon from '../Assets/Track.png';
 import guide_icon from '../Assets/Guide.png';
+import { useEffect, useState } from 'react';
 
 Userfront.init("jb7ywq8b");
 
 const HomeClient = () => {
   const { userId } = useParams();
-
+  const [userType, setUserType] = useState(null); // State to hold userType
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    // Retrieve responseData from local storage
+    const responseData = localStorage.getItem('responseData');
+    
+    // If responseData exists, parse it to get userType and userId
+    if (responseData) {
+      const [type] = responseData.split('/'); // Assuming responseData is like "client/8"
+      setUserType(type);
+    }
+  }, []);
+
   const handleSubmit = () => {
     navigate(`/submit-a-request/${userId}`);
   };
+  
   const handleTrack = () => {
-    navigate(`/track-my-request/${userId}`)
+    navigate(`/track-my-request/${userId}`);
   };
+  
   const handleGuide = () => {
-    navigate(`/guide/${userId}`)
+    navigate(`/guide/${userId}`);
   };
 
   return (
@@ -44,7 +57,7 @@ const HomeClient = () => {
         </div>
 
         <div className="announcement-box">
-          <h2>Welcome to the Client Portal!</h2>
+          <h2>Welcome, {userId} ({userType})!</h2>
         </div>
 
         <div className="options-container">
