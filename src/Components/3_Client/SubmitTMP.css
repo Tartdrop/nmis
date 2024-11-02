@@ -1,0 +1,90 @@
+.submit-container-all {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 6.5vh;
+    width: 1270px;
+    height: 805px;
+    gap: 70px;
+    font-family: 'Poppins';
+
+    .s-c-a-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 400px;
+        height: 805px;
+        background-color: #2b9ec1b0;
+        border-radius: 10px;
+    
+        .s-c-a-l-epithet {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 45px;
+            
+            .s-c-a-l-e-text {
+                margin-top: -20px;
+            }
+        }
+
+        .s-c-a-l-whiteline {
+            margin-top: 20px;
+        }
+
+        .s-c-a-l-information {
+            margin-top: 25px;
+
+
+            .s-c-a-l-i-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                color: #fff;
+                margin-bottom: 25px;
+                font-size: 14px;
+                font-weight: 700;
+                gap: 5px;
+            }
+            
+            input {
+                width: 335px;
+                height: 35px;
+                border: none;
+                border-radius: 100px;
+            }
+
+            .s-c-a-l-i-additionalinfo {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding-top: 3px;
+                font-size: 16px;
+                color: #ffffff;
+                opacity: 60%;
+                transition: opacity 0.3s ease;
+            }
+
+            .s-c-a-l-i-additionalinfo:hover {
+                opacity: 100%;
+            }
+
+        }
+    }
+
+    .s-c-a-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 800px;
+        height: 805px;
+        background-color: #ffffffb5;
+        border-radius: 10px;
+    }
+}

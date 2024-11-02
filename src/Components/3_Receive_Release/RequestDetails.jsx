@@ -3,7 +3,7 @@ import './RequestDetails.css';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import blue_line_icon from '../Assets/BlueLine.png';
 
-const SubmitReview = () => {
+const RequestDetails = () => {
     const { userId, requestId } = useParams();
     const [sampleCategory, setSampleCategory] = useState('');
     const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
@@ -337,4 +337,4 @@ const SubmitReview = () => {
     );
 }
 
-export default SubmitReview;
+export default RequestDetails;

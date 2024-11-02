@@ -13,6 +13,9 @@ import PageHomeClient from "./PageHomeClient";
 import PageHomeRecRel from "./PageHomeRecRel";
 import PageHomeTesting from "./PageHomeTesting";
 import PageSubmitRequest from "./PageSubmitRequest";
+
+import PageSubmitRequestTemp from "./PageSubmitRequestTemp";
+
 import PageSubmitRequestReview from "./PageSubmitRequestReview";
 import PageTrackMyRequest from "./PageTrackMyRequest";
 import PagePendingRequest from "./PagePendingRequest";
@@ -54,6 +57,9 @@ function App() {
 
             <Route path="/home/client/:userId" element={<PageHomeClient />} />
             <Route path="/submit-a-request/:userId" element={<PageSubmitRequest />} />
+
+            <Route path="/submit-a-request/tmp" element={<PageSubmitRequestTemp />} />
+            
             <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
             <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
             <Route path="/guide/:userId" element={<PageGuide />} />
