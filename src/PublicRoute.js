@@ -1,18 +1,13 @@
+// PublicRoute.js
+import React from "react";
 import { Navigate } from "react-router-dom";
 
-function PublicRoute({ isLoggedIn, userType, children }) {
+const PublicRoute = ({ isLoggedIn, userType, userId, children }) => {
+    // Redirect to the specific home page based on userType and userId if the user is logged in
     if (isLoggedIn) {
-        // Redirect to the appropriate home page based on userType
-        const homePage = userType === "client" 
-            ? `/home/client/${localStorage.getItem('userId')}` 
-            : userType === "staff"
-            ? `/home/staff/${localStorage.getItem('userId')}`
-            : `/home/tester/${localStorage.getItem('userId')}`;
-        
-        return <Navigate to={homePage} />;
+        return <Navigate to={`/home/${userType}/${userId}`} />;
     }
-
     return children;
-}
+};
 
 export default PublicRoute;

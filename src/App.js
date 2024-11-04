@@ -29,7 +29,7 @@ import PageTestResults from "./PageTestResults";
 import PageTFAVerify from "./PageTFA-Verify-Reg";
 
 import PublicRoute from "./PublicRoute";
-import ProtectedRoute from "./ProtectedRoute"; // Ensure you have a ProtectedRoute component
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,9 +46,9 @@ function App() {
             setUserId(storedUserId);
             setUserType(storedUserType);
         } else {
-            navigate("/login");
+            setIsLoggedIn(false);  // Ensure isLoggedIn is set to false if no user data is found
         }
-    }, [navigate]);
+    }, []);
 
     const handleLogin = (id, type) => {
         setIsLoggedIn(true);
@@ -71,11 +71,11 @@ function App() {
         <>
             <Header onLogout={handleLogout} userId={userId} userType={userType} />
             <Routes>
-                {/* Public Routes */}
+                {/* Public Routes - Accessible only when logged out */}
                 <Route 
                     path="/login" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageLogin onLogin={handleLogin} />
                         </PublicRoute>
                     } 
@@ -83,7 +83,7 @@ function App() {
                 <Route 
                     path="/forget" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageForget />
                         </PublicRoute>
                     } 
@@ -91,7 +91,7 @@ function App() {
                 <Route 
                     path="/register" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageRegister />
                         </PublicRoute>
                     } 
@@ -99,7 +99,7 @@ function App() {
                 <Route 
                     path="/tfa" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageTFA />
                         </PublicRoute>
                     } 
@@ -107,7 +107,7 @@ function App() {
                 <Route 
                     path="/email-sent" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageForgotES />
                         </PublicRoute>
                     } 
@@ -115,7 +115,7 @@ function App() {
                 <Route 
                     path="/not-in-system" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageForgotNIS />
                         </PublicRoute>
                     } 
@@ -123,7 +123,7 @@ function App() {
                 <Route 
                     path="/registered" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageRegisterTY />
                         </PublicRoute>
                     } 
@@ -131,13 +131,13 @@ function App() {
                 <Route 
                     path="/tfaverify" 
                     element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageTFAVerify />
                         </PublicRoute>
                     } 
                 />
 
-                {/* Protected Routes */}
+                {/* Protected Routes - Accessible only when logged in */}
                 <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}/>}>
                     {/* Client Routes */}
                     <Route path="/home/client/:userId" element={<PageHomeClient />} />
