@@ -1,11 +1,11 @@
-.request-all-container {
+.trackmyrequest-all-container {
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Poppins';
 }
 
-.request-container {
+.trackmyrequest-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,30 +17,40 @@
     background-color: #ffffffb5;
 }
 
-.request-title {
+.trackmyrequest-title {
     font-weight: 700;
     font-size: 64px;
     color: #004e65;
 }
 
-.request-1st-container {
+.trackmyrequest-1st-container {
+    width: 1200px;
+    height: 600px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    width: 1200px;
-    height: 603px;
-    border-radius: 10px;
-    margin-top: 20px;
+    gap: 16px;
 }
 
-.request-1st-container-column-row {
+.trackmyrequest-2nd-container {
+    width: 1200px;
+    height: 470px;
+    margin-top: 20px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.trackmyrequest-1st-container-column-row {
     display: flex;
     gap: 10px;
 }
 
-.request-1st-container-column-row input {
+.trackmyrequest-1st-container-column-row input {
     text-align: center;
     font-family: 'Poppins';
     font-weight: 400;
@@ -49,6 +59,41 @@
     border: none;
     background-color: #2B9DC1;
     color: #fff;
+}
+
+.trackmyrequest-1st-container-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 150px;
+    background-color: #004e65;
+    border-radius: 10px;
+    width: 900px;
+    height: 40px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.myrequests {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 185px 0 175px;
+    height: 35px;
+    border: none;
+    background-color: #2b9ec1;
+    border-radius: 8px;
+    font-family: 'Poppins';
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    opacity: 50%;
+    transition: opacity 0.3s ease;
+}
+
+.myrequests:hover {
+    opacity: 100%;
 }
 
 .blue-logo-icon {
@@ -67,7 +112,7 @@
     margin-bottom: -2px;
 }
 
-.request-row {
+.trackmyrequest-row {
     margin-top: 30px;
     display: flex;
     gap: 30px;

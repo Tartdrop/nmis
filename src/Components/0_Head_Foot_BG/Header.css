@@ -4,36 +4,34 @@
     align-items: center;
     margin: auto;
     background-color: #2b9ec16f;
-    padding-top: 6PX;
+    padding-top: 6px;
     padding-bottom: 6px;
-    
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     background-color: #2b9ec16f;
-
     box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
+    overflow: visible; /* Allow content to overflow */
 }
 
 .left-stuff {
-    padding-left: 331px;
+    padding-left: 355px;
     gap: 20px;
     display: flex;
     align-items: center;
-    opacity: 50%;
-    transition: opacity 0.3s ease;
-}
-
-.left-stuff:hover {
-    opacity: 100%;
+    position: relative;
 }
 
 .left-stuff img {
     width: 70px;
+    position: absolute; /* Position logo absolutely */
+    top: -20px; /* Adjust as needed to control vertical overflow */
+    left: 260px;
+    transform: translateX(-20px); /* Fine-tune to control horizontal overflow */
 }
 
 .right-stuff {
-    padding-right: 331px;
+    padding-right: 330px;
     display: flex;
     align-items: center;
 }
@@ -42,11 +40,17 @@
     height: auto;
     width: auto;
     color: #ffffff;
-    font-size: 40px;
+    font-size: 36px;
     text-align: left;
     font-family:'Poppins';
     font-weight: 600;
     margin-left: -15px;
+    opacity: 50%;
+    transition: opacity 0.3s ease;
+}
+
+.title:hover {
+    opacity: 100%;
 }
 
 .home {

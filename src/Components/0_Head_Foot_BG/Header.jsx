@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './Header.css';
 import home_icon from '../Assets/Home.png';
-import white_logo_icon from '../Assets/WhiteLogo.png';
+import logo from '../Assets/NMISLogo.png';
 
 const Header = ({ onLogout }) => {
     const navigate = useNavigate();
@@ -47,8 +47,8 @@ const Header = ({ onLogout }) => {
     return (
         <div className='header'>
             <div className="left-stuff">
-                <img src={white_logo_icon} alt="Logo" />
-                <div className="title">NMIS</div>
+                <img src={logo} alt="Logo" />
+                <div className="title">National Meat Inspection Service</div>
             </div>
 
             <div className="right-stuff">
