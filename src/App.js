@@ -138,3 +138,198 @@ function App() {
 }
 
 export default App;
+
+/*
+
+import React, { useState } from "react";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Header from "./Components/0_Head_Foot_BG/Header";
+import ProtectedRoute from "./ProtectedRoute"; // Import the ProtectedRoute component
+import PageLogin from "./PageLogin";
+import PageForget from "./PageForget";
+import PageRegister from "./PageRegister";
+import PageTFA from "./PageTFA";
+import PageForgotES from "./PageEmailSent";
+import PageForgotNIS from "./PageNotInSystem";
+import PageRegisterTY from "./PageThankYou";
+import PageHomeClient from "./PageHomeClient";
+import PageHomeRecRel from "./PageHomeRecRel";
+import PageHomeTesting from "./PageHomeTesting";
+import PageSubmitRequest from "./PageSubmitRequest";
+import PageSubmitRequestTemp from "./PageSubmitRequestTemp";
+import PageSubmitRequestReview from "./PageSubmitRequestReview";
+import PageTrackMyRequest from "./PageTrackMyRequest";
+import PagePendingRequest from "./PagePendingRequest";
+import PageForReleaseList from "./PageForReleaseList";
+import PageShowControlNumber from "./PageShowControlNumber";
+import PageRequestAddInfo from "./PageRequestAddInfo";
+import PageRequestDetails from "./PageRequestDetails";
+import PageViewDatabaseT from "./PageViewDatabaseT";
+import PageViewDatabaseRR from "./PageViewDatabaseRR";
+import PageForTesting from "./PageForTesting";
+import PageGuide from "./PageGuide";
+import PageTestResults from "./PageTestResults";
+import PageTFAVerify from "./PageTFA-Verify-Reg";
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [userType, setUserType] = useState(null);
+
+  const handleLogin = (id, type) => {
+    console.log("Login successful:", id, type);
+    setIsLoggedIn(true);
+    setUserId(id);
+    setUserType(type);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserId(null);
+    setUserType(null);
+  };
+
+  return (
+    <>
+      <Header onLogout={handleLogout} userId={userId} userType={userType} />
+      <Routes>
+
+        ==== PUBLIC ROUTES
+        
+        <Route path="/register" element={<PageRegister />} />
+        <Route path="/forget" element={<PageForget />} />
+        <Route path="/tfa" element={<PageTFA />} />
+        <Route path="/email-sent" element={<PageForgotES />} />
+        <Route path="/not-in-system" element={<PageForgotNIS />} />
+        <Route path="/registered" element={<PageRegisterTY />} />
+        <Route path="/login" element={<PageLogin onLogin={handleLogin} />} />
+        <Route path="/tfaverify" element={<PageTFAVerify />} />
+
+        ==== Protected Routes for Clients
+
+        <Route
+          path="/home/client/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['client']}
+              userType={userType}
+            >
+              <PageHomeClient />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/submit-a-request/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['client']}
+              userType={userType}
+            >
+              <PageSubmitRequest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/submit-review/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['client']}
+              userType={userType}
+            >
+              <PageSubmitRequestReview />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/track-my-request/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['client']}
+              userType={userType}
+            >
+              <PageTrackMyRequest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/guide/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['client']}
+              userType={userType}
+            >
+              <PageGuide />
+            </ProtectedRoute>
+          }
+        />
+
+        ==== Protected Routes for Staff
+
+        <Route
+          path="/home/staff/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['staff']}
+              userType={userType}
+            >
+              <PageHomeRecRel />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/pending-requests/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['staff']}
+              userType={userType}
+            >
+              <PagePendingRequest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/request-details/:userId/:requestId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['staff']}
+              userType={userType}
+            >
+              <PageRequestDetails />
+            </ProtectedRoute>
+          }
+        />
+        ==== ADD MORE ROUTES FOR STAFF HERE vvv
+
+        ==== Protected Routes for Testers
+        <Route
+          path="/home/tester/:userId"
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              allowedTypes={['tester']}
+              userType={userType}
+            >
+              <PageHomeTesting />
+            </ProtectedRoute>
+          }
+        />
+        ==== ADD MORE ROUTES FOR STAFF HERE vvv
+
+        ==== CATCH ALL ROUTES TO LOGIN
+        
+        <Route path="*" element={<PageLogin />} />
+      </Routes>
+    </>
+  );
+}
+
+export default App;*/
