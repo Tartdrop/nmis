@@ -1,34 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import './Header.css';
 import home_icon from '../Assets/Home.png';
 import logo from '../Assets/NMISLogo.png';
 
-const Header = ({ onLogout }) => {
+const Header = ({ onLogout, userId, userType }) => {
     const navigate = useNavigate();
-    const [userId, setUserId] = useState(null);
-    const [userType, setUserType] = useState(null);
-
-    useEffect(() => {
-        // Function to retrieve responseData from local storage
-        const retrieveUserData = () => {
-            const responseData = localStorage.getItem('responseData');
-            if (responseData) {
-                const [type, id] = responseData.split('/'); // Assuming responseData is like "client/8"
-                setUserType(type);
-                setUserId(id);
-            }
-        };
-
-        // Call the function to set user data
-        retrieveUserData();
-    }, []);
 
     const handleLogout = () => {
-        // Clear local storage and reset user state
+        // Clear local storage and reset user state through the onLogout prop
         localStorage.removeItem('responseData');
-        setUserId(null);
-        setUserType(null);
         onLogout(); // Call the onLogout prop to update the app state
         navigate('/login'); // Redirect to login page
     };

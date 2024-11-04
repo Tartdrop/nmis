@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Header from "./Components/0_Head_Foot_BG/Header"; // Make sure to import the Header component
+import React, { useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+
+import Header from "./Components/0_Head_Foot_BG/Header";
 import PageLogin from "./PageLogin";
 import PageForget from "./PageForget";
 import PageRegister from "./PageRegister";
@@ -13,9 +13,7 @@ import PageHomeClient from "./PageHomeClient";
 import PageHomeRecRel from "./PageHomeRecRel";
 import PageHomeTesting from "./PageHomeTesting";
 import PageSubmitRequest from "./PageSubmitRequest";
-
 import PageSubmitRequestTemp from "./PageSubmitRequestTemp";
-
 import PageSubmitRequestReview from "./PageSubmitRequestReview";
 import PageTrackMyRequest from "./PageTrackMyRequest";
 import PagePendingRequest from "./PagePendingRequest";
@@ -30,306 +28,199 @@ import PageGuide from "./PageGuide";
 import PageTestResults from "./PageTestResults";
 import PageTFAVerify from "./PageTFA-Verify-Reg";
 
+import PublicRoute from "./PublicRoute";
+
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [userType, setUserType] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userId, setUserId] = useState(null);
+    const [userType, setUserType] = useState(null);
+    const navigate = useNavigate();
 
-  const handleLogin = (id, type) => {
-    console.log("Login successful:", id, type);
-    setIsLoggedIn(true);
-    setUserId(id);
-    setUserType(type);
-  };
+    useEffect(() => {
+        const storedUserId = localStorage.getItem("userId");
+        const storedUserType = localStorage.getItem("userType");
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserId(null);
-    setUserType(null);
-  };
+        if (storedUserId && storedUserType) {
+            setIsLoggedIn(true);
+            setUserId(storedUserId);
+            setUserType(storedUserType);
+        } else {
+            navigate("/login");
+        }
+    }, [navigate]);
 
-  return (
-    <>
-      <Header onLogout={handleLogout} userId={userId} userType={userType} />
-      <Routes>
-            <Route path="/register" element={<PageRegister />} />
-            <Route path="/forget" element={<PageForget />} />
-            <Route path="/tfa" element={<PageTFA />} />
-            <Route path="/email-sent" element={<PageForgotES />} />
-            <Route path="/not-in-system" element={<PageForgotNIS />} />
-            <Route path="/registered" element={<PageRegisterTY />} />
-            <Route path="/login" element={<PageLogin onLogin={handleLogin} />} />
-            <Route path="/tfaverify" element={<PageTFAVerify />} />
+    const handleLogin = (id, type) => {
+        setIsLoggedIn(true);
+        setUserId(id);
+        setUserType(type);
+        localStorage.setItem("userId", id);
+        localStorage.setItem("userType", type);
+        navigate(`/home/${type}/${id}`);
+    };
 
-            <Route path="/home/client/:userId" element={<PageHomeClient />} />
-            <Route path="/submit-a-request/:userId" element={<PageSubmitRequest />} />
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setUserId(null);
+        setUserType(null);
+        localStorage.clear();
+        navigate("/login");
+    };
 
-            <Route path="/submit-a-request/tmp" element={<PageSubmitRequestTemp />} />
-            
-            <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
-            <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
-            <Route path="/guide/:userId" element={<PageGuide />} />
+    const redirectToHome = () => {
+        if (userType === "client") navigate(`/home/client/${userId}`);
+        else if (userType === "staff") navigate(`/home/staff/${userId}`);
+        else if (userType === "tester") navigate(`/home/tester/${userId}`);
+    };
 
-            <Route path="/home/staff/:userId" element={<PageHomeRecRel />} />
-            <Route path="/pending-requests/:userId" element={<PagePendingRequest />} />
-            <Route path="/request-details/:userId/:requestId" element={<PageRequestDetails />} />
-            <Route path="/approved/:userId" element={<PageShowControlNumber />} />
-            <Route path="/request-additional-info/:userId" element={<PageRequestAddInfo />} />
-            <Route path="/for-release/:userId" element={<PageForReleaseList />} />
-            <Route path="/receive-release-database/:userId" element={<PageViewDatabaseRR />} />
+    return (
+        <>
+            <Header onLogout={handleLogout} userId={userId} userType={userType} />
+            <Routes>
+                {/* Public Routes */}
+                <Route 
+                    path="/login" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageLogin onLogin={handleLogin} />
+                        </PublicRoute>
+                    } 
+                />
+                <Route 
+                    path="/forget" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageForget />
+                        </PublicRoute>
+                    } 
+                />
+                <Route 
+                    path="/register" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageRegister />
+                        </PublicRoute>
+                    } 
+                />
+                <Route 
+                    path="/tfa" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageTFA />
+                        </PublicRoute>
+                    } 
+                />
+                <Route 
+                    path="/email-sent" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageForgotES />
+                        </PublicRoute>
+                    } 
+                />
+                <Route 
+                    path="/not-in-system" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageForgotNIS />
+                        </PublicRoute>
+                    } 
+                />
+                <Route 
+                    path="/registered" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageRegisterTY />
+                        </PublicRoute>
+                    } 
+                />
+                <Route 
+                    path="/tfaverify" 
+                    element={
+                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType}>
+                            <PageTFAVerify />
+                        </PublicRoute>
+                    } 
+                />
 
-            <Route path="/home/tester/:userId" element={<PageHomeTesting />} />
-            <Route path="/for-testing/:userId" element={<PageForTesting />} />
-            <Route path="/test-results/:userId" element={<PageTestResults />} />
-            <Route path="/testing-database/:userId" element={<PageViewDatabaseT />} />
-            <Route path="*" element={<PageLogin />} />
+                {/* Client Routes */}
+                <Route
+                    path="/home/client/:userId"
+                    element={isLoggedIn && userType === "client" ? <PageHomeClient /> : redirectToHome()}
+                />
+                <Route
+                    path="/submit-a-request/:userId"
+                    element={isLoggedIn && userType === "client" ? <PageSubmitRequest /> : redirectToHome()}
+                />
+                <Route
+                    path="/submit-a-request/tmp"
+                    element={isLoggedIn && userType === "client" ? <PageSubmitRequestTemp /> : redirectToHome()}
+                />
+                <Route
+                    path="/submit-review/:userId"
+                    element={isLoggedIn && userType === "client" ? <PageSubmitRequestReview /> : redirectToHome()}
+                />
+                <Route
+                    path="/track-my-request/:userId"
+                    element={isLoggedIn && userType === "client" ? <PageTrackMyRequest /> : redirectToHome()}
+                />
+                <Route
+                    path="/guide/:userId"
+                    element={isLoggedIn && userType === "client" ? <PageGuide /> : redirectToHome()}
+                />
 
-      {/* <Route path="*" element={isLoggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />} />  */}
-      </Routes>
-    </>
-  );
+                {/* Staff Routes */}
+                <Route
+                    path="/home/staff/:userId"
+                    element={isLoggedIn && userType === "staff" ? <PageHomeRecRel /> : redirectToHome()}
+                />
+                <Route
+                    path="/pending-requests/:userId"
+                    element={isLoggedIn && userType === "staff" ? <PagePendingRequest /> : redirectToHome()}
+                />
+                <Route
+                    path="/request-details/:userId/:requestId"
+                    element={isLoggedIn && userType === "staff" ? <PageRequestDetails /> : redirectToHome()}
+                />
+                <Route
+                    path="/approved/:userId"
+                    element={isLoggedIn && userType === "staff" ? <PageShowControlNumber /> : redirectToHome()}
+                />
+                <Route
+                    path="/request-additional-info/:userId"
+                    element={isLoggedIn && userType === "staff" ? <PageRequestAddInfo /> : redirectToHome()}
+                />
+                <Route
+                    path="/for-release/:userId"
+                    element={isLoggedIn && userType === "staff" ? <PageForReleaseList /> : redirectToHome()}
+                />
+                <Route
+                    path="/receive-release-database/:userId"
+                    element={isLoggedIn && userType === "staff" ? <PageViewDatabaseRR /> : redirectToHome()}
+                />
 
-  /*
-  return (
-    <>
-      <Header onLogout={handleLogout} />
-      <Routes>
-        {!isLoggedIn && (
-          <>
-            <Route path="/register" element={<PageRegister />} />
-            <Route path="/forget" element={<PageForget />} />
-            <Route path="/tfa" element={<PageTFA />} />
-            <Route path="/email-sent" element={<PageForgotES />} />
-            <Route path="/not-in-system" element={<PageForgotNIS />} />
-            <Route path="/registered" element={<PageRegisterTY />} />
-            <Route path="/login" element={<PageLogin onLogin={handleLogin} />} />
-            <Route path="/tfaverify" element={<PageTFAVerify />} />
-          </>
-        )}
+                {/* Tester Routes */}
+                <Route
+                    path="/home/tester/:userId"
+                    element={isLoggedIn && userType === "tester" ? <PageHomeTesting /> : redirectToHome()}
+                />
+                <Route
+                    path="/for-testing/:userId"
+                    element={isLoggedIn && userType === "tester" ? <PageForTesting /> : redirectToHome()}
+                />
+                <Route
+                    path="/test-results/:userId"
+                    element={isLoggedIn && userType === "tester" ? <PageTestResults /> : redirectToHome()}
+                />
+                <Route
+                    path="/testing-database/:userId"
+                    element={isLoggedIn && userType === "tester" ? <PageViewDatabaseT /> : redirectToHome()}
+                />
 
-        {isLoggedIn && (
-            <>
-              <Route path="/home-client" element={<PageHomeClient />} />
-              <Route path="/submit-a-request" element={<PageSubmitRequest />} />
-              <Route path="/submit-review" element={<PageSubmitRequestReview />} />
-              <Route path="/track-my-request" element={<PageTrackMyRequest />} />
-              <Route path="/guide" element={<PageGuide />} />
-
-
-              <Route path="/home-receive-release" element={<PageHomeRecRel />} />
-              <Route path="/pending-requests" element={<PagePendingRequest />} />
-              <Route path="/request-details" element={<PageRequestDetails />} />
-              <Route path="/show-control-number" element={<PageShowControlNumber />} />
-              <Route path="/request-add-info" element={<PageRequestAddInfo />} />
-              <Route path="/for-release" element={<PageForReleaseList />} />
-              <Route path="/receive-release-database" element={<PageViewDatabaseRR />} />
-
-              <Route path="/home-testing" element={<PageHomeTesting />} />
-              <Route path="/for-testing" element={<PageForTesting />} />
-              <Route path="/test-results" element={<PageTestResults />} />
-              <Route path="/testing-database" element={<PageViewDatabaseT />} />
-            </>
-          )}
-
-      <Route path="*" element={isLoggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />} />
-      </Routes>
-    </>
-  );*/
+                {/* Catch-all Route */}
+                <Route path="*" element={<PageLogin onLogin={handleLogin} />} />
+            </Routes>
+        </>
+    );
 }
 
 export default App;
-
-/*
-
-import React, { useState } from "react";
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Header from "./Components/0_Head_Foot_BG/Header";
-import ProtectedRoute from "./ProtectedRoute"; // Import the ProtectedRoute component
-import PageLogin from "./PageLogin";
-import PageForget from "./PageForget";
-import PageRegister from "./PageRegister";
-import PageTFA from "./PageTFA";
-import PageForgotES from "./PageEmailSent";
-import PageForgotNIS from "./PageNotInSystem";
-import PageRegisterTY from "./PageThankYou";
-import PageHomeClient from "./PageHomeClient";
-import PageHomeRecRel from "./PageHomeRecRel";
-import PageHomeTesting from "./PageHomeTesting";
-import PageSubmitRequest from "./PageSubmitRequest";
-import PageSubmitRequestTemp from "./PageSubmitRequestTemp";
-import PageSubmitRequestReview from "./PageSubmitRequestReview";
-import PageTrackMyRequest from "./PageTrackMyRequest";
-import PagePendingRequest from "./PagePendingRequest";
-import PageForReleaseList from "./PageForReleaseList";
-import PageShowControlNumber from "./PageShowControlNumber";
-import PageRequestAddInfo from "./PageRequestAddInfo";
-import PageRequestDetails from "./PageRequestDetails";
-import PageViewDatabaseT from "./PageViewDatabaseT";
-import PageViewDatabaseRR from "./PageViewDatabaseRR";
-import PageForTesting from "./PageForTesting";
-import PageGuide from "./PageGuide";
-import PageTestResults from "./PageTestResults";
-import PageTFAVerify from "./PageTFA-Verify-Reg";
-
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [userType, setUserType] = useState(null);
-
-  const handleLogin = (id, type) => {
-    console.log("Login successful:", id, type);
-    setIsLoggedIn(true);
-    setUserId(id);
-    setUserType(type);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserId(null);
-    setUserType(null);
-  };
-
-  return (
-    <>
-      <Header onLogout={handleLogout} userId={userId} userType={userType} />
-      <Routes>
-
-        ==== PUBLIC ROUTES
-        
-        <Route path="/register" element={<PageRegister />} />
-        <Route path="/forget" element={<PageForget />} />
-        <Route path="/tfa" element={<PageTFA />} />
-        <Route path="/email-sent" element={<PageForgotES />} />
-        <Route path="/not-in-system" element={<PageForgotNIS />} />
-        <Route path="/registered" element={<PageRegisterTY />} />
-        <Route path="/login" element={<PageLogin onLogin={handleLogin} />} />
-        <Route path="/tfaverify" element={<PageTFAVerify />} />
-
-        ==== Protected Routes for Clients
-
-        <Route
-          path="/home/client/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['client']}
-              userType={userType}
-            >
-              <PageHomeClient />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/submit-a-request/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['client']}
-              userType={userType}
-            >
-              <PageSubmitRequest />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/submit-review/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['client']}
-              userType={userType}
-            >
-              <PageSubmitRequestReview />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/track-my-request/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['client']}
-              userType={userType}
-            >
-              <PageTrackMyRequest />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/guide/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['client']}
-              userType={userType}
-            >
-              <PageGuide />
-            </ProtectedRoute>
-          }
-        />
-
-        ==== Protected Routes for Staff
-
-        <Route
-          path="/home/staff/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['staff']}
-              userType={userType}
-            >
-              <PageHomeRecRel />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/pending-requests/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['staff']}
-              userType={userType}
-            >
-              <PagePendingRequest />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/request-details/:userId/:requestId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['staff']}
-              userType={userType}
-            >
-              <PageRequestDetails />
-            </ProtectedRoute>
-          }
-        />
-        ==== ADD MORE ROUTES FOR STAFF HERE vvv
-
-        ==== Protected Routes for Testers
-        <Route
-          path="/home/tester/:userId"
-          element={
-            <ProtectedRoute
-              isLoggedIn={isLoggedIn}
-              allowedTypes={['tester']}
-              userType={userType}
-            >
-              <PageHomeTesting />
-            </ProtectedRoute>
-          }
-        />
-        ==== ADD MORE ROUTES FOR STAFF HERE vvv
-
-        ==== CATCH ALL ROUTES TO LOGIN
-        
-        <Route path="*" element={<PageLogin />} />
-      </Routes>
-    </>
-  );
-}
-
-export default App;*/

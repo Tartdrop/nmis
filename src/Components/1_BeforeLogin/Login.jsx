@@ -6,7 +6,7 @@ import logo_icon from '../Assets/BlueLogo.png';
 import eyeOpen from '../Assets/EyeOpen.png';
 import eyeClose from '../Assets/EyeClose.png';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
     const navigate = useNavigate();
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
@@ -19,30 +19,23 @@ const Login = () => {
             const url = new URL('http://localhost:8080/login');
             url.searchParams.append('identifier', identifier);
             url.searchParams.append('password', password);
-    
+
             const response = await fetch(url, {
                 method: 'POST',
             });
-    
+
             if (response.ok) {
-                // Login successful
-                const responseData = await response.text(); // Read response as text
-                console.log(responseData);
-                console.log('Login successful');
-    
-                // Clear previous responseData and store the new one
-                localStorage.clear(); // Clear local storage first
-                localStorage.setItem('responseData', responseData); // Store the new responseData
-    
-                // Redirect to home page
+                const responseData = await response.text();
+                console.log('Login successful:', responseData);
+
+                // Extract userType and userId
                 const [type, id] = responseData.split('/');
+                onLogin(id, type);  // Call onLogin prop to set login state in App.js
+
                 navigate(`/home/${type}/${id}`);
             } else {
-                // Login failed
                 const errorMessage = await response.text();
                 setError(errorMessage);
-                console.log('Login failed:', errorMessage);
-                throw new Error(errorMessage);
             }
         } catch (error) {
             console.error('Error during login:', error);

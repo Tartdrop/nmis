@@ -11,7 +11,7 @@ const TrackRequest = () => {
 
     useEffect(() => {
         // Fetch data from backend on component mount
-        fetch('http://localhost:8080/requests/trackmyrequest/{userId}')
+        fetch('http://localhost:8080/requests/pending')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
