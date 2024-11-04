@@ -27,27 +27,48 @@ const PendingRequest = () => {
     }, []);
 
     return (
-        <div className="request-all-container">
-            <div className='request-container'>
-                <div className='request-title'>Pending Requests</div>
-                {requests.length > 0 ? (
-                    requests.map((request, index) => (
-                        <button 
-                            key={index} 
-                            className="request-button"
-                            onClick={() => navigate(`/request-details/${userId}/${request.requestId}`)}
-                        >
-                            {request.representativeName} {request.submissionDate}
-                        </button>
-                    ))
-                ) : (
-                    <div className="request-1st-container">
-                        <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
-                        <h1 className='msg-noreqres1'>
-                            There are no pending requests as of the moment.
-                        </h1>
+        <div className="pendingrequest-all-container">
+            <div className='pendingrequest-container'>
+                <div className='pendingrequest-title'>Pending Requests</div>
+                <div className="pendingrequest-1st-container">
+                    <div className="pendingrequest-1st-container-header">
+                        <div className="pendingrequest-1st-container-header-title">
+                            Username
+                        </div>
+                        <div className="pendingrequest-1st-container-header-title">
+                            |
+                        </div>
+                        <div className="pendingrequest-1st-container-header-title">
+                            Email Address
+                        </div>
+                        <div className="pendingrequest-1st-container-header-title">
+                            |
+                        </div>
+                        <div className="pendingrequest-1st-container-header-title">
+                            Submission Date
+                        </div>
                     </div>
-                )}
+                    {requests.length > 0 ? (
+                        requests.map((request, index) => (
+                            <button 
+                                key={index} 
+                                className="request-button"
+                                onClick={() => navigate(`/request-details/${userId}/${request.requestId}`)}
+                            >
+                                <div>{request.representativeName}</div>
+                                <div>{request.emailAddress}</div>
+                                <div>{request.submissionDate}</div>
+                            </button>
+                        ))
+                    ) : (
+                        <div className="pendingrequest-2nd-container">
+                            <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
+                            <h1 className='msg-noreqres1'>
+                                There are no pending requests as of the moment.
+                            </h1>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
