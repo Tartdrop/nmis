@@ -57,7 +57,7 @@ const HomeRecRel = () => {
         </div>
 
         <div className="announcement-box">
-          <h3>Welcome, {userId} ({userType})!</h3>
+          <h3>Welcome to the Receive and Release Portal, Staff!</h3>
         </div>
 
         <div className="options-container">

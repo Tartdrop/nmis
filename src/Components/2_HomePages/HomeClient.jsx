@@ -14,6 +14,28 @@ const HomeClient = () => {
   const [userType, setUserType] = useState(null); // State to hold userType
   const navigate = useNavigate();
 
+  const [clientDetails, setClientDetails] = useState({
+    username: '',
+  });
+
+  useEffect(() => {
+    const fetchClientDetails = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/clientview/${userId}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setClientDetails(data);
+            console.log(data);
+
+        } catch (error) {
+            console.error('Error fetching consents:', error);
+        }
+    };
+    fetchClientDetails();
+  }, [userId]);
+
   useEffect(() => {
     // Retrieve responseData from local storage
     const responseData = localStorage.getItem('responseData');
@@ -57,7 +79,7 @@ const HomeClient = () => {
         </div>
 
         <div className="announcement-box">
-          <h2>Welcome, {userId} ({userType})!</h2>
+          <h2>Welcome to the Client Portal, {clientDetails.username}!</h2>
         </div>
 
         <div className="options-container">

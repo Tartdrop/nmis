@@ -122,3 +122,16 @@
 button, summary {
     outline: none;
 }
+
+.login-prompt {
+    font-size: 26px;
+    font-weight: 200;
+    font-family:'Poppins';
+    color: #ffffffa7;
+    padding: 10px 25px;
+    transition: color 0.3s ease;
+}
+
+.login-prompt:hover {
+    color: #fff;
+}

@@ -19,7 +19,7 @@
     justify-content: center;
     align-items: center;   
     width: 470px;
-    height: 800px;
+    height: 700px;
     background: #ffffffb5;
     padding-bottom: 30px;
     border-radius: 12px;
@@ -30,7 +30,7 @@
     color:#2B9DC1;
     font-weight: 700;
     margin-top: 40px;
-    margin-bottom: 290px;
+    margin-bottom: 200px;
     margin-left: 30px;
 }
 
@@ -72,7 +72,7 @@
     border: none;
     outline: none;
     color: #004e65;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     padding-left: 20px;
     padding-right: 15px;
@@ -94,7 +94,7 @@
 }
 
 .tfa-input input::placeholder {
-    color:#004e65;
+    color:#004d65a3;
 }
 
 .eyecon {
