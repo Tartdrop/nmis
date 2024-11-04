@@ -29,6 +29,7 @@ import PageTestResults from "./PageTestResults";
 import PageTFAVerify from "./PageTFA-Verify-Reg";
 
 import PublicRoute from "./PublicRoute";
+import ProtectedRoute from "./ProtectedRoute"; // Ensure you have a ProtectedRoute component
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,12 +65,6 @@ function App() {
         setUserType(null);
         localStorage.clear();
         navigate("/login");
-    };
-
-    const redirectToHome = () => {
-        if (userType === "client") navigate(`/home/client/${userId}`);
-        else if (userType === "staff") navigate(`/home/staff/${userId}`);
-        else if (userType === "tester") navigate(`/home/tester/${userId}`);
     };
 
     return (
@@ -142,79 +137,31 @@ function App() {
                     } 
                 />
 
-                {/* Client Routes */}
-                <Route
-                    path="/home/client/:userId"
-                    element={isLoggedIn && userType === "client" ? <PageHomeClient /> : redirectToHome()}
-                />
-                <Route
-                    path="/submit-a-request/:userId"
-                    element={isLoggedIn && userType === "client" ? <PageSubmitRequest /> : redirectToHome()}
-                />
-                <Route
-                    path="/submit-a-request/tmp"
-                    element={isLoggedIn && userType === "client" ? <PageSubmitRequestTemp /> : redirectToHome()}
-                />
-                <Route
-                    path="/submit-review/:userId"
-                    element={isLoggedIn && userType === "client" ? <PageSubmitRequestReview /> : redirectToHome()}
-                />
-                <Route
-                    path="/track-my-request/:userId"
-                    element={isLoggedIn && userType === "client" ? <PageTrackMyRequest /> : redirectToHome()}
-                />
-                <Route
-                    path="/guide/:userId"
-                    element={isLoggedIn && userType === "client" ? <PageGuide /> : redirectToHome()}
-                />
-
-                {/* Staff Routes */}
-                <Route
-                    path="/home/staff/:userId"
-                    element={isLoggedIn && userType === "staff" ? <PageHomeRecRel /> : redirectToHome()}
-                />
-                <Route
-                    path="/pending-requests/:userId"
-                    element={isLoggedIn && userType === "staff" ? <PagePendingRequest /> : redirectToHome()}
-                />
-                <Route
-                    path="/request-details/:userId/:requestId"
-                    element={isLoggedIn && userType === "staff" ? <PageRequestDetails /> : redirectToHome()}
-                />
-                <Route
-                    path="/approved/:userId"
-                    element={isLoggedIn && userType === "staff" ? <PageShowControlNumber /> : redirectToHome()}
-                />
-                <Route
-                    path="/request-additional-info/:userId"
-                    element={isLoggedIn && userType === "staff" ? <PageRequestAddInfo /> : redirectToHome()}
-                />
-                <Route
-                    path="/for-release/:userId"
-                    element={isLoggedIn && userType === "staff" ? <PageForReleaseList /> : redirectToHome()}
-                />
-                <Route
-                    path="/receive-release-database/:userId"
-                    element={isLoggedIn && userType === "staff" ? <PageViewDatabaseRR /> : redirectToHome()}
-                />
-
-                {/* Tester Routes */}
-                <Route
-                    path="/home/tester/:userId"
-                    element={isLoggedIn && userType === "tester" ? <PageHomeTesting /> : redirectToHome()}
-                />
-                <Route
-                    path="/for-testing/:userId"
-                    element={isLoggedIn && userType === "tester" ? <PageForTesting /> : redirectToHome()}
-                />
-                <Route
-                    path="/test-results/:userId"
-                    element={isLoggedIn && userType === "tester" ? <PageTestResults /> : redirectToHome()}
-                />
-                <Route
-                    path="/testing-database/:userId"
-                    element={isLoggedIn && userType === "tester" ? <PageViewDatabaseT /> : redirectToHome()}
-                />
+                {/* Protected Routes */}
+                <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}/>}>
+                    {/* Client Routes */}
+                    <Route path="/home/client/:userId" element={<PageHomeClient />} />
+                    <Route path="/submit-a-request/:userId" element={<PageSubmitRequest />} />
+                    <Route path="/submit-a-request/tmp" element={<PageSubmitRequestTemp />} />
+                    <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
+                    <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
+                    <Route path="/guide/:userId" element={<PageGuide />} />
+                    
+                    {/* Staff Routes */}
+                    <Route path="/home/staff/:userId" element={<PageHomeRecRel />} />
+                    <Route path="/pending-requests/:userId" element={<PagePendingRequest />} />
+                    <Route path="/request-details/:userId/:requestId" element={<PageRequestDetails />} />
+                    <Route path="/approved/:userId" element={<PageShowControlNumber />} />
+                    <Route path="/request-additional-info/:userId" element={<PageRequestAddInfo />} />
+                    <Route path="/for-release/:userId" element={<PageForReleaseList />} />
+                    <Route path="/receive-release-database/:userId" element={<PageViewDatabaseRR />} />
+                    
+                    {/* Tester Routes */}
+                    <Route path="/home/tester/:userId" element={<PageHomeTesting />} />
+                    <Route path="/for-testing/:userId" element={<PageForTesting />} />
+                    <Route path="/test-results/:userId" element={<PageTestResults />} />
+                    <Route path="/testing-database/:userId" element={<PageViewDatabaseT />} />
+                </Route>
 
                 {/* Catch-all Route */}
                 <Route path="*" element={<PageLogin onLogin={handleLogin} />} />
