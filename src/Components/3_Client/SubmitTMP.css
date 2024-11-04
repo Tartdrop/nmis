@@ -7,7 +7,7 @@
     margin-top: 6.5vh;
     width: 1270px;
     height: 805px;
-    gap: 70px;
+    gap: 40px;
     font-family: 'Poppins';
 
     .s-c-a-left {
@@ -86,5 +86,40 @@
         height: 805px;
         background-color: #ffffffb5;
         border-radius: 10px;
+
+        .s-c-a-r-title {
+            font-weight: 700;
+            font-size: 64px;
+            color: #004e65;
+            margin-top: 15px;
+        }
+
+        .s-c-a-r-container-everything {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            margin-top: 15px;
+            width: 720px;
+            height: 640px;
+            border-radius: 10px;
+
+            .s-c-a-r-c-e-scroll {
+                background-color: #004e65;
+                width: 660px;
+                height: 580px;
+                max-height: 580px;
+                overflow-y: auto;
+
+                .s-c-a-r-c-e-s-numbered {
+                    margin-top: -20px;
+
+                    h1 {
+                        color: #2B9DC1;
+                        font-size: 40px;
+                    }
+                }
+            }
+        }
     }
 }

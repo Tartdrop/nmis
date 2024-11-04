@@ -184,7 +184,23 @@ const Submit = () => {
             </div>
 
             <div className="s-c-a-right">
-                .
+                <div className='s-c-a-r-title'>Submit a Request</div>
+                <div className='s-c-a-r-container-everything'>
+                    <div className='s-c-a-r-c-e-scroll'>
+                        <div className='s-c-a-r-c-e-s-numbered'>
+                            <h1>1. Purpose of Testing</h1>
+                        </div>
+                        <div className='s-c-a-r-c-e-s-numbered'>
+                            <h1>2. Sample Category</h1>
+                        </div>
+                        <div className='s-c-a-r-c-e-s-numbered'>
+                            <h1>3. Sample Information</h1>
+                        </div>
+                        <div className='s-c-a-r-c-e-s-numbered'>
+                            <h1>4. Test Selection</h1>
+                        </div>
+                    </div>
+                </div>
             </div>         
         </div> 
     );
