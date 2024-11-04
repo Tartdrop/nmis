@@ -105,19 +105,46 @@
             border-radius: 10px;
 
             .s-c-a-r-c-e-scroll {
-                background-color: #004e65;
                 width: 660px;
-                height: 580px;
-                max-height: 580px;
+                height: 590px;
+                max-height: 590px;
                 overflow-y: auto;
 
                 .s-c-a-r-c-e-s-numbered {
-                    margin-top: -20px;
 
-                    h1 {
+                    .s-c-a-r-c-e-s-n-title {
                         color: #2B9DC1;
                         font-size: 40px;
+                        font-weight: 700;
                     }
+
+                    .s-c-a-r-c-e-s-n-purposeoftesting {
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        padding-left: 30px;
+                        color: #004e65;
+                        gap: 10px;
+                    }
+
+                    .s-c-a-r-c-e-s-n-pot-choices {
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                        cursor: pointer;
+                        color: #004e65;
+                    }
+                    
+                    .s-c-a-r-c-e-s-n-pot-choices input[type="text"] {
+                        font-family: 'Poppins';
+                        font-weight: 500;
+                        color: #004e65;
+                        width: 260px;
+                        background: #ffffff;
+                        border-radius: 10px;
+                        padding: 0 20px;
+                        border: 3px solid #2B9DC1;
+                    } 
                 }
             }
         }
