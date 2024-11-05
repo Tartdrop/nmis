@@ -14,34 +14,40 @@ const Login = ({ onLogin }) => {
     const [visible, setVisible] = useState(false);
 
     const handleLogin = async (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         try {
             const url = new URL('http://localhost:8080/login');
             url.searchParams.append('identifier', identifier);
             url.searchParams.append('password', password);
-
+    
             const response = await fetch(url, {
                 method: 'POST',
             });
-
+    
             if (response.ok) {
                 const responseData = await response.text();
                 console.log('Login successful:', responseData);
-
+    
                 // Extract userType and userId
                 const [type, id] = responseData.split('/');
-                onLogin(id, type);  // Call onLogin prop to set login state in App.js
-
-                navigate(`/home/${type}/${id}`);
+                
+                // Validate that type and id exist
+                if (type && id) {
+                    onLogin(id, type);  // Call onLogin prop to set login state in App.js
+                    navigate(`/home/${type}/${id}`);
+                } else {
+                    setError("User not found"); // Display error if type or id is missing
+                }
             } else {
                 const errorMessage = await response.text();
-                setError(errorMessage);
+                setError(errorMessage || "User not found");
             }
         } catch (error) {
             console.error('Error during login:', error);
             setError('An error occurred during login');
         }
     };
+    
     
     const handleForgetPassword = () => {
         navigate("/forget")

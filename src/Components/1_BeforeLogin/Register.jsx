@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Register.css';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import eyeOpen from '../Assets/EyeOpen.png';
 import eyeClose from '../Assets/EyeClose.png';
 
@@ -16,11 +16,10 @@ const Register = () => {
     const [middleInitial, setMiddleInitial] = useState("");
     const [lastName, setLastName] = useState("");
     const [companyName, setCompanyName] = useState("");
-    const [ltoNumber, setLtoNumber] = useState("");
-    const [contactNumber, setContactNumber] = useState("");
+    const [ltoNumber, setLtoNumber] = useState("PDP-"); // Default to "PDP-"
+    const [contactNumber, setContactNumber] = useState("+63");
     const [clientClassification, setClientClassification] = useState("");
     const [otherClientClassification, setOtherClientClassification] = useState("");
-
 
     const navigateAfterLogin = () => {
         navigate("/tfaverify");
@@ -40,9 +39,9 @@ const Register = () => {
                 },
                 body: JSON.stringify({
                     user: {
-                        username: username,  // Add username to the user object
+                        username: username,
                         firstName: firstName,
-                        middleName: middleInitial,  // Include middle initial
+                        middleName: middleInitial,
                         lastName: lastName,
                         contactNumber: contactNumber,
                         email: email,
@@ -53,8 +52,7 @@ const Register = () => {
                     client: {
                         companyName: companyName,
                         ltoNo: ltoNumber,
-                        classification: clientClassification,  // Include the selected classification
-                        // Add otherClientClassification if needed based on your backend logic
+                        classification: clientClassification,
                     }
                 })
             });
@@ -64,7 +62,6 @@ const Register = () => {
                 throw new Error(errorData.message || "Registration failed.");
             }
     
-
             alert("Registration successful!");
             navigateAfterLogin();
         } catch (error) {
@@ -79,6 +76,36 @@ const Register = () => {
 
     const handleBackToLogin = () => {
         navigate("/login")
+    };
+
+    // LTO Number mask with "PDP-" prefix
+    const handleLtoNumberChange = (e) => {
+        let input = e.target.value.toUpperCase().replace(/^PDP-/, ""); // Remove existing PDP- for easier parsing
+    
+        // Extract numbers and letters based on expected format (DDDD-LL)
+        const numbers = input.replace(/[^0-9]/g, "").slice(0, 4); // Only allow up to 4 numbers
+        const letters = input.replace(/[^A-Z]/g, "").slice(0, 2); // Only allow up to 2 letters
+    
+        // Format as PDP-DDDD-LL
+        let formattedInput = `PDP-${numbers}`;
+        if (numbers.length === 4) {
+            formattedInput += `-${letters}`;
+        }
+    
+        setLtoNumber(formattedInput);
+    };
+    
+    // Contact Number mask
+    const handleContactNumberChange = (e) => {
+        // Strip out any non-numeric characters except for the initial "+63" prefix
+        let value = e.target.value.replace(/^\+63/, "").replace(/[^0-9]/g, "");
+        
+        // Format the number as +63XXX-XXX-XXXX
+        if (value.length > 3) value = value.slice(0, 3) + "-" + value.slice(3);
+        if (value.length > 7) value = value.slice(0, 7) + "-" + value.slice(7, 11);
+    
+        // Set the contact number with "+63" as the prefix
+        setContactNumber(`+63${value}`);
     };
 
     return (
@@ -154,26 +181,28 @@ const Register = () => {
                                 <div className='label-container-left'>
                                     <div className='l-c-label'>LTO Number</div>
                                     <div className='lto-number'>
-                                        <input 
-                                            className="font-link"
-                                            type="text"
-                                            value={ltoNumber}
-                                            maxLength={11}
-                                            onChange={(e) => setLtoNumber(e.target.value)}
-                                        />
+                                    <input 
+                                        className="font-link"
+                                        type="text"
+                                        value={ltoNumber}
+                                        onChange={handleLtoNumberChange}
+                                        placeholder="PDP-DDDD-LL"
+                                        maxLength={11}
+                                    />
                                     </div>
                                 </div>
 
                                 <div className='label-container-left'>
-                                <div className='l-c-label'>Contact Number</div>
+                                    <div className='l-c-label'>Contact Number</div>
                                     <div className='contact-number'>
-                                        <input 
-                                            className="font-link"
-                                            type="text"
-                                            value={contactNumber}
-                                            maxLength={11}
-                                            onChange={(e) => setContactNumber(e.target.value)}
-                                        />
+                                    <input 
+                                        className="font-link"
+                                        type="text"
+                                        value={contactNumber}
+                                        onChange={handleContactNumberChange}
+                                        placeholder="+63XXX-XXX-XXXX"
+                                        maxLength={16}
+                                    />
                                     </div>
                                 </div>
                             </div>

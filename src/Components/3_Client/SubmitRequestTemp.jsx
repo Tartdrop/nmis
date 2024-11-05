@@ -220,17 +220,15 @@ const Submit = () => {
                                         />
                                         <span className="checkmark">Others</span>
                                     </label>
-                                    {testingPurpose === "Others" && (
-                                        <div className="s-c-a-r-c-e-s-n-pot-o-input">
-                                            →
-                                            <input 
-                                                type="text"
-                                                value={otherPurposeTesting}
-                                                onChange={(e) => setOtherPurposeTesting(e.target.value)}
-                                                placeholder="Specify other purpose"
-                                            />
-                                        </div>
-                                    )}
+                                    <div className={`s-c-a-r-c-e-s-n-pot-o-input ${testingPurpose === "Others" ? "show" : ""}`}>
+                                        →
+                                        <input 
+                                            type="text"
+                                            value={otherPurposeTesting}
+                                            onChange={(e) => setOtherPurposeTesting(e.target.value)}
+                                            placeholder="Specify other purpose"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -249,6 +247,36 @@ const Submit = () => {
                         </div>
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">3. Sample Information</div>
+                            <div className="s-c-a-r-c-e-s-n-sampleinformation">
+                                <div className='s-c-a-r-c-e-s-n-input'>
+                                    <div>a. Sample Type/Description</div>
+                                    <input type="text" value={sampleTypeDescription} onChange={(e) => setSampleTypeDescription(e.target.value)} />
+                                </div>
+                                <div className='s-c-a-r-c-e-s-n-input'>
+                                    <div>b. Lot/Batch Number</div>
+                                    <input type="text" value={lotBatchNo} onChange={(e) => setLotBatchNo(e.target.value)} />
+                                </div>
+                                <div className='s-c-a-r-c-e-s-n-input'>
+                                    <div>c. Sample Source</div>
+                                    <input type="text" value={sampleSource} onChange={(e) => setSampleSource(e.target.value)} />
+                                </div>
+                                <div className='s-c-a-r-c-e-s-n-input'>
+                                    <div>d. Production Date</div>
+                                    <input type="date" value={productionDate} onChange={(e) => setProductionDate(e.target.value)} />
+                                </div>
+                                <div className='s-c-a-r-c-e-s-n-input'>
+                                    <div>e. Expiry Date</div>
+                                    <input type="date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
+                                </div>
+                                <div className='s-c-a-r-c-e-s-n-input'>
+                                    <div>f. Sampling Date</div>
+                                    <input type="date" value={samplingDate} onChange={(e) => setSamplingDate(e.target.value)} />
+                                </div>
+                                <div className='s-c-a-r-c-e-s-n-input'>
+                                    <div>g. Sampler Name</div>
+                                    <input type="text" value={samplerName} onChange={(e) => setSamplerName(e.target.value)} />
+                                </div>
+                            </div>
                         </div>
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">4. Test Selection</div>
