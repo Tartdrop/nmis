@@ -17,7 +17,7 @@ const Register = () => {
     const [lastName, setLastName] = useState("");
     const [companyName, setCompanyName] = useState("");
     const [ltoNumber, setLtoNumber] = useState("PDP-"); // Default to "PDP-"
-    const [contactNumber, setContactNumber] = useState("+63");
+    const [contactNumber, setContactNumber] = useState("(+63)");
     const [clientClassification, setClientClassification] = useState("");
     const [otherClientClassification, setOtherClientClassification] = useState("");
 
@@ -26,8 +26,19 @@ const Register = () => {
     }
 
     const handleRegister = async () => {
-        if (!email.trim() || !password.trim() || !firstName.trim() || !lastName.trim() || !companyName.trim() || !ltoNumber.trim() || !contactNumber.trim()) {
-            alert("Please fill in all required fields.");
+        if (
+            !email.trim() ||
+            !password.trim() ||
+            !firstName.trim() ||
+            !lastName.trim() ||
+            !companyName.trim() ||
+            !ltoNumber.trim() ||
+            !contactNumber.trim() ||
+            !clientClassification.trim() || // Ensure client classification is filled
+            ltoNumber.trim().length !== 11 ||  // Ensure LTO number is 11 characters long
+            contactNumber.trim().length !== 18 // Ensure contact number is 18 characters long
+        ) {
+            alert("Please fill in all required fields, and ensure LTO number is 11 characters long, contact number is 18 characters long, and client classification is provided.");
             return;
         }
     
@@ -95,17 +106,25 @@ const Register = () => {
         setLtoNumber(formattedInput);
     };
     
-    // Contact Number mask
     const handleContactNumberChange = (e) => {
         // Strip out any non-numeric characters except for the initial "+63" prefix
-        let value = e.target.value.replace(/^\+63/, "").replace(/[^0-9]/g, "");
-        
-        // Format the number as +63XXX-XXX-XXXX
-        if (value.length > 3) value = value.slice(0, 3) + "-" + value.slice(3);
-        if (value.length > 7) value = value.slice(0, 7) + "-" + value.slice(7, 11);
+        let value = e.target.value.replace(/[^0-9]/g, ""); // Only keep digits
     
-        // Set the contact number with "+63" as the prefix
-        setContactNumber(`+63${value}`);
+        // Ensure the value starts with "+63"
+        if (!value.startsWith("63")) {
+            value = "63" + value; // Add "63" if not present
+        }
+    
+        // Limit the length to the Philippine mobile number format
+        if (value.length > 12) {
+            value = value.slice(0, 12); // Limit to 12 digits (after the +63)
+        }
+    
+        // Format the value into (+63) 999 999 9999
+        const formattedValue = `(+63) ${value.slice(2, 5)} ${value.slice(5, 8)} ${value.slice(8)}`.trim();
+    
+        // Set the contact number with the correct format
+        setContactNumber(formattedValue);
     };
 
     return (
@@ -201,7 +220,7 @@ const Register = () => {
                                         value={contactNumber}
                                         onChange={handleContactNumberChange}
                                         placeholder="+63XXX-XXX-XXXX"
-                                        maxLength={16}
+                                        maxLength={18}
                                     />
                                     </div>
                                 </div>
@@ -268,27 +287,27 @@ const Register = () => {
                                     <div className="cli-class-both">
                                         <div className="cli-class-left">
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Importer" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Importer
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Exporter" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Exporter
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Slaughterhouse" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Slaughterhouse
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Poultry Dressing Plant" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Poultry Dressing Plant
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Meat Dealer" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Meat Dealer
                                             </label>
@@ -296,27 +315,27 @@ const Register = () => {
 
                                         <div className="cli-class-right">
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Meat Processing Plant" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Meat Processing Plant
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Meat Cutting Plant" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Meat Cutting Plant
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Consumer" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Consumer
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Plant Officer" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Plant Officer
                                             </label>
                                             <label class="cli-class-container">
-                                                <input type="radio" name="cli-class" value={clientClassification} onChange={(e) => setClientClassification(e.target.value)}/>
+                                                <input type="radio" name="cli-class" value="Cold Storage Warehouse" onChange={(e) => setClientClassification(e.target.value)}/>
                                                 <span class="checkmark"></span>
                                                 Cold Storage Warehouse
                                             </label>
@@ -324,16 +343,27 @@ const Register = () => {
                                     </div>
 
                                     <div className="cli-class-others">
-                                        <label class="cli-class-container">
-                                            <input type="radio" name="cli-class"/>
-                                            <span class="checkmark"></span>
-                                            Others:
-                                            <input 
-                                                type="text"
-                                                value={otherClientClassification}
-                                                onChange={(e) => setOtherClientClassification(e.target.value)}
-                                            />
-                                        </label>
+                                    <label class="cli-class-container">
+                                        <input 
+                                            type="radio" 
+                                            name="cli-class" 
+                                            value="Others" 
+                                            onChange={(e) => setClientClassification(otherClientClassification || "Others")}
+                                        />
+                                        <span class="checkmark"></span>
+                                        Others:
+                                        <input 
+                                            type="text"
+                                            value={otherClientClassification}
+                                            onChange={(e) => {
+                                                setOtherClientClassification(e.target.value);
+                                                // Update clientClassification only if "Others" is selected
+                                                if (clientClassification === "Others" || clientClassification === otherClientClassification) {
+                                                    setClientClassification(e.target.value);
+                                                }
+                                            }}
+                                        />
+                                    </label>
                                     </div>
                                 </div>
                             </div>
