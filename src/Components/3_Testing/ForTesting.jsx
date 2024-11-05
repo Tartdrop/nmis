@@ -1,22 +1,88 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ForTesting.css';
-import Userfront from "@userfront/core";
-
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
-Userfront.init("jb7ywq8b");
-
 const TestingList = () => {
+    const [requests, setRequests] = useState([]);
+    const [expandedSample, setExpandedSample] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Fetch data from backend on component mount
+        fetch('http://localhost:8080/requests/for-testing')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Update state with fetched data
+                setRequests(data);
+            })
+            .catch(error => {
+                console.error('Error fetching testing requests:', error);
+            });
+    }, []);
+
+    const toggleSample = (controlNumber) => {
+        setExpandedSample(expandedSample === controlNumber ? null : controlNumber);
+    };
+
     return (
         <div className="request-all-container">
             <div className='request-container'>
                 <div className='request-title'>For Testing</div>
                 <div className="request-1st-container">
-                    <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
+                    {requests.length > 0 ? (
+                        requests.map((request, index) => (
+                            <div key={index} className="request-item">
+                                <div className="request-header">
+                                    <span>Control Number: {request.controlNumber}</span>
+                                    {request.microbial && (
+                                        <button className="test-btn" onClick={() => navigate(`/test-details/microbial/${request.controlNumber}`)}>
+                                            Microbial
+                                        </button>
+                                    )}
+                                    {request.chem && (
+                                        <button className="test-btn" onClick={() => navigate(`/test-details/chem/${request.controlNumber}`)}>
+                                            Chem
+                                        </button>
+                                    )}
+                                    {request.molBio && (
+                                        <button className="test-btn" onClick={() => navigate(`/test-details/molbio/${request.controlNumber}`)}>
+                                            MolBio
+                                        </button>
+                                    )}
+                                    <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
+                                        Sample
+                                    </button>
+                                </div>
 
-                    <h1 className='msg-noreqres1'>
-                            All work is done! Great job!
-                    </h1>
+                                {expandedSample === request.controlNumber && (
+                                    <div className="sample-list">
+                                        {request.sample.map(sample => (
+                                            <div key={sample.sampleId} className="sample-item">
+                                                <div><strong>Sample Description:</strong> {sample.sampleDescription}</div>
+                                                <div><strong>Lot Batch No:</strong> {sample.lotBatchNo}</div>
+                                                <div><strong>Sample Source:</strong> {sample.sampleSource}</div>
+                                                <div><strong>Production Date:</strong> {sample.productionDate}</div>
+                                                <div><strong>Expiry Date:</strong> {sample.expiryDate}</div>
+                                                <div><strong>Sampling Date:</strong> {sample.samplingDate}</div>
+                                                <div><strong>Sampler Name:</strong> {sample.samplerName}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))
+                    ) : (
+                        <div className="no-requests-container">
+                            <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
+                            <h1 className='msg-noreqres1'>All work is done! Great job!</h1>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
