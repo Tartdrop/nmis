@@ -23,10 +23,10 @@
 }
 
 .left-stuff img {
-    width: 70px;
+    width: 75px;
     position: absolute; /* Position logo absolutely */
     top: -20px; /* Adjust as needed to control vertical overflow */
-    left: 260px;
+    left: 255px;
     transform: translateX(-20px); /* Fine-tune to control horizontal overflow */
 }
 
