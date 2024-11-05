@@ -71,6 +71,8 @@ function App() {
         <>
             <Header onLogout={handleLogout} userId={userId} userType={userType} />
             <Routes>
+                {/* To Delete After Done*/}
+                <Route path="/submit-a-request/tmp" element={<PageSubmitRequestTemp />} />
                 {/* Public Routes - Accessible only when logged out */}
                 <Route 
                     path="/login" 
@@ -142,7 +144,6 @@ function App() {
                     {/* Client Routes */}
                     <Route path="/home/client/:userId" element={<PageHomeClient />} />
                     <Route path="/submit-a-request/:userId" element={<PageSubmitRequest />} />
-                    <Route path="/submit-a-request/tmp" element={<PageSubmitRequestTemp />} />
                     <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
                     <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
                     <Route path="/guide/:userId" element={<PageGuide />} />

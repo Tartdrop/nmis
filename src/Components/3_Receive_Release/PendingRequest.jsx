@@ -35,13 +35,13 @@ const PendingRequest = () => {
                         <div className="pendingrequest-1st-container-header-title">
                             Username
                         </div>
-                        <div className="pendingrequest-1st-container-header-title">
+                        <div className="lineseparator">
                             |
                         </div>
-                        <div className="pendingrequest-1st-container-header-title">
+                        <div className="pendingrequest-1st-container-header-title-middle">
                             Email Address
                         </div>
-                        <div className="pendingrequest-1st-container-header-title">
+                        <div className="lineseparator">
                             |
                         </div>
                         <div className="pendingrequest-1st-container-header-title">
@@ -52,12 +52,14 @@ const PendingRequest = () => {
                         requests.map((request, index) => (
                             <button 
                                 key={index} 
-                                className="request-button"
+                                className="my-requests"
                                 onClick={() => navigate(`/request-details/${userId}/${request.requestId}`)}
                             >
-                                <div>{request.representativeName}</div>
-                                <div>{request.emailAddress}</div>
-                                <div>{request.submissionDate}</div>
+                                <div className="req-side">{request.representativeName}</div>
+                                <p className="req-lineseparator">|</p>
+                                <div className="req-middle">{request.emailAddress}</div>
+                                <p className="req-lineseparator">|</p>
+                                <div className="req-side">{request.submissionDate}</div>
                             </button>
                         ))
                     ) : (
