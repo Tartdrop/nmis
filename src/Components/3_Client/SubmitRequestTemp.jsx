@@ -190,45 +190,62 @@ const Submit = () => {
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">1. Purpose of Testing</div>
                             <div className="s-c-a-r-c-e-s-n-purposeoftesting">
-                                <label className="s-c-a-r-c-e-s-n-pot-choices">
+                                <label className="s-c-a-r-c-e-s-n-choices">
                                     <input type="radio" name="purpose-choices" value="Monitoring" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                    <span className="checkmark"></span>
-                                    Monitoring
+                                    <span className="checkmark">NMIS Monitoring Program</span>
                                 </label>
-                                <label className="s-c-a-r-c-e-s-n-pot-choices">
+                                <label className="s-c-a-r-c-e-s-n-choices">
                                     <input type="radio" name="purpose-choices" value="Local_Trade" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                    <span className="checkmark"></span>
-                                    Local Trade
+                                    <span className="checkmark">For Local Trade</span>
                                 </label>
-                                <label className="s-c-a-r-c-e-s-n-pot-choices">
+                                <label className="s-c-a-r-c-e-s-n-choices">
                                     <input type="radio" name="purpose-choices" value="Imported" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                    <span className="checkmark"></span>
-                                    Imported
+                                    <span className="checkmark">Imported (COMI Issuance)</span>
                                 </label>
-                                <label className="s-c-a-r-c-e-s-n-pot-choices">
+                                <label className="s-c-a-r-c-e-s-n-choices">
                                     <input type="radio" name="purpose-choices" value="Export" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                    <span className="checkmark"></span>
-                                    Export
+                                    <span className="checkmark">Export (OMIC Issuance)</span>
                                 </label>
-                                <label className="s-c-a-r-c-e-s-n-pot-choices">
+                                <label className="s-c-a-r-c-e-s-n-choices">
                                     <input type="radio" name="purpose-choices" value="Complaint" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                    <span className="checkmark"></span>
-                                    Complaint
+                                    <span className="checkmark">Complaint</span>
                                 </label>
-                                <label className="s-c-a-r-c-e-s-n-pot-choices">
-                                    <input type="radio" name="purpose-choices" value="Others" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                    <span className="checkmark"></span>
-                                    Others:
-                                    <input 
-                                        type="text"
-                                        value={otherPurposeTesting}
-                                        onChange={(e) => setOtherPurposeTesting(e.target.value)}
-                                    />
-                                </label>
+                                <div className="s-c-a-r-c-e-s-n-others">
+                                    <label className="s-c-a-r-c-e-s-n-o-choices">
+                                        <input 
+                                            type="radio" 
+                                            name="purpose-choices" 
+                                            value="Others" 
+                                            onChange={(e) => setTestingPurpose(e.target.value)} 
+                                        />
+                                        <span className="checkmark">Others</span>
+                                    </label>
+                                    {testingPurpose === "Others" && (
+                                        <div className="s-c-a-r-c-e-s-n-pot-o-input">
+                                            →
+                                            <input 
+                                                type="text"
+                                                value={otherPurposeTesting}
+                                                onChange={(e) => setOtherPurposeTesting(e.target.value)}
+                                                placeholder="Specify other purpose"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">2. Sample Category</div>
+                            <div className="s-c-a-r-c-e-s-n-samplecategory">
+                                <label className="s-c-a-r-c-e-s-n-choices">
+                                    <input type="radio" name="sample-category-choices" value="Walk-in" onChange={(e) => setSampleCategory(e.target.value)} />
+                                    <span className="checkmark">Walk-in</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-choices">
+                                    <input type="radio" name="sample-category-choices" value="Monitoring" onChange={(e) => setSampleCategory(e.target.value)} />
+                                    <span className="checkmark">Monitoring</span>
+                                </label>
+                            </div>
                         </div>
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">3. Sample Information</div>

@@ -130,7 +130,6 @@ const RequestDetails = () => {
                                         Sample Category
                                     </div>
                                     <div className="tmp-cont">
-                                        <img src={blue_line_icon} alt="blue line" />
                                         <div className="spacer-top">.</div>
                                         <div className="submit-show">
                                             <label className="samplecategory_choices">
@@ -164,7 +163,6 @@ const RequestDetails = () => {
                                         Sample Information
                                     </div>
                                     <div className="tmp-cont">
-                                        <img src={blue_line_icon} alt="blue line" />
                                         <div className="spacer-top">.</div>
                                         <div className="submit-show">
                                             <div className='sample-rows'>
@@ -208,7 +206,6 @@ const RequestDetails = () => {
                                         Purpose of Testing
                                     </div>
                                     <div className="tmp-cont">
-                                        <img src={blue_line_icon} alt="blue line" />
                                         <div className="spacer-top">.</div>
                                         <div className="submit-show">
                                             <label className="purposeoftesting_choices">
@@ -292,7 +289,6 @@ const RequestDetails = () => {
                                         Test Selection
                                     </div>
                                     <main className="tmp-cont">
-                                        <img src={blue_line_icon} alt="blue line" />
                                         <div className="spacer-top">.</div>
                                         <div className="submit-show">
                                             <label className="test-selection-choice">

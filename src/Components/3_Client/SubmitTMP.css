@@ -18,7 +18,7 @@
         height: 805px;
         background-color: #2b9ec1b0;
         border-radius: 10px;
-    
+
         .s-c-a-l-epithet {
             display: flex;
             flex-direction: column;
@@ -27,7 +27,7 @@
             font-weight: 700;
             color: #fff;
             margin-top: 45px;
-            
+
             .s-c-a-l-e-text {
                 margin-top: -20px;
             }
@@ -39,7 +39,6 @@
 
         .s-c-a-l-information {
             margin-top: 25px;
-
 
             .s-c-a-l-i-text {
                 display: flex;
@@ -74,7 +73,6 @@
             .s-c-a-l-i-additionalinfo:hover {
                 opacity: 100%;
             }
-
         }
     }
 
@@ -110,41 +108,80 @@
                 max-height: 590px;
                 overflow-y: auto;
 
-                .s-c-a-r-c-e-s-numbered {
+                .s-c-a-r-c-e-scroll::-webkit-scrollbar {
+                    width: 10px;
+                }  
+                
+                .s-c-a-r-c-e-scroll::-webkit-scrollbar-thumb {
+                    background: #95CFE1;
+                    border-radius: 100px;
+                }
+                  
+                .s-c-a-r-c-e-scroll::-webkit-scrollbar-thumb:hover {
+                    background: #47a3c0;
+                }
 
+                .s-c-a-r-c-e-s-numbered {
                     .s-c-a-r-c-e-s-n-title {
                         color: #2B9DC1;
                         font-size: 40px;
                         font-weight: 700;
+                        display: flex;
+                        align-items: center;
+                        padding-right: 20px; 
+                        position: relative;
+                    }
+                    .s-c-a-r-c-e-s-n-title::after {
+                        content: "";
+                        flex-grow: 1;
+                        height: 5px;
+                        border-radius: 20px;
+                        background-color: #2B9DC1;
+                        margin: 0 0 0 20px;
                     }
 
-                    .s-c-a-r-c-e-s-n-purposeoftesting {
+                    .s-c-a-r-c-e-s-n-purposeoftesting, .s-c-a-r-c-e-s-n-samplecategory {
                         position: relative;
                         display: flex;
                         flex-direction: column;
                         padding-left: 30px;
                         color: #004e65;
                         gap: 10px;
-                    }
+                        margin-top: 5px;
+                        margin-bottom: 15px;
 
-                    .s-c-a-r-c-e-s-n-pot-choices {
-                        display: flex;
-                        gap: 10px;
-                        align-items: center;
-                        cursor: pointer;
-                        color: #004e65;
+                        .s-c-a-r-c-e-s-n-choices, .s-c-a-r-c-e-s-n-o-choices {
+                            display: flex;
+                            gap: 7px;
+                            font-size: 20px;
+                            align-items: center;
+                            cursor: pointer;
+                            color: #004e65;
+
+                            span {
+                                padding-top: 2.5px;
+                                margin-left: 10px;
+                            }
+                        }
+                        
+                        .s-c-a-r-c-e-s-n-others input[type="text"] {
+                            font-family: 'Poppins';
+                            font-weight: 500;
+                            color: #004e65;
+                            width: 430px;
+                            height: 25px;
+                            background: #ffffff;
+                            border-radius: 8px;
+                            padding: 0 25px;
+                            margin-left: 25px;
+                            border: 3px solid #004e65;
+                        } 
+
+                        .s-c-a-r-c-e-s-n-pot-o-input {
+                            margin: 10px 50px 0;
+                            gap: 10px;
+                        }
                     }
-                    
-                    .s-c-a-r-c-e-s-n-pot-choices input[type="text"] {
-                        font-family: 'Poppins';
-                        font-weight: 500;
-                        color: #004e65;
-                        width: 260px;
-                        background: #ffffff;
-                        border-radius: 10px;
-                        padding: 0 20px;
-                        border: 3px solid #2B9DC1;
-                    } 
                 }
             }
         }

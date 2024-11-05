@@ -195,7 +195,6 @@ const Submit = () => {
                                         Sample Category
                                     </div>
                                     <div className="tmp-cont">
-                                        <img src={blue_line_icon} alt="blue line" />
                                         <div className="spacer-top">.</div>
                                         <div className="submit-show">
                                             <label className="samplecategory_choices">
@@ -217,7 +216,6 @@ const Submit = () => {
                                         Sample Information
                                     </div>
                                         <div className="tmp-cont">
-                                            <img src={blue_line_icon} alt="blue line" />
                                             <div className="spacer-top">.</div>
                                             <div className="submit-show">
                                                 <div className='sample-rows'>
@@ -261,7 +259,6 @@ const Submit = () => {
                                         Purpose of Testing
                                     </div>
                                         <div className="tmp-cont">
-                                            <img src={blue_line_icon} alt="blue line" />
                                             <div className="spacer-top">.</div>
                                             <div className="submit-show">
                                                 <label className="purposeoftesting_choices">
@@ -309,7 +306,6 @@ const Submit = () => {
                                         Test Selection
                                     </div>
                                         <main className="tmp-cont">
-                                            <img src={blue_line_icon} alt="blue line" />
                                             <div className="spacer-top">.</div>
                                             <div className="submit-show">
                                                 {/* Add inputs for test selection here */}
