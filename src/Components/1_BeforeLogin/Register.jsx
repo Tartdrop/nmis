@@ -16,7 +16,7 @@ const Register = () => {
     const [middleInitial, setMiddleInitial] = useState("");
     const [lastName, setLastName] = useState("");
     const [companyName, setCompanyName] = useState("");
-    const [ltoNumber, setLtoNumber] = useState("PDP-"); // Default to "PDP-"
+    const [ltoNumber, setLtoNumber] = useState(""); // Simple input without specific length requirement
     const [contactNumber, setContactNumber] = useState("(+63)");
     const [clientClassification, setClientClassification] = useState("");
     const [otherClientClassification, setOtherClientClassification] = useState("");
@@ -35,10 +35,9 @@ const Register = () => {
             !ltoNumber.trim() ||
             !contactNumber.trim() ||
             !clientClassification.trim() || // Ensure client classification is filled
-            ltoNumber.trim().length !== 11 ||  // Ensure LTO number is 11 characters long
             contactNumber.trim().length !== 18 // Ensure contact number is 18 characters long
         ) {
-            alert("Please fill in all required fields, and ensure LTO number is 11 characters long, contact number is 18 characters long, and client classification is provided.");
+            alert("Please fill in all required fields, ensure contact number is 18 characters long, and client classification is provided.");
             return;
         }
     
@@ -89,42 +88,20 @@ const Register = () => {
         navigate("/login")
     };
 
-    // LTO Number mask with "PDP-" prefix
-    const handleLtoNumberChange = (e) => {
-        let input = e.target.value.toUpperCase().replace(/^PDP-/, ""); // Remove existing PDP- for easier parsing
-    
-        // Extract numbers and letters based on expected format (DDDD-LL)
-        const numbers = input.replace(/[^0-9]/g, "").slice(0, 4); // Only allow up to 4 numbers
-        const letters = input.replace(/[^A-Z]/g, "").slice(0, 2); // Only allow up to 2 letters
-    
-        // Format as PDP-DDDD-LL
-        let formattedInput = `PDP-${numbers}`;
-        if (numbers.length === 4) {
-            formattedInput += `-${letters}`;
-        }
-    
-        setLtoNumber(formattedInput);
-    };
-    
     const handleContactNumberChange = (e) => {
-        // Strip out any non-numeric characters except for the initial "+63" prefix
         let value = e.target.value.replace(/[^0-9]/g, ""); // Only keep digits
-    
-        // Ensure the value starts with "+63"
         if (!value.startsWith("63")) {
             value = "63" + value; // Add "63" if not present
         }
-    
-        // Limit the length to the Philippine mobile number format
         if (value.length > 12) {
             value = value.slice(0, 12); // Limit to 12 digits (after the +63)
         }
-    
-        // Format the value into (+63) 999 999 9999
         const formattedValue = `(+63) ${value.slice(2, 5)} ${value.slice(5, 8)} ${value.slice(8)}`.trim();
-    
-        // Set the contact number with the correct format
         setContactNumber(formattedValue);
+    };
+
+    const handleLtoNumberChange = (e) => {
+        setLtoNumber(e.target.value.toUpperCase());
     };
 
     return (
@@ -205,8 +182,7 @@ const Register = () => {
                                         type="text"
                                         value={ltoNumber}
                                         onChange={handleLtoNumberChange}
-                                        placeholder="PDP-DDDD-LL"
-                                        maxLength={11}
+                                        maxLength={12}
                                     />
                                     </div>
                                 </div>
