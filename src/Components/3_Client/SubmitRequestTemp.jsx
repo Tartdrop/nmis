@@ -300,6 +300,35 @@ const Submit = () => {
                         </div>
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">4. Test Selection</div>
+                            <div className="s-c-a-r-c-e-s-n-container">
+                                <label className="s-c-a-r-c-e-s-n-co-choices-test">
+                                    <input 
+                                        type="checkbox" 
+                                        name="sample-category-choices" 
+                                        value="" 
+                                    /*  onChange={(e) => }  */
+                                    />
+                                    <span className="checkmark">Microbiological Tests</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-co-choices-test">
+                                    <input 
+                                        type="checkbox" 
+                                        name="sample-category-choices" 
+                                        value="" 
+                                    /*  onChange={(e) => }  */
+                                    />
+                                    <span className="checkmark">Chemical/Veterinary Drug Residue Tests</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-co-choices-test">
+                                    <input 
+                                        type="checkbox" 
+                                        name="sample-category-choices" 
+                                        value="" 
+                                    /*  onChange={(e) => }  */
+                                    />
+                                    <span className="checkmark">Molecular Biology Tests</span>
+                                </label>
+                            </div>
                         </div>
                         <div className='s-c-a-r-c-e-sc-submit' onClick={handleSubmitRequest}>
                             <button className="s-c-a-r-c-e-sc-su-button">Submit</button>
