@@ -12,8 +12,8 @@ import PageRegisterTY from "./PageThankYou";
 import PageHomeClient from "./PageHomeClient";
 import PageHomeRecRel from "./PageHomeRecRel";
 import PageHomeTesting from "./PageHomeTesting";
-import PageSubmitRequest from "./PageSubmitRequest";
-import PageSubmitRequestTemp from "./PageSubmitRequestTemp";
+/* import PageSubmitRequest from "./PageSubmitRequest"; */
+import PageSubmitRequestNew from "./PageSubmitRequestNew";
 import PageSubmitRequestReview from "./PageSubmitRequestReview";
 import PageTrackMyRequest from "./PageTrackMyRequest";
 import PagePendingRequest from "./PagePendingRequest";
@@ -71,8 +71,6 @@ function App() {
         <>
             <Header onLogout={handleLogout} userId={userId} userType={userType} />
             <Routes>
-                {/* To Delete After Done*/}
-                <Route path="/submit-a-request/tmp" element={<PageSubmitRequestTemp />} />
                 {/* Public Routes - Accessible only when logged out */}
                 <Route 
                     path="/login" 
@@ -143,7 +141,7 @@ function App() {
                 <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}/>}>
                     {/* Client Routes */}
                     <Route path="/home/client/:userId" element={<PageHomeClient />} />
-                    <Route path="/submit-a-request/:userId" element={<PageSubmitRequest />} />
+                    <Route path="/submit-a-request/:userId" element={<PageSubmitRequestNew />} />
                     <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
                     <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
                     <Route path="/guide/:userId" element={<PageGuide />} />
