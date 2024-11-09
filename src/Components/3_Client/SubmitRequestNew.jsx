@@ -8,7 +8,7 @@ const Submit = () => {
 
     const { userId } = useParams();
     const [sampleCategory, setSampleCategory] = useState("");
-    const [sampleDescription, setSampleDescription] = useState([""]);
+    const [sampleTypeDescription, setSampleTypeDescription] = useState([""]);
     const [lotBatchNo, setLotBatchNo] = useState("");
     const [sampleSource, setSampleSource] = useState("");
     const [productionDate, setProductionDate] = useState("");
@@ -16,15 +16,18 @@ const Submit = () => {
     const [samplingDate, setSamplingDate] = useState("");
     const [samplerName, setSamplerName] = useState("");
     const [testingPurpose, setTestingPurpose] = useState("");
-    const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
+    const [otherTestingPurpose, setOtherTestingPurpose] = useState('');
     const [testSelections, setTestSelections] = useState([""]);
-        const [isMicrobiologicalChecked, setIsMicrobiologicalChecked] = useState(false);
-            const [isCSTChecked, setIsCSTChecked] = useState(false);
-        const [isChemicalChecked, setIsChemicalChecked] = useState(false);
-            const [isMITChecked, setIsMITChecked] = useState(false);
-            const [isELISAChecked, setIsELISAChecked] = useState(false);
-        const [isMolBioChecked, setIsMolBioChecked] = useState(false);
-            const [isSIChecked, setIsSIChecked] = useState(false);
+        const [microbial, setMicrobial] = useState(false);
+        const [chem, setChem] = useState(false);
+        const [molBio, setMolBio] = useState(false);
+            const [isMicrobiologicalChecked, setIsMicrobiologicalChecked] = useState(false);
+                const [isCSTChecked, setIsCSTChecked] = useState(false);
+            const [isChemicalChecked, setIsChemicalChecked] = useState(false);
+                const [isMITChecked, setIsMITChecked] = useState(false);
+                const [isELISAChecked, setIsELISAChecked] = useState(false);
+            const [isMolBioChecked, setIsMolBioChecked] = useState(false);
+                const [isSIChecked, setIsSIChecked] = useState(false);
 
     const [clientDetails, setClientDetails] = useState({
         username: '',
@@ -53,7 +56,8 @@ const Submit = () => {
     }, [userId]);
 
     const handleRequest = async () => {
-        if (!clientDetails.username || !clientDetails.contactNumber || !clientDetails.email || !clientDetails.companyName || sampleDescription.length === 0) {
+        // Validation Checks
+        if (!clientDetails.username || !clientDetails.contactNumber || !clientDetails.email || !clientDetails.companyName || sampleTypeDescription.length === 0) {
             alert("Please fill in all required fields.");
             return;
         }
@@ -65,6 +69,12 @@ const Submit = () => {
 
         if (!sampleCategory || sampleCategory === "") {
             alert("Please select a valid Sample Category.");
+            return;
+        }
+
+        // Additional check for 'Other' testing purpose
+        if (testingPurpose === "Others" && (!otherTestingPurpose || otherTestingPurpose.trim() === "")) {
+            alert("Please provide a description for the 'Other' testing purpose.");
             return;
         }
     
@@ -79,19 +89,22 @@ const Submit = () => {
                     companyName: clientDetails.companyName,
                     clientClassification: clientDetails.classification,
                     ltoNumber: clientDetails.ltoNumber,
-    
-                    sampleDescription,
+
                     lotBatchNo,
                     sampleSource,
                     productionDate,
                     expiryDate,
                     samplingDate,
                     samplerName,
-    
+                    
                     testingPurpose,
-                    customPurpose: testingPurpose === "Others" ? otherPurposeTesting : null,
+                    otherTestingPurpose: testingPurpose === "Others" ? otherTestingPurpose : null,
                     sampleCategory,
                     testSelections,
+
+                    microbial,
+                    chem,
+                    molBio,
     
                     submissionDate: new Date().toISOString(),
                     createdAt: new Date().toISOString(),
@@ -112,24 +125,25 @@ const Submit = () => {
         }
     };
 
-    const addSampleDescription = () => {
-        setSampleDescription([...sampleDescription, ""]);
+    const addSampleTypeDescription = () => {
+        setSampleTypeDescription([...sampleTypeDescription, ""]);
     };
 
-    const removeSampleDescription = () => {
-        if (sampleDescription.length > 1) {
-            setSampleDescription(sampleDescription.slice(0, -1));
+    const removeSampleTypeDescription = () => {
+        if (sampleTypeDescription.length > 1) {
+            setSampleTypeDescription(sampleTypeDescription.slice(0, -1));
         }
     };
 
-    const handleSampleDescriptionChange = (index, value) => {
-        const updatedDescriptions = [...sampleDescription];
+    const handleSampleTypeDescriptionChange = (index, value) => {
+        const updatedDescriptions = [...sampleTypeDescription];
         updatedDescriptions[index] = value;
-        setSampleDescription(updatedDescriptions);
+        setSampleTypeDescription(updatedDescriptions);
     };
     
     const handleMicrobiologicalCheckboxChange = (e) => {
         setIsMicrobiologicalChecked(e.target.checked);
+        setMicrobial(true);
     };
 
         const handleCSTCheckboxChange = (e) => {
@@ -138,6 +152,7 @@ const Submit = () => {
 
     const handleChemicalCheckboxChange = (e) => {
         setIsChemicalChecked(e.target.checked);
+        setChem(true);
     };
 
         const handleMITCheckboxChange = (e) => {
@@ -150,6 +165,7 @@ const Submit = () => {
 
     const handleMolBioCheckboxChange = (e) => {
         setIsMolBioChecked(e.target.checked);
+        setMolBio(true);
     };
 
         const handleSICheckboxChange = (e) => {
@@ -254,8 +270,8 @@ const Submit = () => {
                                         →
                                         <input 
                                             type="text"
-                                            value={otherPurposeTesting}
-                                            onChange={(e) => setOtherPurposeTesting(e.target.value)}
+                                            value={otherTestingPurpose}
+                                            onChange={(e) => setOtherTestingPurpose(e.target.value)}
                                             placeholder="Specify other purpose"
                                         />
                                     </div>
@@ -280,17 +296,17 @@ const Submit = () => {
                             <div className="s-c-a-r-c-e-s-n-container">
                                 <div className='s-c-a-r-c-e-s-n-co-input-samples'>
                                     <div className='s-c-a-r-c-e-s-n-co-i-s-buttons'>
-                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-add" type="button" onClick={addSampleDescription}>+</button>
-                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-delete" type="button" onClick={removeSampleDescription} disabled={sampleDescription.length <= 1}>-</button>
+                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-add" type="button" onClick={addSampleTypeDescription}>+</button>
+                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-delete" type="button" onClick={removeSampleTypeDescription} disabled={sampleTypeDescription.length <= 1}>-</button>
                                     </div>
                                     a. Sample Type/Description
                                     <div className="s-c-a-r-c-e-s-n-co-i-samples">
-                                        {sampleDescription.map((desc, index) => (
+                                        {sampleTypeDescription.map((desc, index) => (
                                             <div key={index}>
                                                 <input
                                                     type="text"
                                                     value={desc}
-                                                    onChange={(e) => handleSampleDescriptionChange(index, e.target.value)}
+                                                    onChange={(e) => handleSampleTypeDescriptionChange(index, e.target.value)}
                                                     placeholder={`Input Sample Type/Description ${index + 1}`}
                                                 />
                                             </div>
@@ -396,8 +412,8 @@ const Submit = () => {
                                                                 </div>
                                                                 <input 
                                                                     type="text"
-                                                                    value={otherPurposeTesting}
-                                                                    onChange={(e) => setOtherPurposeTesting(e.target.value)}
+                                                                    value={otherTestingPurpose}
+                                                                    onChange={(e) => setOtherTestingPurpose(e.target.value)}
                                                                     placeholder="Specify Gram Positive AST"
                                                                 />
                                                             </div>
@@ -408,8 +424,8 @@ const Submit = () => {
                                                                 </div>
                                                                 <input 
                                                                     type="text"
-                                                                    value={otherPurposeTesting}
-                                                                    onChange={(e) => setOtherPurposeTesting(e.target.value)}
+                                                                    value={otherTestingPurpose}
+                                                                    onChange={(e) => setOtherTestingPurpose(e.target.value)}
                                                                     placeholder="Specify Gram Negative AST"
                                                                 />
                                                             </div>

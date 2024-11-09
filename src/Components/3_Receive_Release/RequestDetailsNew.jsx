@@ -16,6 +16,9 @@ const RequestDetails = () => {
     const [samplerName, setSamplerName] = useState("");
     const [testingPurpose, setTestingPurpose] = useState("");
     const [testSelections, setTestSelections] = useState([]);
+        const [microbial, setMicrobial] = useState(false);
+        const [chem, setChem] = useState(false);
+        const [molBio, setMolBio] = useState(false);
     const [requestData, setRequestData] = useState(null);
 
     useEffect(() => {
@@ -33,8 +36,11 @@ const RequestDetails = () => {
                     setSamplingDate(data.samplingDate || '');
                     setSamplerName(data.samplerName || '');
                     setTestingPurpose(data.testingPurpose || '');
-                    setOtherPurposeTesting(data.customPurpose || '');
+                    setOtherPurposeTesting(data.otherTestingPurpose || '');
                     setTestSelections(data.testSelections || []);
+                    setMicrobial(data.microbial || '');
+                    setChem(data.chem || '');
+                    setMolBio(data.molBio || '');
                 } else {
                     console.error('Failed to fetch request data');
                 }
@@ -279,6 +285,7 @@ const RequestDetails = () => {
                                     <input 
                                         type="checkbox" 
                                         name="test-selection" 
+                                        checked={microbial === true}
                                         disabled
                                     />
                                     <span className="checkmark"><b>Microbiological Tests</b> (7 - 16 Days)</span>
@@ -411,6 +418,7 @@ const RequestDetails = () => {
                                     <input 
                                         type="checkbox" 
                                         name="test-selection" 
+                                        checked={chem === true}
                                         disabled
                                     />
                                     <span className="checkmark" ><b>Chemical/Veterinary Drug Residue Tests</b> (5 - 6 Days)</span>
@@ -575,6 +583,7 @@ const RequestDetails = () => {
                                     <input 
                                         type="checkbox" 
                                         name="test-selection" 
+                                        checked={molBio === true}
                                         disabled
                                     />
                                     <span className="checkmark"><b>Molecular Biology Tests</b> (5 Days)</span>
