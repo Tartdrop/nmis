@@ -20,7 +20,7 @@ import PagePendingRequest from "./PagePendingRequest";
 import PageForReleaseList from "./PageForReleaseList";
 import PageShowControlNumber from "./PageShowControlNumber";
 import PageRequestAddInfo from "./PageRequestAddInfo";
-import PageRequestDetails from "./PageRequestDetails";
+import PageRequestDetailsNew from "./PageRequestDetailsNew";
 import PageViewDatabaseT from "./PageViewDatabaseT";
 import PageViewDatabaseRR from "./PageViewDatabaseRR";
 import PageForTesting from "./PageForTesting";
@@ -149,7 +149,7 @@ function App() {
                     {/* Staff Routes */}
                     <Route path="/home/staff/:userId" element={<PageHomeRecRel />} />
                     <Route path="/pending-requests/:userId" element={<PagePendingRequest />} />
-                    <Route path="/request-details/:userId/:requestId" element={<PageRequestDetails />} />
+                    <Route path="/request-details/:userId/:requestId" element={<PageRequestDetailsNew />} />
                     <Route path="/approved/:userId" element={<PageShowControlNumber />} />
                     <Route path="/request-additional-info/:userId" element={<PageRequestAddInfo />} />
                     <Route path="/for-release/:userId" element={<PageForReleaseList />} />

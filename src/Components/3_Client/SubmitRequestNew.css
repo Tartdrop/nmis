@@ -314,8 +314,8 @@
 .s-c-a-r-c-e-s-n-co-choices-test input[type="checkbox"] {
     appearance: none;
     margin-left: 8px;
-    width: 21.5px;
-    height: 21.5px;
+    width: 22.5px;
+    height: 22.5px;
     border: 1px solid #646464d9;
     border-radius: 4px;
     background-color: #fff;
@@ -345,8 +345,8 @@
     border: solid white;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
-    margin-left: 6px;
-    margin-top: 2px;
+    margin-left: 7px;
+    margin-top: 3px;
 }
 
 .s-c-a-r-c-e-s-n-co-tests {
@@ -429,8 +429,8 @@
 .s-c-a-r-c-e-s-n-co-t-subtests input[type="checkbox"] {
     appearance: none;
     margin-left: 8px;
-    width: 15.5px;
-    height: 15.5px;
+    width: 16.5px;
+    height: 16.5px;
     border: 1px solid #646464d9;
     border-radius: 4px;
     background-color: #fff;
@@ -498,7 +498,6 @@
     align-items: center;
     justify-content: space-between;
     margin: 10px 20px 0 50px;
-    gap: 10px;
     font-size: 13px;
     /*overflow: hidden;
     max-height: 0;

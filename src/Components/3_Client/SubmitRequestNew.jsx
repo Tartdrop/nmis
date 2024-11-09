@@ -7,9 +7,8 @@ const Submit = () => {
     const navigate = useNavigate();
 
     const { userId } = useParams();
-    const [sampleCategory, setSampleCategory] = useState('');
-    const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
-    const [sampleTypeDescription, setSampleTypeDescription] = useState([""]);
+    const [sampleCategory, setSampleCategory] = useState("");
+    const [sampleDescription, setSampleDescription] = useState([""]);
     const [lotBatchNo, setLotBatchNo] = useState("");
     const [sampleSource, setSampleSource] = useState("");
     const [productionDate, setProductionDate] = useState("");
@@ -17,6 +16,7 @@ const Submit = () => {
     const [samplingDate, setSamplingDate] = useState("");
     const [samplerName, setSamplerName] = useState("");
     const [testingPurpose, setTestingPurpose] = useState("");
+    const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
     const [testSelections, setTestSelections] = useState([""]);
         const [isMicrobiologicalChecked, setIsMicrobiologicalChecked] = useState(false);
             const [isCSTChecked, setIsCSTChecked] = useState(false);
@@ -53,7 +53,7 @@ const Submit = () => {
     }, [userId]);
 
     const handleRequest = async () => {
-        if (!clientDetails.username || !clientDetails.contactNumber || !clientDetails.email || !clientDetails.companyName || sampleTypeDescription.length === 0) {
+        if (!clientDetails.username || !clientDetails.contactNumber || !clientDetails.email || !clientDetails.companyName || sampleDescription.length === 0) {
             alert("Please fill in all required fields.");
             return;
         }
@@ -80,7 +80,7 @@ const Submit = () => {
                     clientClassification: clientDetails.classification,
                     ltoNumber: clientDetails.ltoNumber,
     
-                    sampleTypeDescription,
+                    sampleDescription,
                     lotBatchNo,
                     sampleSource,
                     productionDate,
@@ -89,6 +89,7 @@ const Submit = () => {
                     samplerName,
     
                     testingPurpose,
+                    customPurpose: testingPurpose === "Others" ? otherPurposeTesting : null,
                     sampleCategory,
                     testSelections,
     
@@ -112,21 +113,21 @@ const Submit = () => {
     };
 
     const addSampleDescription = () => {
-        setSampleTypeDescription([...sampleTypeDescription, ""]);
+        setSampleDescription([...sampleDescription, ""]);
     };
 
     const removeSampleDescription = () => {
-        if (sampleTypeDescription.length > 1) {
-            setSampleTypeDescription(sampleTypeDescription.slice(0, -1));
+        if (sampleDescription.length > 1) {
+            setSampleDescription(sampleDescription.slice(0, -1));
         }
     };
 
     const handleSampleDescriptionChange = (index, value) => {
-        const updatedDescriptions = [...sampleTypeDescription];
+        const updatedDescriptions = [...sampleDescription];
         updatedDescriptions[index] = value;
-        setSampleTypeDescription(updatedDescriptions);
+        setSampleDescription(updatedDescriptions);
     };
-
+    
     const handleMicrobiologicalCheckboxChange = (e) => {
         setIsMicrobiologicalChecked(e.target.checked);
     };
@@ -280,11 +281,11 @@ const Submit = () => {
                                 <div className='s-c-a-r-c-e-s-n-co-input-samples'>
                                     <div className='s-c-a-r-c-e-s-n-co-i-s-buttons'>
                                         <button className="s-c-a-r-c-e-s-n-co-i-s-b-add" type="button" onClick={addSampleDescription}>+</button>
-                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-delete" type="button" onClick={removeSampleDescription} disabled={sampleTypeDescription.length <= 1}>-</button>
+                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-delete" type="button" onClick={removeSampleDescription} disabled={sampleDescription.length <= 1}>-</button>
                                     </div>
                                     a. Sample Type/Description
                                     <div className="s-c-a-r-c-e-s-n-co-i-samples">
-                                        {sampleTypeDescription.map((desc, index) => (
+                                        {sampleDescription.map((desc, index) => (
                                             <div key={index}>
                                                 <input
                                                     type="text"
