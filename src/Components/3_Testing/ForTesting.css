@@ -10,8 +10,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 1280px;
-    height: 805px;
+    width: 1000px; /* Adjust the width as needed */
+    height: auto;
     margin-top: 7vh;
     border-radius: 10px;
     background-color: #ffffffb5;
@@ -21,54 +21,98 @@
     font-weight: 700;
     font-size: 64px;
     color: #004e65;
+    margin-bottom: 20px;
 }
 
+/* Header styling */
+.request-1st-container-header {
+    display: flex;
+    justify-content: space-between;
+    width: 94%; /* Now it matches the width of the parent container */
+    background-color: #2B9DC1;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 10px 0; /* Remove padding from sides to keep alignment */
+}
+
+.header-item {
+    flex: 1;
+    text-align: center;
+}
+
+/* Row styling */
 .request-1st-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    width: 1200px;
-    height: 603px;
-    border-radius: 10px;
-    margin-top: 20px;
+    width: 100%; /* Ensure the width matches the container */
+    padding: 10px 0; /* Match padding for both the header and the rows */
 }
 
-.request-1st-container-column-row {
+.request-item {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
+    width: 90%; /* Same width as the container */
+    padding: 15px 3%;
+    background-color: #f9f9f9;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.request-1st-container-column-row input {
-    text-align: center;
-    font-family: 'Poppins';
-    font-weight: 400;
-    font-size: 15px;
-    border-radius: 100px;
-    border: none;
-    background-color: #2B9DC1;
+.request-item:hover {
+    background-color: #e3f7fb;
+}
+
+.request-item .request-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.test-btn {
+    background-color: #004e65;
     color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.test-btn:hover {
+    background-color: #2B9DC1;
+}
+
+.sample-list {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.sample-item {
+    margin-bottom: 10px;
+}
+
+/* No requests styling */
+.no-requests-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
 }
 
 .blue-logo-icon {
     display: block;
     margin: 0 auto 20px;
-    height: 374px;
+    height: 150px;
 }
 
 .msg-noreqres1 {
     color: #2B9DC1;
-    margin-bottom: -20px;
-}
-
-.msg-noreqres2 {
-    color: #2B9DC1;
-    margin-bottom: -2px;
-}
-
-.request-row {
-    margin-top: 30px;
-    display: flex;
-    gap: 30px;
+    font-size: 24px;
+    text-align: center;
 }
