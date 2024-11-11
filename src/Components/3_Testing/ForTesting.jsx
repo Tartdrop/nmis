@@ -34,29 +34,39 @@ const TestingList = () => {
         <div className="request-all-container">
             <div className='request-container'>
                 <div className='request-title'>For Testing</div>
+                
+                {/* Header for the table */}
+                <div className="request-1st-container-header">
+                    <div className="header-item">Control Number</div>
+                    <div className="header-item">Microbio</div>
+                    <div className="header-item">Chemical</div>
+                    <div className="header-item">Mol. Bio</div>
+                    <div className="header-item">Sample Info</div>
+                </div>
+
                 <div className="request-1st-container">
                     {requests.length > 0 ? (
                         requests.map((request, index) => (
                             <div key={index} className="request-item">
                                 <div className="request-header">
-                                    <span>Control Number: {request.controlNumber}</span>
+                                    <span>{request.controlNumber}</span>
                                     {request.microbial && (
                                         <button className="test-btn" onClick={() => navigate(`/test-details/microbial/${request.controlNumber}`)}>
-                                            Microbial
+                                            Microbio
                                         </button>
                                     )}
                                     {request.chem && (
                                         <button className="test-btn" onClick={() => navigate(`/test-details/chem/${request.controlNumber}`)}>
-                                            Chem
+                                            Chemical
                                         </button>
                                     )}
                                     {request.molBio && (
                                         <button className="test-btn" onClick={() => navigate(`/test-details/molbio/${request.controlNumber}`)}>
-                                            MolBio
+                                            Mol Bio
                                         </button>
                                     )}
                                     <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
-                                        Sample
+                                        Sample Info
                                     </button>
                                 </div>
 
