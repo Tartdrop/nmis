@@ -8,7 +8,7 @@ const Submit = () => {
 
     const { userId } = useParams();
     const [sampleCategory, setSampleCategory] = useState("");
-    const [sampleTypeDescription, setSampleTypeDescription] = useState([""]);
+    const [sampleTypeDescription, setSampleTypeDescription] = useState([{ sampleId: Date.now(), description: "" }]);
     const [lotBatchNo, setLotBatchNo] = useState("");
     const [sampleSource, setSampleSource] = useState("");
     const [productionDate, setProductionDate] = useState("");
@@ -17,17 +17,53 @@ const Submit = () => {
     const [samplerName, setSamplerName] = useState("");
     const [testingPurpose, setTestingPurpose] = useState("");
     const [otherTestingPurpose, setOtherTestingPurpose] = useState('');
-    const [testSelections, setTestSelections] = useState([""]);
-        const [microbial, setMicrobial] = useState(false);
-        const [chem, setChem] = useState(false);
-        const [molBio, setMolBio] = useState(false);
+        const [microbio, setMicrobio] = useState(false);
             const [isMicrobiologicalChecked, setIsMicrobiologicalChecked] = useState(false);
-                const [isCSTChecked, setIsCSTChecked] = useState(false);
+                const [standardPlateCount, setStandardPlateCount] = useState(false);
+                const [staphylococcusAureus, setStaphylococcusAureus] = useState(false);
+                const [salmonellaSp, setSalmonellaSp] = useState(false);
+                const [campylobacter, setCampylobacter] = useState(false);
+                const [cultureAndSensitivityTest, setCultureAndSensitivityTest] = useState(false);
+                    const [isCSTChecked, setIsCSTChecked] = useState(false);
+                        const [gramPositiveAst, setGramPositiveAst] = useState("");
+                        const [gramNegativeAst, setGramNegativeAst] = useState("");
+                const [coliformCount, setColiformCount] = useState(false);
+                const [eColi, setEColi] = useState(false);
+                const [eColiAndeColi0O157, setEColiAndeColi0O157] = useState(false);
+                const [yeastAndMolds, setYeastAndMolds] = useState(false);
+        const [chem, setChem] = useState(false);
             const [isChemicalChecked, setIsChemicalChecked] = useState(false);
-                const [isMITChecked, setIsMITChecked] = useState(false);
-                const [isELISAChecked, setIsELISAChecked] = useState(false);
+                const [microbial, setMicrobial] = useState(false);
+                    const [isMITChecked, setIsMITChecked] = useState(false);
+                        const [betaLactams, setBetaLactams] = useState(false);
+                        const [tetracyclines, setTetracyclines] = useState(false);
+                        const [sulfonamides, setSulfonamides] = useState(false);
+                        const [aminoglycosides, setAminoglycosides] = useState(false);
+                        const [macrolides, setMacrolides] = useState(false);
+                        const [quinolones, setQuinolones] = useState(false);
+                const [elisa, setELISA] = useState(false);
+                    const [isELISAChecked, setIsELISAChecked] = useState(false);
+                        const [chloramphenicol, setChloramphenicol] = useState(false);
+                        const [nitrofuranAoz, setNitrofuranAoz] = useState(false);
+                        const [beta_agonists, setBeta_agonists] = useState(false);
+                        const [corticosteroids, setCorticosteroids] = useState(false);
+                        const [olaquindox, setOlaquindox] = useState(false);
+                        const [nitrufuranAmoz, setNitrufuranAmoz] = useState(false);
+                        const [stilbenes, setStilbenes] = useState(false);
+                        const [ractopamine, setRactopamine] = useState(false);
+        const [molBio, setMolBio] = useState(false);
             const [isMolBioChecked, setIsMolBioChecked] = useState(false);
-                const [isSIChecked, setIsSIChecked] = useState(false);
+                const [speciesIdentification, setSpeciesIdentification] = useState(false);
+                    const [isSIChecked, setIsSIChecked] = useState(false);
+                        const [dog, setDog] = useState(false);
+                        const [cat, setCat] = useState(false);
+                        const [chicken, setChicken] = useState(false);
+                        const [buffalo, setBuffalo] = useState(false);
+                        const [cattle, setCattle] = useState(false);
+                        const [horse, setHorse] = useState(false);
+                        const [goat, setGoat] = useState(false);
+                        const [sheep, setSheep] = useState(false);
+                        const [swine, setSwine] = useState(false);
 
     const [clientDetails, setClientDetails] = useState({
         username: '',
@@ -77,7 +113,65 @@ const Submit = () => {
             alert("Please provide a description for the 'Other' testing purpose.");
             return;
         }
-    
+
+        const allDescriptionsFilled = sampleTypeDescription.every(sample => sample.description && sample.description.trim() !== "");
+        if (!allDescriptionsFilled) {
+            alert("Please provide a description for each sample type.");
+            return;
+        }
+
+        if (!lotBatchNo || lotBatchNo === "") {
+            alert("Please select a valid Lot Batch Number.");
+            return;
+        }
+
+        if (!sampleSource || sampleSource === "") {
+            alert("Please select a valid Sample Source.");
+            return;
+        }
+
+        if (!productionDate || productionDate === "") {
+            alert("Please select a valid Production Date.");
+            return;
+        }
+
+        if (!expiryDate || expiryDate === "") {
+            alert("Please select a valid Expiry Date.");
+            return;
+        }
+
+        if (!samplingDate || samplingDate === "") {
+            alert("Please select a Sampling Date.");
+            return;
+        }
+
+        if (!samplerName || samplerName === "") {
+            alert("Please select a valid Sampler Name.");
+            return;
+        }
+
+        if (!(
+            standardPlateCount || staphylococcusAureus || salmonellaSp || campylobacter ||
+            cultureAndSensitivityTest || coliformCount || eColi || eColiAndeColi0O157 ||
+            yeastAndMolds || betaLactams || tetracyclines || sulfonamides || aminoglycosides ||
+            macrolides || quinolones || chloramphenicol || nitrofuranAoz || beta_agonists ||
+            corticosteroids || olaquindox || nitrufuranAmoz || stilbenes || ractopamine ||
+            dog || cat || chicken || buffalo || cattle || horse || goat || sheep || swine
+        )) {
+            alert("Please select at least one test.");
+            return;
+        }
+
+        if (cultureAndSensitivityTest && (!gramPositiveAst || !gramNegativeAst)) {
+            alert("Please fill in both Gram Positive AST and Gram Negative AST.");
+            return;
+        }
+
+        const sample = sampleTypeDescription.map(item => ({
+            sampleId: item.sampleId,
+            sampleTypeDescription: item.description
+        }));
+
         try {
             const response = await fetch(`http://localhost:8080/requests/submitrequest/${userId}`, {
                 method: "POST",
@@ -97,14 +191,52 @@ const Submit = () => {
                     samplingDate,
                     samplerName,
                     
+                    sample,
+
                     testingPurpose,
                     otherTestingPurpose: testingPurpose === "Others" ? otherTestingPurpose : null,
                     sampleCategory,
-                    testSelections,
 
-                    microbial,
+                    microbio,
+                        standardPlateCount,
+                        staphylococcusAureus,
+                        salmonellaSp,
+                        campylobacter,
+                        cultureAndSensitivityTest,
+                            gramPositiveAst: isCSTChecked === true ? gramPositiveAst : null,
+                            gramNegativeAst: isCSTChecked === true ? gramPositiveAst : null,
+                        coliformCount,
+                        eColi,
+                        eColiAndeColi0O157,
+                        yeastAndMolds,
                     chem,
+                        microbial,
+                            betaLactams,
+                            tetracyclines,
+                            sulfonamides,
+                            aminoglycosides,
+                            macrolides,
+                            quinolones,
+                        elisa,
+                            chloramphenicol,
+                            nitrofuranAoz,
+                            beta_agonists,
+                            corticosteroids,
+                            olaquindox,
+                            nitrufuranAmoz,
+                            stilbenes,
+                            ractopamine,
                     molBio,
+                        speciesIdentification,
+                            dog,
+                            cat,
+                            chicken,
+                            buffalo,
+                            cattle,
+                            horse,
+                            goat,
+                            sheep,
+                            swine,
     
                     submissionDate: new Date().toISOString(),
                     createdAt: new Date().toISOString(),
@@ -126,28 +258,34 @@ const Submit = () => {
     };
 
     const addSampleTypeDescription = () => {
-        setSampleTypeDescription([...sampleTypeDescription, ""]);
+        setSampleTypeDescription([
+            ...sampleTypeDescription,
+            { sampleId: Date.now(), description: "" } // Assign a unique sampleId based on the timestamp
+        ]);
     };
-
+    
     const removeSampleTypeDescription = () => {
         if (sampleTypeDescription.length > 1) {
             setSampleTypeDescription(sampleTypeDescription.slice(0, -1));
         }
     };
-
-    const handleSampleTypeDescriptionChange = (index, value) => {
-        const updatedDescriptions = [...sampleTypeDescription];
-        updatedDescriptions[index] = value;
-        setSampleTypeDescription(updatedDescriptions);
+    
+    const handleSampleTypeDescriptionChange = (index, newDescription) => {
+        setSampleTypeDescription(prevDescriptions => 
+            prevDescriptions.map((sample, i) => 
+                i === index ? { ...sample, description: newDescription } : sample
+            )
+        );
     };
     
     const handleMicrobiologicalCheckboxChange = (e) => {
         setIsMicrobiologicalChecked(e.target.checked);
-        setMicrobial(true);
+        setMicrobio(true);
     };
 
         const handleCSTCheckboxChange = (e) => {
             setIsCSTChecked(e.target.checked);
+            setCultureAndSensitivityTest(true);
         };
 
     const handleChemicalCheckboxChange = (e) => {
@@ -157,10 +295,12 @@ const Submit = () => {
 
         const handleMITCheckboxChange = (e) => {
             setIsMITChecked(e.target.checked);
+            setMicrobial(true);
         };
 
         const handleELISACheckboxChange = (e) => {
             setIsELISAChecked(e.target.checked);
+            setELISA(true);
         };
 
     const handleMolBioCheckboxChange = (e) => {
@@ -170,6 +310,7 @@ const Submit = () => {
 
         const handleSICheckboxChange = (e) => {
             setIsSIChecked(e.target.checked);
+            setSpeciesIdentification(true);
         };
 
     const handleSubmitRequest = (e) => {
@@ -301,16 +442,16 @@ const Submit = () => {
                                     </div>
                                     a. Sample Type/Description
                                     <div className="s-c-a-r-c-e-s-n-co-i-samples">
-                                        {sampleTypeDescription.map((desc, index) => (
-                                            <div key={index}>
-                                                <input
-                                                    type="text"
-                                                    value={desc}
-                                                    onChange={(e) => handleSampleTypeDescriptionChange(index, e.target.value)}
-                                                    placeholder={`Input Sample Type/Description ${index + 1}`}
-                                                />
-                                            </div>
-                                        ))}
+                                        {sampleTypeDescription.map((sample, index) => (
+                                        <div key={sample.sampleId || index}>
+                                            <input
+                                                type="text"
+                                                value={sample.description}  // Access the description property
+                                                onChange={(e) => handleSampleTypeDescriptionChange(index, e.target.value)}
+                                                placeholder={`Input Sample Type/Description ${index + 1}`}
+                                            />
+                                        </div>
+                                    ))}
                                     </div>
                                 </div>
                                 <div className='s-c-a-r-c-e-s-n-co-input'>
@@ -366,7 +507,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setStandardPlateCount(true)} 
                                                     />
                                                     <span className="checkmark">Standard Plate Count/ Aerobic Plate Count (Php 150.00)</span>
                                                 </label>
@@ -374,7 +515,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setStaphylococcusAureus(true)}
                                                     />
                                                     <span className="checkmark">Staphylococcus aureus (Php 350.00)</span>
                                                 </label>
@@ -382,7 +523,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setSalmonellaSp(true)} 
                                                     />
                                                     <span className="checkmark">Salmonella sp. (Php 350.00)</span>
                                                 </label>
@@ -390,7 +531,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setCampylobacter(true)} 
                                                     />
                                                     <span className="checkmark">Campylobacter (Php 1,500.00)</span>
                                                 </label>
@@ -412,8 +553,8 @@ const Submit = () => {
                                                                 </div>
                                                                 <input 
                                                                     type="text"
-                                                                    value={otherTestingPurpose}
-                                                                    onChange={(e) => setOtherTestingPurpose(e.target.value)}
+                                                                    value={gramPositiveAst}
+                                                                    onChange={(e) => setGramPositiveAst(e.target.value)}
                                                                     placeholder="Specify Gram Positive AST"
                                                                 />
                                                             </div>
@@ -424,8 +565,8 @@ const Submit = () => {
                                                                 </div>
                                                                 <input 
                                                                     type="text"
-                                                                    value={otherTestingPurpose}
-                                                                    onChange={(e) => setOtherTestingPurpose(e.target.value)}
+                                                                    value={gramNegativeAst}
+                                                                    onChange={(e) => setGramNegativeAst(e.target.value)}
                                                                     placeholder="Specify Gram Negative AST"
                                                                 />
                                                             </div>
@@ -436,7 +577,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setColiformCount(true)}
                                                     />
                                                     <span className="checkmark">Coliform Count (Php 150.00)</span>
                                                 </label>
@@ -444,7 +585,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setEColi(true)} 
                                                     />
                                                     <span className="checkmark">E. Coli (Php 350.00)</span>
                                                 </label>
@@ -452,7 +593,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setEColiAndeColi0O157(true)} 
                                                     />
                                                     <span className="checkmark">E. Coli & E. Coli O157;H7 (Php 700.00)</span>
                                                 </label>
@@ -460,7 +601,7 @@ const Submit = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="microbiological-choices" 
-                                                        value="" 
+                                                        onChange={() => setYeastAndMolds(true)} 
                                                     />
                                                     <span className="checkmark">Yeast and Molds (Php 300.00)</span>
                                                 </label>
@@ -501,7 +642,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setBetaLactams(true)} 
                                                                 />
                                                                 <span className="checkmark">Beta-lactams (Php 375.00)</span>
                                                             </label>
@@ -509,7 +650,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setTetracyclines(true)} 
                                                                 />
                                                                 <span className="checkmark">Tetracyclines (Php 375.00)</span>
                                                             </label>
@@ -517,7 +658,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setSulfonamides(true)} 
                                                                 />
                                                                 <span className="checkmark">Sulfonamides (Php 375.00)</span>
                                                             </label>
@@ -525,7 +666,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setAminoglycosides(true)} 
                                                                 />
                                                                 <span className="checkmark">Aminoglycosides (Php 375.00)</span>
                                                             </label>
@@ -533,7 +674,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setMacrolides(true)} 
                                                                 />
                                                                 <span className="checkmark">Macrolides (Php 375.00)</span>
                                                             </label>
@@ -541,7 +682,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setQuinolones(true)} 
                                                                 />
                                                                 <span className="checkmark">Quinolones (Php 375.00)</span>
                                                             </label>
@@ -563,7 +704,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setChloramphenicol(true)} 
                                                                 />
                                                                 <span className="checkmark">Chloramphenicol (Php1,500)</span>
                                                             </label>
@@ -571,7 +712,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setNitrofuranAoz(true)} 
                                                                 />
                                                                 <span className="checkmark">Nitrofuran AOZ (Php1,500)</span>
                                                             </label>
@@ -579,7 +720,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setBeta_agonists(true)} 
                                                                 />
                                                                 <span className="checkmark">Beta-agonists (Php1,500)</span>
                                                             </label>
@@ -587,7 +728,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setCorticosteroids(true)} 
                                                                 />
                                                                 <span className="checkmark">Corticosteroids (Php1,500)</span>
                                                             </label>
@@ -595,7 +736,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setOlaquindox(true)} 
                                                                 />
                                                                 <span className="checkmark">Olaquindox (Php1,500)</span>
                                                             </label>
@@ -603,7 +744,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setNitrufuranAmoz(true)} 
                                                                 />
                                                                 <span className="checkmark">Nitrofuran AMOZ (Php1,500)</span>
                                                             </label>
@@ -611,7 +752,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setStilbenes(true)} 
                                                                 />
                                                                 <span className="checkmark">Stilbenes (Php1,500)</span>
                                                             </label>
@@ -619,7 +760,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="chemical-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setRactopamine(true)} 
                                                                 />
                                                                 <span className="checkmark">Ractopamine (Php1,500)</span>
                                                             </label>
@@ -661,7 +802,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setDog(true)} 
                                                                 />
                                                                 <span className="checkmark">Dog (Php1,500)</span>
                                                             </label>
@@ -669,7 +810,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setCat(true)} 
                                                                 />
                                                                 <span className="checkmark">Cat (Php1,500)</span>
                                                             </label>
@@ -677,7 +818,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setChicken(true)} 
                                                                 />
                                                                 <span className="checkmark">Chicken (Php1,500)</span>
                                                             </label>
@@ -685,7 +826,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setBuffalo(true)} 
                                                                 />
                                                                 <span className="checkmark">Buffalo (Php1,500)</span>
                                                             </label>
@@ -693,7 +834,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setCattle(true)} 
                                                                 />
                                                                 <span className="checkmark">Cattle (Php1,500)</span>
                                                             </label>
@@ -701,7 +842,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setHorse(true)} 
                                                                 />
                                                                 <span className="checkmark">Horse (Php1,500)</span>
                                                             </label>
@@ -709,7 +850,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setGoat(true)} 
                                                                 />
                                                                 <span className="checkmark">Goat (Php1,500)</span>
                                                             </label>
@@ -717,7 +858,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setSheep(true)} 
                                                                 />
                                                                 <span className="checkmark">Sheep (Php1,500)</span>
                                                             </label>
@@ -725,7 +866,7 @@ const Submit = () => {
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="molbio-choices" 
-                                                                    value="" 
+                                                                    onChange={() => setSwine(true)} 
                                                                 />
                                                                 <span className="checkmark">Swine (Php1,500)</span>
                                                             </label>

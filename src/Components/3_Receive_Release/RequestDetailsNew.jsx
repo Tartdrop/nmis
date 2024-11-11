@@ -6,8 +6,9 @@ import white_line_submit from '../Assets/WhiteLineSubmit.png';
 const RequestDetails = () => {
     const { userId, requestId } = useParams();
     const [sampleCategory, setSampleCategory] = useState('');
-    const [otherPurposeTesting, setOtherPurposeTesting] = useState('');
+    const [otherTestingPurpose, setOtherTestingPurpose] = useState('');
     const [sampleTypeDescription, setSampleTypeDescription] = useState([""]);
+    const [sampleId, setSampleId] = useState([]);
     const [lotBatchNo, setLotBatchNo] = useState("");
     const [sampleSource, setSampleSource] = useState("");
     const [productionDate, setProductionDate] = useState("");
@@ -15,10 +16,46 @@ const RequestDetails = () => {
     const [samplingDate, setSamplingDate] = useState("");
     const [samplerName, setSamplerName] = useState("");
     const [testingPurpose, setTestingPurpose] = useState("");
-    const [testSelections, setTestSelections] = useState([]);
-        const [microbial, setMicrobial] = useState(false);
+        const [microbio, setMicrobio] = useState(false);
+            const [standardPlateCount, setStandardPlateCount] = useState(false);
+            const [staphylococcusAureus, setStaphylococcusAureus] = useState(false);
+            const [salmonellaSp, setSalmonellaSp] = useState(false);
+            const [campylobacter, setCampylobacter] = useState(false);
+            const [cultureAndSensitivityTest, setCultureAndSensitivityTest] = useState(false);
+                const [gramPositiveAst, setGramPositiveAst] = useState("");
+                const [gramNegativeAst, setGramNegativeAst] = useState("");
+            const [coliformCount, setColiformCount] = useState(false);
+            const [eColi, setEColi] = useState(false);
+            const [eColiAndeColi0O157, setEColiAndeColi0O157] = useState(false);
+            const [yeastAndMolds, setYeastAndMolds] = useState(false);
         const [chem, setChem] = useState(false);
+            const [microbial, setMicrobial] = useState(false);
+                const [betaLactams, setBetaLactams] = useState(false);
+                const [tetracyclines, setTetracyclines] = useState(false);
+                const [sulfonamides, setSulfonamides] = useState(false);
+                const [aminoglycosides, setAminoglycosides] = useState(false);
+                const [macrolides, setMacrolides] = useState(false);
+                const [quinolones, setQuinolones] = useState(false);
+            const [elisa, setELISA] = useState(false);
+                const [chloramphenicol, setChloramphenicol] = useState(false);
+                const [nitrofuranAoz, setNitrofuranAoz] = useState(false);
+                const [beta_agonists, setBeta_agonists] = useState(false);
+                const [corticosteroids, setCorticosteroids] = useState(false);
+                const [olaquindox, setOlaquindox] = useState(false);
+                const [nitrufuranAmoz, setNitrufuranAmoz] = useState(false);
+                const [stilbenes, setStilbenes] = useState(false);
+                const [ractopamine, setRactopamine] = useState(false);
         const [molBio, setMolBio] = useState(false);
+            const [speciesIdentification, setSpeciesIdentification] = useState(false);
+                const [dog, setDog] = useState(false);
+                const [cat, setCat] = useState(false);
+                const [chicken, setChicken] = useState(false);
+                const [buffalo, setBuffalo] = useState(false);
+                const [cattle, setCattle] = useState(false);
+                const [horse, setHorse] = useState(false);
+                const [goat, setGoat] = useState(false);
+                const [sheep, setSheep] = useState(false);
+                const [swine, setSwine] = useState(false);
     const [requestData, setRequestData] = useState(null);
 
     useEffect(() => {
@@ -36,11 +73,64 @@ const RequestDetails = () => {
                     setSamplingDate(data.samplingDate || '');
                     setSamplerName(data.samplerName || '');
                     setTestingPurpose(data.testingPurpose || '');
-                    setOtherPurposeTesting(data.otherTestingPurpose || '');
-                    setTestSelections(data.testSelections || []);
-                    setMicrobial(data.microbial || '');
+                    setOtherTestingPurpose(data.otherTestingPurpose || '');
+                    setMicrobio(data.microbio || '');
+                        setStandardPlateCount(data.standardPlateCount || '');
+                        setStaphylococcusAureus(data.staphylococcusAureus || '');
+                        setSalmonellaSp(data.salmonellaSp || '');
+                        setCampylobacter(data.campylobacter || '');
+                        setCultureAndSensitivityTest(data.cultureAndSensitivityTest || '');
+                            setGramPositiveAst(data.gramPositiveAst || '');
+                            setGramNegativeAst(data.gramNegativeAst || '');
+                        setColiformCount(data.coliformCount || '');
+                        setEColi(data.eColi || '');
+                        setEColiAndeColi0O157(data.eColiAndeColi0O157 || '');
+                        setYeastAndMolds(data.yeastAndMolds || '');
                     setChem(data.chem || '');
+                        setMicrobial(data.microbial || '');
+                            setBetaLactams(data.betaLactams || '');
+                            setTetracyclines(data.tetracyclines || '');
+                            setSulfonamides(data.sulfonamides || '');
+                            setAminoglycosides(data.aminoglycosides || '');
+                            setMacrolides(data.macrolides || '');
+                            setQuinolones(data.quinolones || '');
+                        setELISA(data.elisa || '');
+                            setChloramphenicol(data.chloramphenicol || '');
+                            setNitrofuranAoz(data.nitrofuranAoz || '');
+                            setBeta_agonists(data.beta_agonists || '');
+                            setCorticosteroids(data.corticosteroids || '');
+                            setOlaquindox(data.olaquindox || '');
+                            setNitrufuranAmoz(data.nitrufuranAmoz || '');
+                            setStilbenes(data.stilbenes || '');
+                            setRactopamine(data.ractopamine || '');
                     setMolBio(data.molBio || '');
+                        setSpeciesIdentification(data.speciesIdentification || '');
+                            setDog(data.dog || '');
+                            setCat(data.cat || '');
+                            setChicken(data.chicken || '');
+                            setBuffalo(data.buffalo || '');
+                            setCattle(data.cattle || '');
+                            setHorse(data.horse || '');
+                            setGoat(data.goat || '');
+                            setSheep(data.sheep || '');
+                            setSwine(data.swine || '');
+
+                    const requestResponse = await fetch(`http://localhost:8080/request/${requestId}`);
+                    if (requestResponse.ok) {
+                        const requestData = await requestResponse.json();
+                        
+                        // Extract sampleIds and sampleTypeDescriptions
+                        const sampleIds = requestData.map(item => item.sampleId);
+                        const sampleDescriptions = requestData.map(item => item.sampleTypeDescription);
+        
+                        setSampleId(sampleId || []);
+                        setSampleTypeDescription(sampleDescriptions || []);
+                        
+                        console.log('Sample IDs:', sampleIds);
+                        console.log('Sample Descriptions:', sampleDescriptions);
+                    } else {
+                        console.error('Failed to fetch request data.');
+                    }
                 } else {
                     console.error('Failed to fetch request data');
                 }
@@ -98,16 +188,6 @@ const RequestDetails = () => {
     
     const handleRequestAdditionalInformation = () => {
         navigate("/request-additional-info");
-    };
-
-    const addSampleDescription = () => {
-        setSampleTypeDescription([...sampleTypeDescription, ""]);
-    };
-
-    const removeSampleDescription = () => {
-        if (sampleTypeDescription.length > 1) {
-            setSampleTypeDescription(sampleTypeDescription.slice(0, -1));
-        }
     };
 
     const handleSampleDescriptionChange = (index, value) => {
@@ -210,7 +290,7 @@ const RequestDetails = () => {
                                         →
                                         <input 
                                             type="text"
-                                            value={otherPurposeTesting}
+                                            value={otherTestingPurpose}
                                             readOnly
                                         />
                                     </div>
@@ -233,25 +313,26 @@ const RequestDetails = () => {
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">3. Sample Information</div>
                             <div className="s-c-a-r-c-e-s-n-container">
-                                <div className='s-c-a-r-c-e-s-n-co-input-samples'>
-                                    <div className='s-c-a-r-c-e-s-n-co-i-s-buttons'>
-                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-add" type="button" onClick={addSampleDescription}>+</button>
-                                        <button className="s-c-a-r-c-e-s-n-co-i-s-b-delete" type="button" onClick={removeSampleDescription} disabled={sampleTypeDescription.length <= 1}>-</button>
-                                    </div>
-                                    a. Sample Type/Description
-                                    <div className="s-c-a-r-c-e-s-n-co-i-samples">
-                                        {sampleTypeDescription.map((desc, index) => (
-                                            <div key={index}>
-                                                <input
-                                                    type="text"
-                                                    value={desc}
-                                                    onChange={(e) => handleSampleDescriptionChange(index, e.target.value)}
-                                                    placeholder={`Input Sample Type/Description ${index + 1}`}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                            <div className="s-c-a-r-c-e-s-n-co-input">
+                                {sampleTypeDescription.length === 0 ? (
+                                    <p>Loading sample inputs...</p>
+                                ) : (
+                                    <>
+                                        <div>a. Sample Type/Description</div>
+                                        <div className="s-c-a-r-c-e-s-n-co-i-samples">
+                                            {sampleTypeDescription.map((_, index) => (
+                                                <div key={index}>
+                                                    <input
+                                                        type="text"
+                                                        value={sampleTypeDescription[index] || ''}
+                                                        onChange={(e) => handleSampleDescriptionChange(index, e.target.value)}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                                 <div className='s-c-a-r-c-e-s-n-co-input'>
                                     <div>b. Lot/Batch Number</div>
                                     <input type="text" value={lotBatchNo} readOnly />
@@ -285,7 +366,7 @@ const RequestDetails = () => {
                                     <input 
                                         type="checkbox" 
                                         name="test-selection" 
-                                        checked={microbial === true}
+                                        checked={microbio === true}
                                         disabled
                                     />
                                     <span className="checkmark"><b>Microbiological Tests</b> (7 - 16 Days)</span>
@@ -304,7 +385,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={standardPlateCount === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">Standard Plate Count/ Aerobic Plate Count (Php 150.00)</span>
@@ -313,7 +394,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={staphylococcusAureus === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">Staphylococcus aureus (Php 350.00)</span>
@@ -322,7 +403,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={salmonellaSp === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">Salmonella sp. (Php 350.00)</span>
@@ -331,7 +412,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={campylobacter === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">Campylobacter (Php 1,500.00)</span>
@@ -340,6 +421,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
+                                                checked={cultureAndSensitivityTest === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">Culture and Sensitivity Test (Php1,500/panel)</span>
@@ -352,11 +434,7 @@ const RequestDetails = () => {
                                                 </div>
                                                 <input 
                                                     type="text"
-                                                    /*
-                                                    value={otherPurposeTesting}
-                                                    onChange={(e) => setOtherPurposeTesting(e.target.value)}
-                                                    placeholder="Specify Gram Positive AST"
-                                                    */
+                                                    value={gramPositiveAst}
                                                     disabled
                                                 />
                                             </div>
@@ -367,11 +445,7 @@ const RequestDetails = () => {
                                                 </div>
                                                 <input 
                                                     type="text"
-                                                    /*
-                                                    value={otherPurposeTesting}
-                                                    onChange={(e) => setOtherPurposeTesting(e.target.value)}
-                                                    placeholder="Specify Gram Negative AST"
-                                                    */
+                                                    value={gramNegativeAst}
                                                     disabled
                                                 />
                                             </div>
@@ -380,7 +454,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={coliformCount === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">Coliform Count (Php 150.00)</span>
@@ -389,7 +463,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={eColi === true} 
                                                 disabled 
                                             />
                                             <span className="checkmark">E. Coli (Php 350.00)</span>
@@ -398,7 +472,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={eColiAndeColi0O157 === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">E. Coli & E. Coli O157;H7 (Php 700.00)</span>
@@ -407,7 +481,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="microbiological-choices" 
-                                                value="" 
+                                                checked={yeastAndMolds === true} 
                                                 disabled
                                             />
                                             <span className="checkmark">Yeast and Molds (Php 300.00)</span>
@@ -435,6 +509,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="chemical-container-choices"
+                                                checked={microbial === true}
                                                 disabled 
                                             />
                                             <span className="checkmark"><b>Microbial Inhibition Test</b> (5 Days)</span>
@@ -444,7 +519,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={betaLactams === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Beta-lactams (Php 375.00)</span>
@@ -453,7 +528,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={tetracyclines === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Tetracyclines (Php 375.00)</span>
@@ -462,7 +537,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={sulfonamides === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Sulfonamides (Php 375.00)</span>
@@ -471,7 +546,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={aminoglycosides === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Aminoglycosides (Php 375.00)</span>
@@ -480,7 +555,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={macrolides === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Macrolides (Php 375.00)</span>
@@ -489,7 +564,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={quinolones === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Quinolones (Php 375.00)</span>
@@ -499,6 +574,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="chemical-container-choices" 
+                                                checked={elisa === true}
                                                 disabled
                                             />
                                             <span className="checkmark"><b>ELISA: Enzyme-Linked ImmunoSorbent Assay</b> (6 Days)</span>
@@ -508,7 +584,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={chloramphenicol === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Chloramphenicol (Php1,500)</span>
@@ -517,7 +593,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={nitrofuranAoz === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Nitrofuran AOZ (Php1,500)</span>
@@ -526,7 +602,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={beta_agonists === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Beta-agonists (Php1,500)</span>
@@ -535,7 +611,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={corticosteroids === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Corticosteroids (Php1,500)</span>
@@ -544,7 +620,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={olaquindox === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Olaquindox (Php1,500)</span>
@@ -553,7 +629,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={nitrufuranAmoz === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Nitrofuran AMOZ (Php1,500)</span>
@@ -562,7 +638,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={stilbenes === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Stilbenes (Php1,500)</span>
@@ -571,7 +647,7 @@ const RequestDetails = () => {
                                                     <input 
                                                         type="checkbox" 
                                                         name="chemical-choices" 
-                                                        value="" 
+                                                        checked={ractopamine === true} 
                                                         disabled
                                                     />
                                                     <span className="checkmark">Ractopamine (Php1,500)</span>
@@ -598,6 +674,7 @@ const RequestDetails = () => {
                                             <input 
                                                 type="checkbox" 
                                                 name="molbio-container-choices" 
+                                                checked={speciesIdentification === true}
                                                 disabled
                                             />
                                             <span className="checkmark"><b>Species Identification</b></span>
@@ -607,7 +684,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={dog === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Dog (Php1,500)</span>
@@ -616,7 +693,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={cat === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Cat (Php1,500)</span>
@@ -625,7 +702,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={chicken === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Chicken (Php1,500)</span>
@@ -634,7 +711,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={buffalo === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Buffalo (Php1,500)</span>
@@ -643,7 +720,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={cattle === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Cattle (Php1,500)</span>
@@ -652,7 +729,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={horse === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Horse (Php1,500)</span>
@@ -661,7 +738,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={goat === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Goat (Php1,500)</span>
@@ -670,7 +747,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={sheep === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Sheep (Php1,500)</span>
@@ -679,7 +756,7 @@ const RequestDetails = () => {
                                                 <input 
                                                     type="checkbox" 
                                                     name="molbio-choices" 
-                                                    value="" 
+                                                    checked={swine === true} 
                                                     disabled
                                                 />
                                                 <span className="checkmark">Swine (Php1,500)</span>
