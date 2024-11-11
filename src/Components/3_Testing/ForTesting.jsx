@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import './ForTesting.css';
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
+
 const TestingList = () => {
     const [requests, setRequests] = useState([]);
     const [expandedSample, setExpandedSample] = useState(null);
+    const [selectedRequests, setSelectedRequests] = useState([]); // {{ edit_1 }}
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,8 +28,30 @@ const TestingList = () => {
             });
     }, []);
 
-    const toggleSample = (controlNumber) => {
-        setExpandedSample(expandedSample === controlNumber ? null : controlNumber);
+    const toggleSelectRequest = (controlNumber) => { // {{ edit_2 }}
+        setSelectedRequests(prevSelected => 
+            prevSelected.includes(controlNumber) 
+                ? prevSelected.filter(num => num !== controlNumber) 
+                : [...prevSelected, controlNumber]
+        );
+    };
+
+    const toggleSample = (controlNumber) => { // {{ edit_9 }}
+        setExpandedSample(prevExpanded => 
+            prevExpanded === controlNumber ? null : controlNumber
+        );
+    };
+
+    const handleDelete = () => { // {{ edit_3 }}
+        // Logic to delete selected requests
+        console.log('Delete requests:', selectedRequests);
+        // Implement delete functionality here
+    };
+
+    const handleFinishTesting = () => { // {{ edit_4 }}
+        // Logic to change status of selected requests
+        console.log('Finish Testing for requests:', selectedRequests);
+        // Implement status change functionality here
     };
 
     return (
@@ -37,11 +61,12 @@ const TestingList = () => {
                 
                 {/* Header for the table */}
                 <div className="request-1st-container-header">
+                    <div className="header-item">...</div> {/* {{ edit_5 }} */}
                     <div className="header-item">Control Number</div>
                     <div className="header-item">Microbio</div>
                     <div className="header-item">Chemical</div>
                     <div className="header-item">Mol. Bio</div>
-                    <div className="header-item">Sample Info</div>
+                    <div className="header-item">Sample Info </div>
                 </div>
 
                 <div className="request-1st-container">
@@ -49,6 +74,11 @@ const TestingList = () => {
                         requests.map((request, index) => (
                             <div key={index} className="request-item">
                                 <div className="request-header">
+                                    <input 
+                                        type="checkbox" 
+                                        checked={selectedRequests.includes(request.controlNumber)} // {{ edit_6 }}
+                                        onChange={() => toggleSelectRequest(request.controlNumber)} 
+                                    />
                                     <span>{request.controlNumber}</span>
                                     {request.microbial && (
                                         <button className="test-btn" onClick={() => navigate(`/test-details/microbial/${request.controlNumber}`)}>
@@ -93,6 +123,11 @@ const TestingList = () => {
                             <h1 className='msg-noreqres1'>All work is done! Great job!</h1>
                         </div>
                     )}
+                </div>
+
+                <div>
+                    <button onClick={handleDelete}>Delete</button> {/* {{ edit_7 }} */}
+                    <button onClick={handleFinishTesting}>Finish Testing</button> {/* {{ edit_8 }} */}
                 </div>
             </div>
         </div>

@@ -38,7 +38,7 @@
 }
 
 .header-item {
-    flex: 1;
+    flex: 0 0 150px; /* Fixed width for each header item */
     text-align: center;
 }
 
@@ -79,6 +79,7 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    min-width: 100px; /* Ensure buttons have a minimum width */
 }
 
 .test-btn:hover {
