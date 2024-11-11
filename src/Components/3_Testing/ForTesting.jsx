@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ForTesting.css';
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
 
 const TestingList = () => {
+    const { userId, requestId } = useParams();
     const [requests, setRequests] = useState([]);
     const [expandedSample, setExpandedSample] = useState(null);
     const [selectedRequests, setSelectedRequests] = useState([]); // {{ edit_1 }}
@@ -42,16 +43,44 @@ const TestingList = () => {
         );
     };
 
-    const handleDelete = () => { // {{ edit_3 }}
-        // Logic to delete selected requests
-        console.log('Delete requests:', selectedRequests);
-        // Implement delete functionality here
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/requests/reject/${requestId}`, {
+                method: 'PUT'
+            });
+    
+            if (response.ok) {
+                // Handle successful rejection, e.g., show a success message, navigate to a different page
+                alert('Request deleted successfully!');
+            } else {
+                // Handle error, e.g., show an error message
+                console.error('Failed to reject request');
+                alert('Error rejecting request. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error rejecting request:', error);
+            alert('Error rejecting request. Please try again.');
+        }
     };
 
-    const handleFinishTesting = () => { // {{ edit_4 }}
-        // Logic to change status of selected requests
-        console.log('Finish Testing for requests:', selectedRequests);
-        // Implement status change functionality here
+    const handleFinishTesting = async () => { // {{ edit_4 }}
+        try {
+            const response = await fetch(`http://localhost:8080/requests/approve/${requestId}`, {
+                method: 'PUT'
+            });
+    
+            if (response.ok) {
+                // Handle successful approval, e.g., show a success message, navigate to a different page
+                alert('Request approved successfully!');
+            } else {
+                // Handle error, e.g., show an error message
+                console.error('Failed to approve request');
+                alert('Error approving request. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error approving request:', error);
+            alert('Error approving request. Please try again.');
+        }
     };
 
     return (
