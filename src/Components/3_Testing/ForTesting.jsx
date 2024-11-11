@@ -144,17 +144,19 @@ const TestingList = () => {
                                     <div className="sample-list">
                                         {request.sample.map(sample => (
                                             <div key={sample.sampleId} className="sample-item">
-                                                <div><strong>Sample Description:</strong> {sample.sampleDescription}</div>
-                                                <div><strong>Lot Batch No:</strong> {sample.lotBatchNo}</div>
-                                                <div><strong>Sample Source:</strong> {sample.sampleSource}</div>
-                                                <div><strong>Production Date:</strong> {sample.productionDate}</div>
-                                                <div><strong>Expiry Date:</strong> {sample.expiryDate}</div>
-                                                <div><strong>Sampling Date:</strong> {sample.samplingDate}</div>
-                                                <div><strong>Sampler Name:</strong> {sample.samplerName}</div>
+                                                <div><strong>Sample Description:</strong> {sample.sampleTypeDescription}</div>
                                             </div>
                                         ))}
+
+                                        {/* Assuming these fields are common for all samples */}
+                                        <div><strong>Lot Batch No:</strong> {request.lotBatchNo}</div>
+                                        <div><strong>Sampler Name:</strong> {request.samplerName}</div>
+                                        <div><strong>Sample Source:</strong> {request.sampleSource}</div>
+                                        <div><strong>Production Date:</strong> {request.productionDate}</div>
+                                        <div><strong>Expiry Date:</strong> {request.expiryDate}</div>
+                                        <div><strong>Sampling Date:</strong> {request.samplingDate}</div>
                                     </div>
-                                )}
+                                )}      
                             </div>
                         ))
                     ) : (
