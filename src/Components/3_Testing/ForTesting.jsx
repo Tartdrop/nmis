@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './ForTesting.css';
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
-
 const TestingList = () => {
     const { userId, requestId } = useParams();
     const [requests, setRequests] = useState([]);
@@ -90,12 +89,12 @@ const TestingList = () => {
                 
                 {/* Header for the table */}
                 <div className="request-1st-container-header">
-                    <div className="header-item">...</div> {/* {{ edit_5 }} */}
+                    <div className="header-item">Select</div> {/* {{ edit_5 }} */}
                     <div className="header-item">Control Number</div>
                     <div className="header-item">Microbio</div>
                     <div className="header-item">Chemical</div>
                     <div className="header-item">Mol. Bio</div>
-                    <div className="header-item">Sample Info </div>
+                    <div className="header-item">Sample Info</div>
                 </div>
 
                 <div className="request-1st-container">
@@ -109,21 +108,33 @@ const TestingList = () => {
                                         onChange={() => toggleSelectRequest(request.controlNumber)} 
                                     />
                                     <span>{request.controlNumber}</span>
-                                    {request.microbial && (
-                                        <button className="test-btn" onClick={() => navigate(`/test-details/microbial/${request.controlNumber}`)}>
-                                            Microbio
-                                        </button>
-                                    )}
-                                    {request.chem && (
-                                        <button className="test-btn" onClick={() => navigate(`/test-details/chem/${request.controlNumber}`)}>
-                                            Chemical
-                                        </button>
-                                    )}
-                                    {request.molBio && (
-                                        <button className="test-btn" onClick={() => navigate(`/test-details/molbio/${request.controlNumber}`)}>
-                                            Mol Bio
-                                        </button>
-                                    )}
+                                    <span>
+                                        {request.microbial ? (
+                                            <button className="test-btn" onClick={() => navigate(`/test-details/microbial/${request.controlNumber}`)}>
+                                                Microbio
+                                            </button>
+                                        ) : (
+                                            "no testing...."
+                                        )}
+                                    </span>
+                                    <span>
+                                        {request.chem ? (
+                                            <button className="test-btn" onClick={() => navigate(`/test-details/chem/${request.controlNumber}`)}>
+                                                Chemical
+                                            </button>
+                                        ) : (
+                                            "no testing...."
+                                        )}
+                                    </span>
+                                    <span>
+                                        {request.molBio ? (
+                                            <button className="test-btn" onClick={() => navigate(`/test-details/molbio/${request.controlNumber}`)}>
+                                                Mol Bio
+                                            </button>
+                                        ) : (
+                                            "no testing...."
+                                        )}
+                                    </span>
                                     <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
                                         Sample Info
                                     </button>

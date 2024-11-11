@@ -71,6 +71,11 @@
     justify-content: space-between;
 }
 
+.request-header > div {
+    flex: 0 0 150px; /* Ensure each item in the request header has the same width */
+    text-align: center; /* Center align text */
+}
+
 .test-btn {
     background-color: #004e65;
     color: #fff;
