@@ -30,6 +30,7 @@ import PageTFAVerify from "./PageTFA-Verify-Reg";
 
 import PublicRoute from "./PublicRoute";
 import ProtectedRoute from "./ProtectedRoute";
+import { user } from "@userfront/core";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -76,7 +77,7 @@ function App() {
                     path="/login" 
                     element={
                         <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
-                            <PageLogin onLogin={handleLogin} />
+                           <PageLogin />
                         </PublicRoute>
                     } 
                 />
@@ -97,10 +98,10 @@ function App() {
                     } 
                 />
                 <Route 
-                    path="/tfa" 
+                    path="/tfa/:username" 
                     element={
                         <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
-                            <PageTFA />
+                            <PageTFA onLogin={handleLogin} />
                         </PublicRoute>
                     } 
                 />
@@ -163,7 +164,7 @@ function App() {
                 </Route>
 
                 {/* Catch-all Route */}
-                <Route path="*" element={<PageLogin onLogin={handleLogin} />} />
+                <Route path="*" element={<PageLogin />} />
             </Routes>
         </>
     );

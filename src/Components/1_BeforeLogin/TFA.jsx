@@ -1,39 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TFA.css';
-import Userfront from "@userfront/core";
+// import Userfront from "@userfront/core";
+import { useNavigate, useParams } from 'react-router-dom';
 
-Userfront.init("jb7ywq8b");
+// Userfront.init("jb7ywq8b");
 
-const TFA = () => {
-    const [authCode, setAuthCode] = useState("");
+const TFA = ({ onLogin }) => {
+    console.log("onLogin is detected:", onLogin)
+    const navigate = useNavigate(); // Initialize useNavigate hook
+    //const [storedEmail, setStoredEmail] = useState(sessionStorage.getItem('userEmail') || '');
+    //const [storedUsername, setStoredUsername] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
+    const [error, setError] = useState(null);
+    const { username } = useParams();
 
-    const sendResetLink = async (authCode) => {
-        try {
-          const response = await fetch("https://api.userfront.com/v0/auth/reset", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              authCode,
-            }),
+    // Clear sessionStorage item on component mount
+    useEffect(() => {
+        sessionStorage.removeItem('userEmail');
+    }, []);
+
+    /*
+    const handleEmailChange = (event) => {
+        setStoredEmail(event.target.value);
+    };
+    */
+
+    /*
+    const handleUsernameChange = (event) => {
+        setStoredUsername(event.target.value);
+    };
+    */
+
+    const handleVerificationCodeChange = (event) => {
+        setVerificationCode(event.target.value);
+    };
+
+    const handleSubmit = async (event) => {
+      event.preventDefault(); // Prevent the default form submission behavior
+      
+      try {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}verify-otp?username=${username}&otp=${verificationCode}`, {
+              method: 'POST'
           });
-      
+  
           if (response.ok) {
-            console.log("Reset link sent successfully.");
+            const responseData = await response.text();
+            console.log('Login successful:', responseData);
+
+            // Extract userType and userId
+            const [type, id] = responseData.split('/');
+              // Successful verification
+              console.log('Successful verification.', {type, id});
+              if (type && id) {
+                console.log("umabot here")
+                onLogin(id, type); // Call onLogin prop to set login state in App.js
+                navigate(`/home/${type}/${id}`);
+            } else {
+                setError("User not found"); // Display error if type or id is missing
+            }
           } else {
-            console.error("Error sending reset link.");
+              // Unsuccessful verification
+              console.log('Unsuccessful verification.', error);
           }
-        } catch (error) {
-          console.error("Network error:", error);
-        }
-      };
-      
-      sendResetLink("user@example.com");
+      } catch (error) {
+          console.error('Error verifying user:', error);
+      }
+  };
 
     return (
         <div className='tfa-all-container'>
             <div className='tfa-all-left'>
+            <form className="verification" onSubmit={handleSubmit}>
                 <div className='tfa-container'>
                     <div className='t-c-container'>
                         <p className="t-c-c-title">
@@ -47,22 +84,33 @@ const TFA = () => {
                         </p>
                         
                     </div>
-                    <div className="tfa-email">               
+                    <div className="tfa-email">
+                        {/*<div className="tfa-input">
+                            <input 
+                                className="font-link"
+                                type="text" 
+                                value={storedUsername}
+                                placeholder="Username"
+                                onChange={handleUsernameChange}
+                            />
+                        </div>   
+                        */}                                    
                         <div className="tfa-input">
                             <input 
                                 className="font-link"
                                 type="text" 
-                                value={authCode}
+                                value={verificationCode}
                                 placeholder="Authentication Code"
-                                onChange={(e) => setAuthCode(e.target.value)}
+                                onChange={handleVerificationCodeChange}
                             />
                         </div>
                     </div>
 
                     <div className="login-button">
-                        <button className="text-button">Log In</button>
+                        <button className="text-button" value="Verify Account">Log In</button>
                     </div>
                 </div>
+                </form>
             </div>
             {/*
             <div className='all-right'>

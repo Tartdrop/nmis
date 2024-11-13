@@ -6,7 +6,8 @@ import logo_icon from '../Assets/BlueLogo.png';
 import eyeOpen from '../Assets/EyeOpen.png';
 import eyeClose from '../Assets/EyeClose.png';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
+    //console.log("onLogin is detected: ", onLogin)
     const navigate = useNavigate();
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +17,7 @@ const Login = ({ onLogin }) => {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const url = new URL('http://localhost:8080/login');
+            const url = new URL(`${process.env.REACT_APP_API_URL}login`);
             url.searchParams.append('identifier', identifier);
             url.searchParams.append('password', password);
     
@@ -25,19 +26,23 @@ const Login = ({ onLogin }) => {
             });
     
             if (response.ok) {
+                console.log("Login successful")
+                navigate(`/tfa/${identifier}`)
+                /*
                 const responseData = await response.text();
-                console.log('Login successful:', responseData);
     
                 // Extract userType and userId
                 const [type, id] = responseData.split('/');
                 
                 // Validate that type and id exist
                 if (type && id) {
-                    onLogin(id, type);  // Call onLogin prop to set login state in App.js
-                    navigate(`/home/${type}/${id}`);
+                    console.log(identifier)
+                    //onLogin(id, type);  // Call onLogin prop to set login state in App.js
+                    navigate(`tfa/${identifier}`);
                 } else {
                     setError("User not found"); // Display error if type or id is missing
                 }
+                    */
             } else {
                 const errorMessage = await response.text();
                 setError(errorMessage || "User not found");
