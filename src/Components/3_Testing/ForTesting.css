@@ -99,6 +99,30 @@
     font-size: 14px;
 }
 
+.microbial-list {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.chemical-list {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.molbio-list {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
 .sample-item {
     margin-bottom: 10px;
 }
