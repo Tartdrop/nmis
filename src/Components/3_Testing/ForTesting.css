@@ -12,6 +12,7 @@
     align-items: center;
     width: 1000px; /* Adjust the width as needed */
     height: auto;
+    padding-bottom: 20px;
     margin-top: 7vh;
     border-radius: 10px;
     background-color: #ffffffb5;
@@ -46,8 +47,24 @@
 .request-1st-container {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Ensure the width matches the container */
-    padding: 10px 0; /* Match padding for both the header and the rows */
+    width: 100%;
+    max-height: 600px; /* Set a fixed max height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px 0;
+    padding-top: 50px;
+}
+
+.request-1st-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.request-1st-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.request-1st-container::-webkit-scrollbar-thumb {
+    background: #2B9DC1;
+    border-radius: 4px;
 }
 
 .request-item {
@@ -159,4 +176,34 @@
     color: #2B9DC1;
     font-size: 24px;
     text-align: center;
+}
+
+.save-changes-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.save-changes-btn {
+    padding: 10px 20px;
+    background-color: #2B9DC1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.save-changes-btn:hover {
+    background-color: #004e65;
+}
+
+.save-status {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 500;
 }

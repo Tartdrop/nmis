@@ -13,10 +13,11 @@ const TestingList = () => {
     const navigate = useNavigate();
     const [userType, setUserType] = useState('');
     const [testResults, setTestResults] = useState({});
+    const [saveStatus, setSaveStatus] = useState('');
 
     useEffect(() => {
         // Get user type from your auth system
-        const userType = localStorage.getItem('userType'); // or however you store user data
+        const userType = localStorage.getItem('userType');
         setUserType(userType);
         
         // Fetch data from backend on component mount
@@ -28,7 +29,7 @@ const TestingList = () => {
                 return response.json();
             })
             .then(data => {
-                // Update state with fetched data
+                console.log('Fetched requests:', data); // Debug log
                 setRequests(data);
             })
             .catch(error => {
@@ -81,6 +82,115 @@ const TestingList = () => {
                 [testType]: value
             }
         }));
+    };
+
+    const handleSaveChanges = async (request) => {
+        try {
+            setSaveStatus('Saving...');
+            
+            // Check if sample exists and has a sampleId
+            if (!request.sample || !request.sample.length) {
+                throw new Error('No sample ID found for this request');
+            }
+            
+            const sampleId = request.sample[0].sampleId;
+            console.log('Saving for sampleId:', sampleId); // Debug log
+
+            // Save Microbio results if they exist
+            if (request.microbio && testResults[request.requestId]) {
+                const microbioData = {
+                    standardPlateCount: testResults[request.requestId].standardPlateCount,
+                    staphylococcusAureus: testResults[request.requestId].staphylococcusAureus,
+                    salmonellaSp: testResults[request.requestId].salmonellaSp,
+                    campylobacter: testResults[request.requestId].campylobacter,
+                    cultureAndSensitivityTest: testResults[request.requestId].cultureAndSensitivityTest,
+                    coliformCount: testResults[request.requestId].coliformCount,
+                    eColi: testResults[request.requestId].eColi,
+                    eColiAndeColi0O157: testResults[request.requestId].eColiAndeColi0O157,
+                    yeastAndMolds: testResults[request.requestId].yeastAndMolds
+                };
+
+                await fetch(`http://localhost:8080/microbioTestResults/${sampleId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(microbioData)
+                });
+            }
+
+            // Save Chemical Microbial results if they exist
+            if (request.microbial && testResults[request.requestId]) {
+                const chemMicrobialData = {
+                    betaLactams: testResults[request.requestId].betaLactams,
+                    tetracyclines: testResults[request.requestId].tetracyclines,
+                    sulfonamides: testResults[request.requestId].sulfonamides,
+                    aminoglycosides: testResults[request.requestId].aminoglycosides,
+                    macrolides: testResults[request.requestId].macrolides,
+                    quinolones: testResults[request.requestId].quinolones
+                };
+
+                await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(chemMicrobialData)
+                });
+            }
+
+            // Save Chemical ELISA results if they exist
+            if (request.elisa && testResults[request.requestId]) {
+                const chemElisaData = {
+                    chloramphenicol: testResults[request.requestId].chloramphenicol,
+                    nitrofuranAoz: testResults[request.requestId].nitrofuranAoz,
+                    beta_agonists: testResults[request.requestId].beta_agonists,
+                    corticosteroids: testResults[request.requestId].corticosteroids,
+                    olaquindox: testResults[request.requestId].olaquindox,
+                    nitrufuranAmoz: testResults[request.requestId].nitrufuranAmoz,
+                    stilbenes: testResults[request.requestId].stilbenes,
+                    ractopamine: testResults[request.requestId].ractopamine
+                };
+
+                await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(chemElisaData)
+                });
+            }
+
+            // Save Molecular Biology results if they exist
+            if (request.molBio && testResults[request.requestId]) {
+                const molBioData = {
+                    dog: testResults[request.requestId].dog,
+                    cat: testResults[request.requestId].cat,
+                    chicken: testResults[request.requestId].chicken,
+                    buffalo: testResults[request.requestId].buffalo,
+                    cattle: testResults[request.requestId].cattle,
+                    horse: testResults[request.requestId].horse,
+                    goat: testResults[request.requestId].goat,
+                    sheep: testResults[request.requestId].sheep,
+                    swine: testResults[request.requestId].swine
+                };
+
+                await fetch(`http://localhost:8080/molBioTestResults/${sampleId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(molBioData)
+                });
+            }
+
+            setSaveStatus('Changes saved successfully!');
+            setTimeout(() => setSaveStatus(''), 3000); // Clear message after 3 seconds
+        } catch (error) {
+            console.error('Error saving changes:', error);
+            setSaveStatus('Error saving changes: ' + error.message);
+            setTimeout(() => setSaveStatus(''), 3000);
+        }
     };
 
     return (
@@ -252,20 +362,9 @@ const TestingList = () => {
                                         {expandedChem === request.controlNumber && (
                                             <div className="chemical-list">
                                                 {request.microbial && (
-                                                    <div className="test-result-item">
-                                                        <strong>Microbial Inhibition Test:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.microbialInhibition || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'microbialInhibition', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.elisa && (
-                                                    <div className="elisa-section">
-                                                        <div><strong>ELISA Tests:</strong></div>
-                                                        <div className="elisa-tests">
+                                                    <div className="microbial-inhibition-section">
+                                                        <div><strong>Microbial Inhibition Test:</strong></div>
+                                                        <div className="microbial-inhibition-tests">
                                                             {request.betaLactams && (
                                                                 <div className="test-result-item">
                                                                     <strong>Beta Lactams:</strong>
@@ -332,6 +431,13 @@ const TestingList = () => {
                                                                     />
                                                                 </div>
                                                             )}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {request.elisa && (
+                                                    <div className="elisa-section">
+                                                        <div><strong>ELISA Tests:</strong></div>
+                                                        <div className="elisa-tests">
                                                             {request.chloramphenicol && (
                                                                 <div className="test-result-item">
                                                                     <strong>Chloramphenicol:</strong>
@@ -576,6 +682,15 @@ const TestingList = () => {
                                         <div><strong>Sampling Date:</strong> {request.samplingDate}</div>
                                     </div>
                                 )}      
+                                <div className="save-changes-section">
+                                    <button 
+                                        className="save-changes-btn"
+                                        onClick={() => handleSaveChanges(request)}
+                                    >
+                                        Save Changes
+                                    </button>
+                                    {saveStatus && <div className="save-status">{saveStatus}</div>}
+                                </div>
                             </div>
                         ))
                     ) : (
