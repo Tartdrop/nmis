@@ -12,8 +12,13 @@ const TestingList = () => {
     const [expandedMolBio, setExpandedMolBio] = useState(null);
     const [selectedRequests, setSelectedRequests] = useState([]);
     const navigate = useNavigate();
+    const [userType, setUserType] = useState('');
 
     useEffect(() => {
+        // Get user type from your auth system
+        const userType = localStorage.getItem('userType'); // or however you store user data
+        setUserType(userType);
+        
         // Fetch data from backend on component mount
         fetch('http://localhost:8080/requests/for-testing')
             .then(response => {
@@ -103,6 +108,19 @@ const TestingList = () => {
         }
     };
 
+    // Helper functions to check permissions
+    const canAccessMolBio = (userType) => {
+        return ['TESTER', 'MOLBIOTESTER'].includes(userType.toUpperCase());
+    };
+
+    const canAccessChem = (userType) => {
+        return ['TESTER', 'CHEMTESTER'].includes(userType.toUpperCase());
+    };
+
+    const canAccessMicrobio = (userType) => {
+        return ['TESTER', 'MICROBIOTESTER'].includes(userType.toUpperCase());
+    };
+
     return (
         <div className="request-all-container">
             <div className='request-container'>
@@ -131,9 +149,22 @@ const TestingList = () => {
                                     <span>{request.controlNumber}</span>
                                     <span>
                                         {request.microbio ? (
-                                            <button className="test-btn" onClick={() => toggleMicrobial(request.controlNumber)}>
-                                                Microbio
-                                            </button>
+                                            canAccessMicrobio(userType) ? (
+                                                <button 
+                                                    className="test-btn" 
+                                                    onClick={() => toggleMicrobial(request.controlNumber)}
+                                                >
+                                                    Microbio
+                                                </button>
+                                            ) : (
+                                                <button 
+                                                    className="test-btn-disabled" 
+                                                    disabled
+                                                    title="You don't have permission to access this section"
+                                                >
+                                                    Microbio
+                                                </button>
+                                            )
                                         ) : (
                                             "no testing...."
                                         )}
@@ -171,9 +202,22 @@ const TestingList = () => {
                                     </span>
                                     <span>
                                         {request.chem ? (
-                                            <button className="test-btn" onClick={() => toggleChem(request.controlNumber)}>
-                                                Chemical
-                                            </button>
+                                            canAccessChem(userType) ? (
+                                                <button 
+                                                    className="test-btn" 
+                                                    onClick={() => toggleChem(request.controlNumber)}
+                                                >
+                                                    Chemical
+                                                </button>
+                                            ) : (
+                                                <button 
+                                                    className="test-btn-disabled" 
+                                                    disabled
+                                                    title="You don't have permission to access this section"
+                                                >
+                                                    Chemical
+                                                </button>
+                                            )
                                         ) : (
                                             "no testing...."
                                         )}
@@ -239,9 +283,22 @@ const TestingList = () => {
                                     </span>
                                     <span>
                                         {request.molBio ? (
-                                            <button className="test-btn" onClick={() => toggleMolBio(request.controlNumber)}>
-                                                Mol Bio
-                                            </button>
+                                            canAccessMolBio(userType) ? (
+                                                <button 
+                                                    className="test-btn" 
+                                                    onClick={() => toggleMolBio(request.controlNumber)}
+                                                >
+                                                    Mol Bio
+                                                </button>
+                                            ) : (
+                                                <button 
+                                                    className="test-btn-disabled" 
+                                                    disabled
+                                                    title="You don't have permission to access this section"
+                                                >
+                                                    Mol Bio
+                                                </button>
+                                            )
                                         ) : (
                                             "no testing...."
                                         )}
