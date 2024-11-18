@@ -61,7 +61,7 @@ const RequestDetails = () => {
     useEffect(() => {
         const fetchRequestData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/requests/trackrequest/${requestId}`);
+                const response = await fetch(`http://localhost:8080/requests/pendingrequest/${requestId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setRequestData(data);
@@ -146,22 +146,33 @@ const RequestDetails = () => {
 
     const handleApprove = async () => {
         try {
+            // First approve the request
             const response = await fetch(`http://localhost:8080/requests/approve/${requestId}`, {
                 method: 'PUT'
             });
     
             if (response.ok) {
-                // Handle successful approval, e.g., show a success message, navigate to a different page
-                alert('Request approved successfully!');
-                navigate(`/home/staff/${userId}`); // Navigate to the staff dashboard
+                // Then create the result - note the corrected URL
+                const responseResultGen = await fetch(`http://localhost:8080/results/createresult/${requestId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (responseResultGen.ok) {
+                    alert('Request approved successfully!');
+                    navigate(`/home/staff/${userId}`);
+                } else {
+                    const errorData = await responseResultGen.json();
+                    throw new Error(errorData.message || 'Failed to create result');
+                }
             } else {
-                // Handle error, e.g., show an error message
-                console.error('Failed to approve request');
-                alert('Error approving request. Please try again.');
+                throw new Error('Failed to approve request');
             }
         } catch (error) {
-            console.error('Error approving request:', error);
-            alert('Error approving request. Please try again.');
+            console.error('Error:', error);
+            alert('Error processing request. Please try again.');
         }
     };
     
