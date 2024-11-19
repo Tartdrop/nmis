@@ -152,12 +152,23 @@ const RequestDetails = () => {
             });
     
             if (response.ok) {
-                // Then create the result - note the corrected URL
+                // Prepare the result data
+                const resultData = {
+                    resultId: null, // Backend will generate this
+                    testerId: userId,
+                    testerUsername: "", // Backend will fill this based on testerId
+                    chemTestResults: [],
+                    molBioTestResults: [],
+                    microbialTestResults: []
+                };
+
+                // Then create the result
                 const responseResultGen = await fetch(`http://localhost:8080/createresult/${requestId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify(resultData)
                 });
 
                 if (responseResultGen.ok) {
