@@ -154,7 +154,6 @@ const RequestDetails = () => {
             if (response.ok) {
                 // Prepare the result data
                 const resultData = {
-                    requestId: parseInt(requestId),
                     testerId: parseInt(userId),
                     testerUsername: "",
                     chemElisaTestResults: [],
