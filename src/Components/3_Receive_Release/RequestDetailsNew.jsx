@@ -153,7 +153,7 @@ const RequestDetails = () => {
     
             if (response.ok) {
                 // Then create the result - note the corrected URL
-                const responseResultGen = await fetch(`http://localhost:8080/results/createresult/${requestId}`, {
+                const responseResultGen = await fetch(`http://localhost:8080/createresult/${requestId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
