@@ -93,6 +93,7 @@ const TestingList = () => {
             }
             
             const sampleId = request.sample[0].sampleId;
+            console.log('Attempting to save changes for Sample ID:', sampleId);
             const currentResults = testResults[request.requestId] || {};
             
             // Microbio tests
@@ -109,7 +110,7 @@ const TestingList = () => {
                 if (currentResults.coliformCount) microbioData.coliformCount = currentResults.coliformCount;
                 if (currentResults.yeastAndMolds) microbioData.yeastAndMolds = currentResults.yeastAndMolds;
 
-                console.log('Sending microbio data:', microbioData);
+                console.log(`Sending microbio data to Sample ID ${sampleId}:`, microbioData);
                 const response = await fetch(`http://localhost:8080/microbioTestResults/${sampleId}`, {
                     method: 'PUT',
                     headers: {
@@ -138,7 +139,7 @@ const TestingList = () => {
                 if (currentResults.ractopamine) elisaData.ractopamine = currentResults.ractopamine;
 
                 if (Object.keys(elisaData).length > 0) {
-                    console.log('Sending ELISA data:', elisaData);
+                    console.log(`Sending ELISA data to Sample ID ${sampleId}:`, elisaData);
                     const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
@@ -163,7 +164,7 @@ const TestingList = () => {
                 if (currentResults.quinolones) chemMicrobialData.quinolones = currentResults.quinolones;
 
                 if (Object.keys(chemMicrobialData).length > 0) {
-                    console.log('Sending chemical microbial data:', chemMicrobialData);
+                    console.log(`Sending chemical microbial data to Sample ID ${sampleId}:`, chemMicrobialData);
                     const response = await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
@@ -193,7 +194,7 @@ const TestingList = () => {
                 if (currentResults.swine) molBioData.swine = currentResults.swine;
 
                 if (Object.keys(molBioData).length > 0) {
-                    console.log('Sending mol bio data:', molBioData);
+                    console.log(`Sending mol bio data to Sample ID ${sampleId}:`, molBioData);
                     const response = await fetch(`http://localhost:8080/molBioTestResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
