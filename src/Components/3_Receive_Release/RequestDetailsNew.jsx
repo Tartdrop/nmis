@@ -154,15 +154,17 @@ const RequestDetails = () => {
             if (response.ok) {
                 // Prepare the result data
                 const resultData = {
-                    resultId: null, // Backend will generate this
-                    testerId: userId,
-                    testerUsername: "", // Backend will fill this based on testerId
-                    chemTestResults: [],
+                    requestId: parseInt(requestId),
+                    testerId: parseInt(userId),
+                    testerUsername: "",
+                    chemElisaTestResults: [],
+                    chemMicrobialTestResults: [],
                     molBioTestResults: [],
-                    microbialTestResults: []
+                    microbioTestResults: []
                 };
 
-                // Then create the result
+                console.log('Sending resultData:', resultData);
+
                 const responseResultGen = await fetch(`http://localhost:8080/createresult/${requestId}`, {
                     method: 'POST',
                     headers: {
@@ -175,15 +177,16 @@ const RequestDetails = () => {
                     alert('Request approved successfully!');
                     navigate(`/home/staff/${userId}`);
                 } else {
-                    const errorData = await responseResultGen.json();
-                    throw new Error(errorData.message || 'Failed to create result');
+                    const errorData = await responseResultGen.text();
+                    console.error('Server error:', errorData);
+                    throw new Error(errorData || 'Failed to create result');
                 }
             } else {
                 throw new Error('Failed to approve request');
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Error processing request. Please try again.');
+            console.error('Error details:', error);
+            alert('Error processing request. Please check console for details.');
         }
     };
     
