@@ -88,104 +88,129 @@ const TestingList = () => {
         try {
             setSaveStatus('Saving...');
             
-            // Check if sample exists and has a sampleId
             if (!request.sample || !request.sample.length) {
                 throw new Error('No sample ID found for this request');
             }
             
             const sampleId = request.sample[0].sampleId;
-            console.log('Saving for sampleId:', sampleId); // Debug log
+            const currentResults = testResults[request.requestId] || {};
+            
+            // Microbio tests
+            if (request.microbio) {
+                // Only include properties that have values
+                const microbioData = {};
+                if (currentResults.eColi) microbioData.eColi = currentResults.eColi;
+                if (currentResults.eColiAndeColi0O157) microbioData.eColiAndeColi0O157 = currentResults.eColiAndeColi0O157;
+                if (currentResults.standardPlateCount) microbioData.standardPlateCount = currentResults.standardPlateCount;
+                if (currentResults.staphylococcusAureus) microbioData.staphylococcusAureus = currentResults.staphylococcusAureus;
+                if (currentResults.salmonellaSp) microbioData.salmonellaSp = currentResults.salmonellaSp;
+                if (currentResults.campylobacter) microbioData.campylobacter = currentResults.campylobacter;
+                if (currentResults.cultureAndSensitivityTest) microbioData.cultureAndSensitivityTest = currentResults.cultureAndSensitivityTest;
+                if (currentResults.coliformCount) microbioData.coliformCount = currentResults.coliformCount;
+                if (currentResults.yeastAndMolds) microbioData.yeastAndMolds = currentResults.yeastAndMolds;
 
-            // Save Microbio results if they exist
-            if (request.microbio && testResults[request.requestId]) {
-                const microbioData = {
-                    standardPlateCount: testResults[request.requestId].standardPlateCount,
-                    staphylococcusAureus: testResults[request.requestId].staphylococcusAureus,
-                    salmonellaSp: testResults[request.requestId].salmonellaSp,
-                    campylobacter: testResults[request.requestId].campylobacter,
-                    cultureAndSensitivityTest: testResults[request.requestId].cultureAndSensitivityTest,
-                    coliformCount: testResults[request.requestId].coliformCount,
-                    eColi: testResults[request.requestId].eColi,
-                    eColiAndeColi0O157: testResults[request.requestId].eColiAndeColi0O157,
-                    yeastAndMolds: testResults[request.requestId].yeastAndMolds
-                };
-
-                await fetch(`http://localhost:8080/microbioTestResults/${sampleId}`, {
+                console.log('Sending microbio data:', microbioData);
+                const response = await fetch(`http://localhost:8080/microbioTestResults/${sampleId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(microbioData)
                 });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Failed to save microbio results: ${errorText}`);
+                }
             }
 
-            // Save Chemical Microbial results if they exist
-            if (request.microbial && testResults[request.requestId]) {
-                const chemMicrobialData = {
-                    betaLactams: testResults[request.requestId].betaLactams,
-                    tetracyclines: testResults[request.requestId].tetracyclines,
-                    sulfonamides: testResults[request.requestId].sulfonamides,
-                    aminoglycosides: testResults[request.requestId].aminoglycosides,
-                    macrolides: testResults[request.requestId].macrolides,
-                    quinolones: testResults[request.requestId].quinolones
-                };
+            // Chemical tests
+            if (request.chem) {
+                // ELISA tests
+                const elisaData = {};
+                if (currentResults.chloramphenicol) elisaData.chloramphenicol = currentResults.chloramphenicol;
+                if (currentResults.nitrofuranAoz) elisaData.nitrofuranAoz = currentResults.nitrofuranAoz;
+                if (currentResults.beta_agonists) elisaData.beta_agonists = currentResults.beta_agonists;
+                if (currentResults.corticosteroids) elisaData.corticosteroids = currentResults.corticosteroids;
+                if (currentResults.olaquindox) elisaData.olaquindox = currentResults.olaquindox;
+                if (currentResults.nitrufuranAmoz) elisaData.nitrufuranAmoz = currentResults.nitrufuranAmoz;
+                if (currentResults.stilbenes) elisaData.stilbenes = currentResults.stilbenes;
+                if (currentResults.ractopamine) elisaData.ractopamine = currentResults.ractopamine;
 
-                await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(chemMicrobialData)
-                });
+                if (Object.keys(elisaData).length > 0) {
+                    console.log('Sending ELISA data:', elisaData);
+                    const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(elisaData)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Failed to save ELISA results: ${errorText}`);
+                    }
+                }
+
+                // Chemical Microbial tests
+                const chemMicrobialData = {};
+                if (currentResults.betaLactams) chemMicrobialData.betaLactams = currentResults.betaLactams;
+                if (currentResults.tetracyclines) chemMicrobialData.tetracyclines = currentResults.tetracyclines;
+                if (currentResults.sulfonamides) chemMicrobialData.sulfonamides = currentResults.sulfonamides;
+                if (currentResults.aminoglycosides) chemMicrobialData.aminoglycosides = currentResults.aminoglycosides;
+                if (currentResults.macrolides) chemMicrobialData.macrolides = currentResults.macrolides;
+                if (currentResults.quinolones) chemMicrobialData.quinolones = currentResults.quinolones;
+
+                if (Object.keys(chemMicrobialData).length > 0) {
+                    console.log('Sending chemical microbial data:', chemMicrobialData);
+                    const response = await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(chemMicrobialData)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Failed to save chemical microbial results: ${errorText}`);
+                    }
+                }
             }
 
-            // Save Chemical ELISA results if they exist
-            if (request.elisa && testResults[request.requestId]) {
-                const chemElisaData = {
-                    chloramphenicol: testResults[request.requestId].chloramphenicol,
-                    nitrofuranAoz: testResults[request.requestId].nitrofuranAoz,
-                    beta_agonists: testResults[request.requestId].beta_agonists,
-                    corticosteroids: testResults[request.requestId].corticosteroids,
-                    olaquindox: testResults[request.requestId].olaquindox,
-                    nitrufuranAmoz: testResults[request.requestId].nitrufuranAmoz,
-                    stilbenes: testResults[request.requestId].stilbenes,
-                    ractopamine: testResults[request.requestId].ractopamine
-                };
+            // Mol Bio tests
+            if (request.molBio) {
+                const molBioData = {};
+                if (currentResults.dog) molBioData.dog = currentResults.dog;
+                if (currentResults.cat) molBioData.cat = currentResults.cat;
+                if (currentResults.chicken) molBioData.chicken = currentResults.chicken;
+                if (currentResults.buffalo) molBioData.buffalo = currentResults.buffalo;
+                if (currentResults.cattle) molBioData.cattle = currentResults.cattle;
+                if (currentResults.horse) molBioData.horse = currentResults.horse;
+                if (currentResults.goat) molBioData.goat = currentResults.goat;
+                if (currentResults.sheep) molBioData.sheep = currentResults.sheep;
+                if (currentResults.swine) molBioData.swine = currentResults.swine;
 
-                await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(chemElisaData)
-                });
-            }
+                if (Object.keys(molBioData).length > 0) {
+                    console.log('Sending mol bio data:', molBioData);
+                    const response = await fetch(`http://localhost:8080/molBioTestResults/${sampleId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(molBioData)
+                    });
 
-            // Save Molecular Biology results if they exist
-            if (request.molBio && testResults[request.requestId]) {
-                const molBioData = {
-                    dog: testResults[request.requestId].dog,
-                    cat: testResults[request.requestId].cat,
-                    chicken: testResults[request.requestId].chicken,
-                    buffalo: testResults[request.requestId].buffalo,
-                    cattle: testResults[request.requestId].cattle,
-                    horse: testResults[request.requestId].horse,
-                    goat: testResults[request.requestId].goat,
-                    sheep: testResults[request.requestId].sheep,
-                    swine: testResults[request.requestId].swine
-                };
-
-                await fetch(`http://localhost:8080/molBioTestResults/${sampleId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(molBioData)
-                });
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Failed to save mol bio results: ${errorText}`);
+                    }
+                }
             }
 
             setSaveStatus('Changes saved successfully!');
-            setTimeout(() => setSaveStatus(''), 3000); // Clear message after 3 seconds
+            setTimeout(() => setSaveStatus(''), 3000);
         } catch (error) {
             console.error('Error saving changes:', error);
             setSaveStatus('Error saving changes: ' + error.message);
