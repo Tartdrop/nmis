@@ -33,13 +33,13 @@ const ForReleasing = () => {
                 <div className="pendingrequest-1st-container">
                     <div className="pendingrequest-1st-container-header">
                         <div className="pendingrequest-1st-container-header-title">
-                            Username
+                            Control Number
                         </div>
                         <div className="lineseparator">
                             |
                         </div>
                         <div className="pendingrequest-1st-container-header-title-middle">
-                            Email Address
+                            Type of Tests
                         </div>
                         <div className="lineseparator">
                             |
