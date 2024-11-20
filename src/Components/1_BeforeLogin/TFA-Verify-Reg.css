@@ -2,7 +2,7 @@
     font-family: 'Poppins', cursive;
   }
 
-.tfa-all-container {
+.tfa-vr-all-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,7 +11,7 @@
     caret-color: transparent;
 }
 
-.tfa-container{
+.tfa-vr-container{
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -26,7 +26,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.t-c-container{
+.t-vr-c-container{
     color:#2B9DC1;
     font-weight: 700;
     margin-top: 40px;
@@ -34,13 +34,13 @@
     margin-left: 30px;
 }
 
-.t-c-c-title {
+.t-vr-c-c-title {
     font-family: 'Poppins';
     font-size: 48px;
     margin-bottom: -20px;
 }
 
-.t-c-c-text {
+.t-vr-c-c-text {
     font-family: 'Poppins';
     font-size: 24px;
     padding-top: 30px;
@@ -58,13 +58,13 @@
 .logo img{
     width: 382px;
 }
-.tfa-email{
+.tfa-vr-email{
     display: flex;
     flex-direction: column;
     gap: 20px;
     
 }
-.tfa-input input{
+.tfa-vr-input input{
     caret-color: auto;
     height: 50px;
     width: 500px;
@@ -78,7 +78,7 @@
     padding-right: 15px;
 }
 
-.tfa-input{
+.tfa-vr-input{
     display: flex;
     align-items: center;
     margin: auto;
@@ -89,11 +89,11 @@
     border: 4px solid #95CFE1;
 }
 
-.tfa-input input[type="password"]::-ms-reveal {
+.tfa-vr-input input[type="password"]::-ms-reveal {
     display: none;
 }
 
-.tfa-input input::placeholder {
+.tfa-vr-input input::placeholder {
     color:#004d65a3;
 }
 
@@ -129,11 +129,11 @@
     border: none;
 }
 
-.tfa-last-row-text {
+.tfa-vr-last-row-text {
     display: flex;
 }
 
-.tfa-text {
+.tfa-vr-text {
     border: none;
     background: none;
     cursor: pointer;
@@ -145,20 +145,20 @@
     padding: 5px 10px;
 }
 
-.tfa-text:hover {
+.tfa-vr-text:hover {
     color:#ffffff;
     border-radius: 12px;
     background: #2B9DC1;
 }
 
-.tfa-first-row {
+.tfa-vr-first-row {
     font-family: 'Poppins';
     font-weight: 700;
     font-size: 62px;
     color: white;
 }
 
-.tfa-second-row {
+.tfa-vr-second-row {
     display: flex;
     align-items: flex-end;
     font-family: 'Poppins';
@@ -167,11 +167,11 @@
     margin-top: -70px;
 }
 
-.tfa-third-row {
+.tfa-vr-third-row {
     margin-top: -40px;
 }
 
-.tfa-third-row p{
+.tfa-vr-third-row p{
     padding: 20px 30px;
     width: 870px;
     background: #ffffffb5;

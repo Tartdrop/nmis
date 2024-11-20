@@ -45,24 +45,24 @@ const TFAVerification = () => {
   };
 
     return (
-        <div className='tfa-all-container'>
-            <div className='tfa-all-left'>
-            <form className="verification" onSubmit={handleSubmit}>
-                <div className='tfa-container'>
-                    <div className='t-c-container'>
-                        <p className="t-c-c-title">
+        <div className='tfa-vr-all-container'>
+            <div className='tfa-vr-all-left'>
+            <form className="vr-verification" onSubmit={handleSubmit}>
+                <div className='tfa-vr-container'>
+                    <div className='t-vr-c-container'>
+                        <p className="t-vr-c-c-title">
                             Two-Factor
                         </p>
-                        <p className="t-c-c-title">
+                        <p className="t-vr-c-c-title">
                             Authentication
                         </p>
-                        <p className="t-c-c-text">
+                        <p className="t-vr-c-c-text">
                         Enter the code from your provided email below.
                         </p>
                         
                     </div>
-                    <div className="tfa-email">     
-                        <div className="tfa-input">
+                    <div className="tfa-vr-email">     
+                        <div className="tfa-vr-input">
                             <input 
                                 className="font-link"
                                 type="email" 
@@ -71,7 +71,7 @@ const TFAVerification = () => {
                                 onChange={handleEmailChange}
                             />
                         </div>          
-                        <div className="tfa-input">
+                        <div className="tfa-vr-input">
                             <input 
                                 className="font-link"
                                 type="text" 
