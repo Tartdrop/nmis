@@ -11,7 +11,7 @@ const TrackRequest = () => {
 
     useEffect(() => {
         // Fetch data from backend on component mount
-        fetch('http://localhost:8080/requests/pending')
+        fetch(`http://localhost:8080/requests/clientrequest/${userId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -27,6 +27,16 @@ const TrackRequest = () => {
             });
     }, []);
 
+    const formatRequestStatus = (status) => {
+        const statusMap = {
+            REJECTED: "REJECTED",
+            FOR_TESTING: "FOR TESTING",
+            FOR_RELEASE: "FOR RELEASE",
+            PENDING_REVIEW: "PENDING REVIEW"
+        };
+        return statusMap[status] || status; // Fallback to the original status if not mapped
+    };
+
     return (
         <div className="trackmyrequest-all-container">
             <div className='trackmyrequest-container'>
@@ -34,12 +44,12 @@ const TrackRequest = () => {
                 <div className="trackmyrequest-1st-container">
                     <div className="trackmyrequest-1st-container-header">
                         <div className="trackmyrequest-1st-container-header-title">
-                            Username
+                            Control Number
                         </div>
                         <div className="lineseperator">
                             |
                         </div>
-                        <div className="trackmyrequest-1st-container-header-title-middle">
+                        <div className="trackmyrequest-1st-container-header-title">
                             Submission Date
                         </div>
                         <div className="lineseperator">
@@ -54,13 +64,12 @@ const TrackRequest = () => {
                             <button 
                                 key={index} 
                                 className="request-button"
-                                onClick={() => navigate(`/request-details/${userId}/${request.requestId}`)}
                             >
-                                <div className="req-side">{request.representativeName}</div>
-                                <p className="req-lineseparator">|</p>
-                                <div className="req-middle">{request.emailAddress}</div>
+                                <div className="req-side">{request.controlNumber}</div>
                                 <p className="req-lineseparator">|</p>
                                 <div className="req-side">{request.submissionDate}</div>
+                                <p className="req-lineseparator">|</p>
+                                <div className="req-side">{formatRequestStatus(request.requestStatus)}</div>
                             </button>
                         ))
                     ) : (
@@ -68,9 +77,6 @@ const TrackRequest = () => {
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
                             <h1 className='msg-noreqres1'>
                                 You have no ongoing requests and results.
-                            </h1>
-                            <h1 className='msg-noreqres2'>
-                                Request through the "Submit a Request" page.
                             </h1>
                         </div>
                     )}

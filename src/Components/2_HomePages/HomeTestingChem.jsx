@@ -26,15 +26,15 @@ const HomeTesting = () => {
   }, []);
 
   const handleForTestingPage = () => {
-    navigate(`/for-testing/${userId}`);
+    navigate(`/for-testing-chem/${userId}`);
   };
 
   const handleTestResults = () => {
-    navigate(`/test-results/${userId}`);
+    navigate(`/test-results-chem/${userId}`);
   };
 
   const handleDatabase = () => {
-    navigate(`/testing-database/${userId}`);
+    navigate(`/testing-database-chem/${userId}`);
   };
 
   return (
@@ -57,7 +57,7 @@ const HomeTesting = () => {
         </div>
 
         <div className="announcement-box">
-          <h4>Welcome to the Testing Portal, Tester!</h4>
+          <h4>Welcome to the Chemisty Testing Portal!</h4>
         </div>
 
         <div className="options-container">

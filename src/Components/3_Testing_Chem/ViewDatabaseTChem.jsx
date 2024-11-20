@@ -1,5 +1,5 @@
 import React from 'react';
-import './ViewDatabaseT.css';
+import './ViewDatabaseTChem.css';
 import Userfront from "@userfront/core";
 
 import blue_error_icon from '../Assets/BlueError.png';

@@ -12,7 +12,9 @@ const ProtectedRoute = ({ isLoggedIn, userType, userId, redirectPath = '/login' 
     const allowedPaths = {
         client: ['/home/client', '/submit-a-request', '/track-my-request', '/guide'],
         staff: ['/home/staff', '/pending-requests', '/request-details', '/approved', '/request-additional-info', '/for-release', '/receive-release-database'],
-        tester: ['/home/tester', '/for-testing', '/test-results', '/testing-database'],
+        chemtester: ['/home/chemtester', '/for-testing-chem', '/test-results-chem', '/testing-database-chem'],
+        microbiotester: ['/home/microbiotester', '/for-testing-microbio', '/test-results-microbio', '/testing-database-microbio'],
+        molbiotester: ['/home/molbiotester', '/for-testing-molbio', '/test-results-molbio', '/testing-database-molbio'],
     };
 
     // Get the current path and check if it starts with any of the allowed paths for the userType

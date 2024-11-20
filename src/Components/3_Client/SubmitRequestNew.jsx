@@ -162,6 +162,21 @@ const Submit = () => {
             return;
         }
 
+        if (microbial && !(betaLactams || tetracyclines || sulfonamides || aminoglycosides || macrolides || quinolones)) {
+            alert("Please choose at least one test from Microbial.");
+            return;
+        }
+    
+        if (elisa && !(chloramphenicol || nitrofuranAoz || beta_agonists || corticosteroids || olaquindox || nitrufuranAmoz || stilbenes || ractopamine)) {
+            alert("Please choose at least one test from Elisa.");
+            return;
+        }
+    
+        if (speciesIdentification && !(dog || cat || chicken || buffalo || cattle || horse || goat || sheep || swine)) {
+            alert("Please choose at least one test from Species Identification.");
+            return;
+        }
+
         if (cultureAndSensitivityTest && (!gramPositiveAst || !gramNegativeAst)) {
             alert("Please fill in both Gram Positive AST and Gram Negative AST.");
             return;
@@ -204,7 +219,7 @@ const Submit = () => {
                         campylobacter,
                         cultureAndSensitivityTest,
                             gramPositiveAst: isCSTChecked === true ? gramPositiveAst : null,
-                            gramNegativeAst: isCSTChecked === true ? gramPositiveAst : null,
+                            gramNegativeAst: isCSTChecked === true ? gramNegativeAst : null,
                         coliformCount,
                         eColi,
                         eColiAndeColi0O157,
@@ -541,7 +556,7 @@ const Submit = () => {
                                                         name="microbiological-choices" 
                                                         onChange={handleCSTCheckboxChange}
                                                     />
-                                                    <span className="checkmark">Culture and Sensitivity Test (Php1,500/panel)</span>
+                                                    <span className="checkmark">Culture and Sensitivity Test (Php 1,500/panel)</span>
                                                 </label>
                                                 <div className="s-c-a-r-c-e-s-n-co-t-subchoices">
                                                     {isCSTChecked && (
@@ -706,7 +721,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setChloramphenicol(true)} 
                                                                 />
-                                                                <span className="checkmark">Chloramphenicol (Php1,500)</span>
+                                                                <span className="checkmark">Chloramphenicol (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -714,7 +729,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setNitrofuranAoz(true)} 
                                                                 />
-                                                                <span className="checkmark">Nitrofuran AOZ (Php1,500)</span>
+                                                                <span className="checkmark">Nitrofuran AOZ (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -722,7 +737,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setBeta_agonists(true)} 
                                                                 />
-                                                                <span className="checkmark">Beta-agonists (Php1,500)</span>
+                                                                <span className="checkmark">Beta-agonists (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -730,7 +745,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setCorticosteroids(true)} 
                                                                 />
-                                                                <span className="checkmark">Corticosteroids (Php1,500)</span>
+                                                                <span className="checkmark">Corticosteroids (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -738,7 +753,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setOlaquindox(true)} 
                                                                 />
-                                                                <span className="checkmark">Olaquindox (Php1,500)</span>
+                                                                <span className="checkmark">Olaquindox (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -746,7 +761,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setNitrufuranAmoz(true)} 
                                                                 />
-                                                                <span className="checkmark">Nitrofuran AMOZ (Php1,500)</span>
+                                                                <span className="checkmark">Nitrofuran AMOZ (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -754,7 +769,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setStilbenes(true)} 
                                                                 />
-                                                                <span className="checkmark">Stilbenes (Php1,500)</span>
+                                                                <span className="checkmark">Stilbenes (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -762,7 +777,7 @@ const Submit = () => {
                                                                     name="chemical-choices" 
                                                                     onChange={() => setRactopamine(true)} 
                                                                 />
-                                                                <span className="checkmark">Ractopamine (Php1,500)</span>
+                                                                <span className="checkmark">Ractopamine (Php 1,500)</span>
                                                             </label>
                                                         </div>
                                                     </>
@@ -804,7 +819,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setDog(true)} 
                                                                 />
-                                                                <span className="checkmark">Dog (Php1,500)</span>
+                                                                <span className="checkmark">Dog (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -812,7 +827,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setCat(true)} 
                                                                 />
-                                                                <span className="checkmark">Cat (Php1,500)</span>
+                                                                <span className="checkmark">Cat (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -820,7 +835,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setChicken(true)} 
                                                                 />
-                                                                <span className="checkmark">Chicken (Php1,500)</span>
+                                                                <span className="checkmark">Chicken (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -828,7 +843,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setBuffalo(true)} 
                                                                 />
-                                                                <span className="checkmark">Buffalo (Php1,500)</span>
+                                                                <span className="checkmark">Buffalo (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -836,7 +851,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setCattle(true)} 
                                                                 />
-                                                                <span className="checkmark">Cattle (Php1,500)</span>
+                                                                <span className="checkmark">Cattle (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -844,7 +859,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setHorse(true)} 
                                                                 />
-                                                                <span className="checkmark">Horse (Php1,500)</span>
+                                                                <span className="checkmark">Horse (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -852,7 +867,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setGoat(true)} 
                                                                 />
-                                                                <span className="checkmark">Goat (Php1,500)</span>
+                                                                <span className="checkmark">Goat (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -860,7 +875,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setSheep(true)} 
                                                                 />
-                                                                <span className="checkmark">Sheep (Php1,500)</span>
+                                                                <span className="checkmark">Sheep (Php 1,500)</span>
                                                             </label>
                                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                                 <input 
@@ -868,7 +883,7 @@ const Submit = () => {
                                                                     name="molbio-choices" 
                                                                     onChange={() => setSwine(true)} 
                                                                 />
-                                                                <span className="checkmark">Swine (Php1,500)</span>
+                                                                <span className="checkmark">Swine (Php 1,500)</span>
                                                             </label>
                                                         </div>
                                                     </>

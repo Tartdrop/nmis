@@ -448,7 +448,7 @@ const RequestDetails = () => {
                                                 checked={cultureAndSensitivityTest === true} 
                                                 disabled
                                             />
-                                            <span className="checkmark">Culture and Sensitivity Test (Php1,500/panel)</span>
+                                            <span className="checkmark">Culture and Sensitivity Test (Php 1,500/panel)</span>
                                         </label>
                                         <div className="s-c-a-r-c-e-s-n-co-t-subchoices">
                                             <div className="s-c-a-r-c-e-s-n-co-t-s-container">
@@ -611,7 +611,7 @@ const RequestDetails = () => {
                                                         checked={chloramphenicol === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Chloramphenicol (Php1,500)</span>
+                                                    <span className="checkmark">Chloramphenicol (Php 1,500)</span>
                                                 </label>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                     <input 
@@ -620,7 +620,7 @@ const RequestDetails = () => {
                                                         checked={nitrofuranAoz === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Nitrofuran AOZ (Php1,500)</span>
+                                                    <span className="checkmark">Nitrofuran AOZ (Php 1,500)</span>
                                                 </label>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                     <input 
@@ -629,7 +629,7 @@ const RequestDetails = () => {
                                                         checked={beta_agonists === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Beta-agonists (Php1,500)</span>
+                                                    <span className="checkmark">Beta-agonists (Php 1,500)</span>
                                                 </label>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                     <input 
@@ -638,7 +638,7 @@ const RequestDetails = () => {
                                                         checked={corticosteroids === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Corticosteroids (Php1,500)</span>
+                                                    <span className="checkmark">Corticosteroids (Php 1,500)</span>
                                                 </label>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                     <input 
@@ -647,7 +647,7 @@ const RequestDetails = () => {
                                                         checked={olaquindox === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Olaquindox (Php1,500)</span>
+                                                    <span className="checkmark">Olaquindox (Php 1,500)</span>
                                                 </label>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                     <input 
@@ -656,7 +656,7 @@ const RequestDetails = () => {
                                                         checked={nitrufuranAmoz === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Nitrofuran AMOZ (Php1,500)</span>
+                                                    <span className="checkmark">Nitrofuran AMOZ (Php 1,500)</span>
                                                 </label>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                     <input 
@@ -665,7 +665,7 @@ const RequestDetails = () => {
                                                         checked={stilbenes === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Stilbenes (Php1,500)</span>
+                                                    <span className="checkmark">Stilbenes (Php 1,500)</span>
                                                 </label>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                     <input 
@@ -674,7 +674,7 @@ const RequestDetails = () => {
                                                         checked={ractopamine === true} 
                                                         disabled
                                                     />
-                                                    <span className="checkmark">Ractopamine (Php1,500)</span>
+                                                    <span className="checkmark">Ractopamine (Php 1,500)</span>
                                                 </label>
                                             </div>
                                     </div>
@@ -711,7 +711,7 @@ const RequestDetails = () => {
                                                     checked={dog === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Dog (Php1,500)</span>
+                                                <span className="checkmark">Dog (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -720,7 +720,7 @@ const RequestDetails = () => {
                                                     checked={cat === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Cat (Php1,500)</span>
+                                                <span className="checkmark">Cat (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -729,7 +729,7 @@ const RequestDetails = () => {
                                                     checked={chicken === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Chicken (Php1,500)</span>
+                                                <span className="checkmark">Chicken (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -738,7 +738,7 @@ const RequestDetails = () => {
                                                     checked={buffalo === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Buffalo (Php1,500)</span>
+                                                <span className="checkmark">Buffalo (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -747,7 +747,7 @@ const RequestDetails = () => {
                                                     checked={cattle === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Cattle (Php1,500)</span>
+                                                <span className="checkmark">Cattle (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -756,7 +756,7 @@ const RequestDetails = () => {
                                                     checked={horse === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Horse (Php1,500)</span>
+                                                <span className="checkmark">Horse (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -765,7 +765,7 @@ const RequestDetails = () => {
                                                     checked={goat === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Goat (Php1,500)</span>
+                                                <span className="checkmark">Goat (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -774,7 +774,7 @@ const RequestDetails = () => {
                                                     checked={sheep === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Sheep (Php1,500)</span>
+                                                <span className="checkmark">Sheep (Php 1,500)</span>
                                             </label>
                                             <label className="s-c-a-r-c-e-s-n-co-t-subtests">
                                                 <input 
@@ -783,7 +783,7 @@ const RequestDetails = () => {
                                                     checked={swine === true} 
                                                     disabled
                                                 />
-                                                <span className="checkmark">Swine (Php1,500)</span>
+                                                <span className="checkmark">Swine (Php 1,500)</span>
                                             </label>
                                         </div>
                                     </div>

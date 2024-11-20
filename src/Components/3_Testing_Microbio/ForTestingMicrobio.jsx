@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './ForTesting.css';
+import './ForTestingMicrobio.css';
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
 const TestingList = () => {

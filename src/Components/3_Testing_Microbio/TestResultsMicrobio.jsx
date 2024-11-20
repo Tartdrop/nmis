@@ -1,5 +1,5 @@
 import React from 'react';
-import './TestResults.css';
+import './TestResultsMicrobio.css';
 import Userfront from "@userfront/core";
 
 import blue_logo_icon from '../Assets/BlueLogo.png';

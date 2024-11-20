@@ -11,7 +11,9 @@ import PageForgotNIS from "./PageNotInSystem";
 import PageRegisterTY from "./PageThankYou";
 import PageHomeClient from "./PageHomeClient";
 import PageHomeRecRel from "./PageHomeRecRel";
-import PageHomeTesting from "./PageHomeTesting";
+    import PageHomeTestingChem from "./PageHomeTestingChem";
+    import PageHomeTestingMicrobio from "./PageHomeTestingMicrobio";
+    import PageHomeTestingMolBio from "./PageHomeTestingMolBio";
 /* import PageSubmitRequest from "./PageSubmitRequest"; */
 import PageSubmitRequestNew from "./PageSubmitRequestNew";
 import PageSubmitRequestReview from "./PageSubmitRequestReview";
@@ -21,11 +23,17 @@ import PageForReleaseList from "./PageForReleaseList";
 import PageShowControlNumber from "./PageShowControlNumber";
 import PageRequestAddInfo from "./PageRequestAddInfo";
 import PageRequestDetailsNew from "./PageRequestDetailsNew";
-import PageViewDatabaseT from "./PageViewDatabaseT";
+    import PageViewDatabaseTChem from "./PageViewDatabaseTChem";
+    import PageViewDatabaseTMicrobio from "./PageViewDatabaseTMicrobio";
+    import PageViewDatabaseTMolBio from "./PageViewDatabaseTMolBio";
 import PageViewDatabaseRR from "./PageViewDatabaseRR";
-import PageForTesting from "./PageForTesting";
+    import PageForTestingChem from "./PageForTestingChem";
+    import PageForTestingMicrobio from "./PageForTestingMicrobio";
+    import PageForTestingMolBio from "./PageForTestingMolBio";
 import PageGuide from "./PageGuide";
-import PageTestResults from "./PageTestResults";
+    import PageTestResultsChem from "./PageTestResultsChem";
+    import PageTestResultsMicrobio from "./PageTestResultsMicrobio";
+    import PageTestResultsMolBio from "./PageTestResultsMolBio";
 import PageTFAVerify from "./PageTFA-Verify-Reg";
 
 import PublicRoute from "./PublicRoute";
@@ -156,11 +164,23 @@ function App() {
                     <Route path="/for-release/:userId" element={<PageForReleaseList />} />
                     <Route path="/receive-release-database/:userId" element={<PageViewDatabaseRR />} />
                     
-                    {/* Tester Routes */}
-                    <Route path="/home/tester/:userId" element={<PageHomeTesting />} />
-                    <Route path="/for-testing/:userId" element={<PageForTesting />} />
-                    <Route path="/test-results/:userId" element={<PageTestResults />} />
-                    <Route path="/testing-database/:userId" element={<PageViewDatabaseT />} />
+                    {/* Chem Tester Routes */}
+                    <Route path="/home/chemtester/:userId" element={<PageHomeTestingChem />} />
+                    <Route path="/for-testing-chem/:userId" element={<PageForTestingChem />} />
+                    <Route path="/test-results-chem/:userId" element={<PageTestResultsChem />} />
+                    <Route path="/testing-database-chem/:userId" element={<PageViewDatabaseTChem />} />
+
+                    {/* Microbio Tester Routes */}
+                    <Route path="/home/microbiotester/:userId" element={<PageHomeTestingMicrobio />} />
+                    <Route path="/for-testing-microbio/:userId" element={<PageForTestingMicrobio />} />
+                    <Route path="/test-results-microbio/:userId" element={<PageTestResultsMicrobio />} />
+                    <Route path="/testing-database-microbio/:userId" element={<PageViewDatabaseTMicrobio />} />
+
+                    {/* MolBio Tester Routes */}
+                    <Route path="/home/molbiotester/:userId" element={<PageHomeTestingMolBio />} />
+                    <Route path="/for-testing-molbio/:userId" element={<PageForTestingMolBio />} />
+                    <Route path="/test-results-molbio/:userId" element={<PageTestResultsMolBio />} />
+                    <Route path="/testing-database-molbio/:userId" element={<PageViewDatabaseTMolBio />} />
                 </Route>
 
                 {/* Catch-all Route */}

@@ -5,7 +5,7 @@
     align-items: center;
     margin: auto;
     margin-top: 6.5vh;
-    width: 1270px;
+    width: 100%;
     height: 805px;
     gap: 40px;
     font-family: 'Poppins';
@@ -86,7 +86,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 800px;
+    width: 1200px;
     height: 805px;
     background-color: #ffffffb5;
     border-radius: 10px;
@@ -105,13 +105,13 @@
     justify-content: center;
     background-color: #fff;
     margin-top: 15px;
-    width: 720px;
+    width: 1120px;
     height: 640px;
     border-radius: 10px;
 }
 
 .s-c-a-r-c-e-scroll {
-    width: 660px;
+    width: 1060px;
     height: 590px;
     max-height: 590px;
     overflow: auto;
@@ -195,7 +195,7 @@
 
 .s-c-a-r-c-e-s-n-co-input input,
 .s-c-a-r-c-e-s-n-co-input-samples input {
-    width: 265px;
+    width: 650px;
     height: 25px;
     border: 2px solid #004e65;
     border-radius: 8px;
@@ -213,14 +213,14 @@
 }
 
 .s-c-a-r-c-e-s-n-co-i-samples input::placeholder {
-    color:#004e65
+    color:#004d65b7
 }
 
 .s-c-a-r-c-e-s-n-co-i-s-buttons {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin: -9px -15px -40px 0;
+    margin: -9px -30px -40px 0;
 }
 
 .s-c-a-r-c-e-s-n-co-i-s-buttons button {
@@ -275,7 +275,7 @@
     font-family: 'Poppins';
     font-weight: 500;
     color: #004e65;
-    width: 420px;
+    width: 820px;
     height: 25px;
     background: #ffffff;
     border-radius: 8px;
@@ -509,7 +509,7 @@
     font-family: 'Poppins';
     font-weight: 500;
     color: #004e65;
-    width: 265px;
+    width: 670px;
     height: 25px;
     background: #ffffff;
     border-radius: 8px;
@@ -550,7 +550,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 585px;
+    width: 985px;
     height: 85px;
     background-color: #2B9DC1;
     border-radius: 10px;
