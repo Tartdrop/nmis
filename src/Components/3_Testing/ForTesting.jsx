@@ -16,25 +16,105 @@ const TestingList = () => {
     const [saveStatus, setSaveStatus] = useState('');
 
     useEffect(() => {
-        // Get user type from your auth system
         const userType = localStorage.getItem('userType');
         setUserType(userType);
         
-        // Fetch data from backend on component mount
-        fetch('http://localhost:8080/requests/for-testing')
-            .then(response => {
-                if (!response.ok) {
+        const fetchData = async () => {
+            try {
+                const requestsResponse = await fetch('http://localhost:8080/requests/for-testing');
+                if (!requestsResponse.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Fetched requests:', data); // Debug log
-                setRequests(data);
-            })
-            .catch(error => {
-                console.error('Error fetching testing requests:', error);
-            });
+                const requestsData = await requestsResponse.json();
+                setRequests(requestsData);
+
+                // Fetch test results
+                const [microbioRes, chemElisaRes, chemMicrobialRes, molBioRes] = await Promise.all([
+                    fetch('http://localhost:8080/microbioTestResults'),
+                    fetch('http://localhost:8080/chemElisaTestResults'),
+                    fetch('http://localhost:8080/chemMicrobialTestResults'),
+                    fetch('http://localhost:8080/molBioTestResults')
+                ]);
+
+                const [microbioData, chemElisaData, chemMicrobialData, molBioData] = await Promise.all([
+                    microbioRes.json(),
+                    chemElisaRes.json(),
+                    chemMicrobialRes.json(),
+                    molBioRes.json()
+                ]);
+
+                // Map results to requests
+                const mappedResults = {};
+
+                // Map microbio results
+                microbioData.forEach(result => {
+                    mappedResults[result.result.requestId] = {
+                        ...mappedResults[result.result.requestId],
+                        eColi: result.eColi,
+                        eColiAndeColi0O157: result.eColiAndeColi0O157,
+                        standardPlateCount: result.standardPlateCount,
+                        staphylococcusAureus: result.staphylococcusAureus,
+                        salmonellaSp: result.salmonellaSp,
+                        campylobacter: result.campylobacter,
+                        cultureAndSensitivityTest: result.cultureAndSensitivityTest,
+                        coliformCount: result.coliformCount,
+                        yeastAndMolds: result.yeastAndMolds
+                    };
+                });
+
+                // Map chem ELISA results
+                chemElisaData.forEach(result => {
+                    mappedResults[result.result.requestId] = {
+                        ...mappedResults[result.result.requestId],
+                        chloramphenicol: result.chloramphenicol,
+                        nitrofuranAoz: result.nitrofuranAoz,
+                        beta_agonists: result.beta_agonists,
+                        corticosteroids: result.corticosteroids,
+                        olaquindox: result.olaquindox,
+                        nitrufuranAmoz: result.nitrufuranAmoz,
+                        stilbenes: result.stilbenes,
+                        ractopamine: result.ractopamine
+                    };
+                });
+
+                // Map chem microbial results
+                chemMicrobialData.forEach(result => {
+                    mappedResults[result.result.requestId] = {
+                        ...mappedResults[result.result.requestId],
+                        betaLactams: result.betaLactams,
+                        tetracyclines: result.tetracyclines,
+                        sulfonamides: result.sulfonamides,
+                        aminoglycosides: result.aminoglycosides,
+                        macrolides: result.macrolides,
+                        quinolones: result.quinolones
+                    };
+                });
+
+                // Map mol bio results
+                molBioData.forEach(result => {
+                    mappedResults[result.result.requestId] = {
+                        ...mappedResults[result.result.requestId],
+                        dog: result.dog,
+                        cat: result.cat,
+                        chicken: result.chicken,
+                        buffalo: result.buffalo,
+                        cattle: result.cattle,
+                        horse: result.horse,
+                        goat: result.goat,
+                        sheep: result.sheep,
+                        swine: result.swine
+                    };
+                });
+
+                console.log('Mapped test results:', mappedResults);
+                setTestResults(mappedResults);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     const toggleSample = (controlNumber) => {
@@ -93,7 +173,6 @@ const TestingList = () => {
             }
             
             const sampleId = request.sample[0].sampleId;
-            console.log('Attempting to save changes for Sample ID:', sampleId);
             const currentResults = testResults[request.requestId] || {};
             
             // Microbio tests
@@ -110,7 +189,7 @@ const TestingList = () => {
                 if (currentResults.coliformCount) microbioData.coliformCount = currentResults.coliformCount;
                 if (currentResults.yeastAndMolds) microbioData.yeastAndMolds = currentResults.yeastAndMolds;
 
-                console.log(`Sending microbio data to Sample ID ${sampleId}:`, microbioData);
+                console.log('Sending microbio data:', microbioData);
                 const response = await fetch(`http://localhost:8080/microbioTestResults/${sampleId}`, {
                     method: 'PUT',
                     headers: {
@@ -139,7 +218,7 @@ const TestingList = () => {
                 if (currentResults.ractopamine) elisaData.ractopamine = currentResults.ractopamine;
 
                 if (Object.keys(elisaData).length > 0) {
-                    console.log(`Sending ELISA data to Sample ID ${sampleId}:`, elisaData);
+                    console.log('Sending ELISA data:', elisaData);
                     const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
@@ -164,7 +243,7 @@ const TestingList = () => {
                 if (currentResults.quinolones) chemMicrobialData.quinolones = currentResults.quinolones;
 
                 if (Object.keys(chemMicrobialData).length > 0) {
-                    console.log(`Sending chemical microbial data to Sample ID ${sampleId}:`, chemMicrobialData);
+                    console.log('Sending chemical microbial data:', chemMicrobialData);
                     const response = await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
@@ -194,7 +273,7 @@ const TestingList = () => {
                 if (currentResults.swine) molBioData.swine = currentResults.swine;
 
                 if (Object.keys(molBioData).length > 0) {
-                    console.log(`Sending mol bio data to Sample ID ${sampleId}:`, molBioData);
+                    console.log('Sending mol bio data:', molBioData);
                     const response = await fetch(`http://localhost:8080/molBioTestResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
