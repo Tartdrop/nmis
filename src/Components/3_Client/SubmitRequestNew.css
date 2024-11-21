@@ -94,7 +94,7 @@
 
 .s-c-a-r-title {
     font-weight: 700;
-    font-size: 64px;
+    font-size: 68px;
     color: #004e65;
     margin-top: 15px;
 }
@@ -133,7 +133,7 @@
 
 .s-c-a-r-c-e-s-n-title {
     color: #2B9DC1;
-    font-size: 40px;
+    font-size: 44px;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -152,12 +152,41 @@
 
 .s-c-a-r-c-e-s-n-container {
     position: relative;
-    display: flex;
+    display: grid;
     flex-direction: column;
     padding-left: 30px;
     color: #004e65;
     gap: 10px;
     margin: 10px 0 10px;
+}
+
+.s-c-a-r-c-e-s-n-container-row {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding-left: 30px;
+    color: #004e65;
+    gap: 60px;
+    margin: 10px 0 10px;
+}
+
+.s-c-a-r-c-e-s-n-container-row-2 {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding-left: 30px;
+    color: #004e65;
+    gap: 79px;
+    margin: 10px 0 10px;
+}
+
+.s-c-a-r-c-e-s-n-container-others {
+    position: relative;
+    display: grid;
+    flex-direction: column;
+    color: #004e65;
+    gap: 10px;
+    margin: 10px -15px 10px;
 }
 
 .s-c-a-r-c-e-s-n-sampleinformation {
@@ -169,10 +198,14 @@
 .s-c-a-r-c-e-s-n-co-input {
     display: flex;
     gap: 7px;
-    font-size: 18px;
+    font-size: 20px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
+}
+
+.s-c-a-r-c-e-s-n-co-o-choices {
+    padding-left: 26.5px;
 }
 
 .s-c-a-r-c-e-s-n-co-input,
@@ -181,7 +214,7 @@
     justify-content: space-between;
     margin-right: 20px;
     gap: 7px;
-    font-size: 18px;
+    font-size: 20px;
     align-items: start;
     margin-left: 10px;
     cursor: auto;
@@ -195,7 +228,7 @@
 
 .s-c-a-r-c-e-s-n-co-input input,
 .s-c-a-r-c-e-s-n-co-input-samples input {
-    width: 650px;
+    width: 630px;
     height: 25px;
     border: 2px solid #004e65;
     border-radius: 8px;
@@ -220,7 +253,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin: -9px -30px -40px 0;
+    margin: -9px -24px -40px 0;
 }
 
 .s-c-a-r-c-e-s-n-co-i-s-buttons button {
@@ -275,25 +308,26 @@
     font-family: 'Poppins';
     font-weight: 500;
     color: #004e65;
-    width: 820px;
+    width: 900px;
     height: 25px;
     background: #ffffff;
     border-radius: 8px;
     padding: 0 25px;
-    margin-left: 25px;
+    margin-bottom: 20px;
     border: 2px solid #004e65;
 }
 
 .s-c-a-r-c-e-s-n-co-o-input {
-    margin: 10px 50px 0;
+    margin: 0 50px 0;
     gap: 10px;
     overflow: hidden;
     max-height: 0;
     opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    transition: margin 0.3s ease, max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .s-c-a-r-c-e-s-n-co-o-input.show {
+    margin: 10px 50px -20px;
     max-height: 200px;
     opacity: 1;
 }
@@ -305,7 +339,7 @@
 .s-c-a-r-c-e-s-n-co-choices-test {
     display: flex;
     gap: 19px;
-    font-size: 18px;
+    font-size: 22px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
@@ -367,7 +401,7 @@
 .s-c-a-r-c-e-s-n-co-t-choices-cst {
     display: flex;
     gap: 19px;
-    font-size: 15px;
+    font-size: 16px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
@@ -420,7 +454,7 @@
 .s-c-a-r-c-e-s-n-co-t-subtests {
     display: flex;
     gap: 19px;
-    font-size: 14px;
+    font-size: 16px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
@@ -465,7 +499,7 @@
 }
 
 .s-c-a-r-c-e-s-n-co-t-choices span {
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .s-c-a-r-c-e-s-n-co-t-s-c-text {
@@ -498,7 +532,7 @@
     align-items: center;
     justify-content: space-between;
     margin: 10px 20px 0 50px;
-    font-size: 13px;
+    font-size: 14px;
     /*overflow: hidden;
     max-height: 0;
     opacity: 0;*/
@@ -555,7 +589,7 @@
     background-color: #2B9DC1;
     border-radius: 10px;
     margin: 20px 0 10px;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
     color: #ffffff;
     cursor: pointer;
