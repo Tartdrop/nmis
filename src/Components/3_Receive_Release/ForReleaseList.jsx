@@ -21,40 +21,23 @@ const ForReleasing = () => {
                 const requestsData = await requestsResponse.json();
                 setRequests(requestsData);
 
-                // Fetch all test results
-                const [microbioRes, chemElisaRes, chemMicrobialRes, molBioRes] = await Promise.all([
-                    fetch('http://localhost:8080/microbioTestResults'),
-                    fetch('http://localhost:8080/chemElisaTestResults'),
-                    fetch('http://localhost:8080/chemMicrobialTestResults'),
-                    fetch('http://localhost:8080/molBioTestResults')
-                ]);
-
-                const [microbioData, chemElisaData, chemMicrobialData, molBioData] = await Promise.all([
-                    microbioRes.json(),
-                    chemElisaRes.json(),
-                    chemMicrobialRes.json(),
-                    molBioRes.json()
-                ]);
-
-                // Map results to requests
-                const mappedResults = {};
+                // Fetch results for each request
+                const resultsPromises = requestsData.map(request => 
+                    fetch(`http://localhost:8080/getResult/${request.requestId}`)
+                        .then(res => res.json())
+                );
                 
-                // Map all test results similar to ForTestingChem.jsx
-                [
-                    { data: microbioData, type: 'microbio' },
-                    { data: chemElisaData, type: 'chemElisa' },
-                    { data: chemMicrobialData, type: 'chemMicrobial' },
-                    { data: molBioData, type: 'molBio' }
-                ].forEach(({ data, type }) => {
-                    data.forEach(result => {
-                        if (!mappedResults[result.result.requestId]) {
-                            mappedResults[result.result.requestId] = {};
-                        }
-                        mappedResults[result.result.requestId][type] = result;
-                    });
+                const results = await Promise.all(resultsPromises);
+                
+                // Map results to request IDs
+                const mappedResults = {};
+                results.forEach(result => {
+                    mappedResults[result.requestId] = result;
                 });
 
+                console.log('Mapped results:', mappedResults);
                 setTestResults(mappedResults);
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -83,83 +66,163 @@ const ForReleasing = () => {
                 <div className='pendingrequest-title'>For Releasing</div>
                 <div className="pendingrequest-1st-container">
                     {requests.length > 0 ? (
-                        requests.map((request) => (
-                            <div key={request.requestId} className="release-request-row">
-                                <div className="release-request-summary" onClick={() => toggleRequestDetails(request.requestId)}>
-                                    <div className="control-number">
-                                        {request.controlNumber}
-                                    </div>
-                                    <div className="test-results-summary">
-                                        {request.microbio && (
-                                            <div className="microbio-summary">
-                                                Microbio: {testResults[request.requestId]?.microbio ? 'Completed' : 'Pending'}
-                                            </div>
-                                        )}
-                                        {request.chem && (
-                                            <div className="chem-summary">
-                                                Chem: {(testResults[request.requestId]?.chemElisa || testResults[request.requestId]?.chemMicrobial) ? 'Completed' : 'Pending'}
-                                            </div>
-                                        )}
-                                        {request.molBio && (
-                                            <div className="molbio-summary">
-                                                MolBio: {testResults[request.requestId]?.molBio ? 'Completed' : 'Pending'}
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="action-buttons">
-                                        <button 
-                                            className="release-btn"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleRelease(request.requestId);
-                                            }}
-                                        >
-                                            Release
-                                        </button>
-                                        <button 
-                                            className="reject-btn"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleReject(request.requestId);
-                                            }}
-                                        >
-                                            Reject
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {expandedRequest === request.requestId && (
-                                    <div className="request-details">
-                                        {/* Test Results Details */}
-                                        <div className="test-results-details">
-                                            {/* Microbio Results */}
-                                            {request.microbio && testResults[request.requestId]?.microbio && (
-                                                <div className="microbio-results">
-                                                    <h3>Microbiology Results</h3>
-                                                    {/* Display microbio test results */}
+                        requests.map((request) => {
+                            const result = testResults[request.requestId];
+                            return (
+                                <div key={request.requestId} className="release-request-row">
+                                    <div className="release-request-summary" onClick={() => toggleRequestDetails(request.requestId)}>
+                                        <div className="control-number">
+                                            {request.controlNumber}
+                                        </div>
+                                        <div className="test-results-summary">
+                                            {request.microbio && (
+                                                <div className="microbio-summary">
+                                                    Microbio: {result?.completeMicrobio ? 'Completed' : 'Pending'}
                                                 </div>
                                             )}
-                                            
-                                            {/* Chemical Results */}
                                             {request.chem && (
-                                                <div className="chemical-results">
-                                                    <h3>Chemical Test Results</h3>
-                                                    {/* Display chemical test results */}
+                                                <div className="chem-summary">
+                                                    Chem: {(result?.completeChemElisa || result?.completeChemMicrobial) ? 'Completed' : 'Pending'}
                                                 </div>
                                             )}
-                                            
-                                            {/* Molecular Biology Results */}
-                                            {request.molBio && testResults[request.requestId]?.molBio && (
-                                                <div className="molbio-results">
-                                                    <h3>Molecular Biology Results</h3>
-                                                    {/* Display molecular biology test results */}
+                                            {request.molBio && (
+                                                <div className="molbio-summary">
+                                                    MolBio: {result?.completeMolBio ? 'Completed' : 'Pending'}
                                                 </div>
                                             )}
                                         </div>
+                                        <div className="action-buttons">
+                                            <button 
+                                                className="release-btn"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleRelease(request.requestId);
+                                                }}
+                                            >
+                                                Release
+                                            </button>
+                                            <button 
+                                                className="reject-btn"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleReject(request.requestId);
+                                                }}
+                                            >
+                                                Reject
+                                            </button>
+                                        </div>
                                     </div>
-                                )}
-                            </div>
-                        ))
+
+                                    {expandedRequest === request.requestId && result && (
+                                        <div className="request-details">
+                                            <div className="test-results-details">
+                                                {/* Microbio Results */}
+                                                {request.microbio && result.microbioTestResults && result.microbioTestResults.length > 0 && (
+                                                    <div className="microbio-results">
+                                                        <h3>Microbiology Results</h3>
+                                                        {Object.entries(result.microbioTestResults[0])
+                                                            .filter(([key, value]) => 
+                                                                !key.includes('Date') && 
+                                                                !key.includes('Id') && 
+                                                                !key.includes('sample') &&
+                                                                value !== null
+                                                            )
+                                                            .map(([key, value]) => {
+                                                                // Format the key for display
+                                                                const formattedKey = key
+                                                                    .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+                                                                    .replace(/^./, str => str.toUpperCase()); // Capitalize first letter
+                                                                return (
+                                                                    <div key={key} className="result-item">
+                                                                        <strong>{formattedKey}:</strong> {value}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Chemical Results */}
+                                                {request.chem && (
+                                                    <div className="chemical-results">
+                                                        <h3>Chemical Test Results</h3>
+                                                        {/* ELISA Results */}
+                                                        {result.chemElisaTestResults && result.chemElisaTestResults.length > 0 && (
+                                                            <div className="elisa-results">
+                                                                <h4>ELISA Tests</h4>
+                                                                {Object.entries(result.chemElisaTestResults[0])
+                                                                    .filter(([key, value]) => 
+                                                                        !key.includes('Date') && 
+                                                                        !key.includes('Id') && 
+                                                                        !key.includes('sample') &&
+                                                                        value !== null
+                                                                    )
+                                                                    .map(([key, value]) => {
+                                                                        const formattedKey = key
+                                                                            .replace(/([A-Z])/g, ' $1')
+                                                                            .replace(/^./, str => str.toUpperCase());
+                                                                        return (
+                                                                            <div key={key} className="result-item">
+                                                                                <strong>{formattedKey}:</strong> {value}
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                            </div>
+                                                        )}
+                                                        {/* Microbial Results */}
+                                                        {result.chemMicrobialTestResults && result.chemMicrobialTestResults.length > 0 && (
+                                                            <div className="microbial-results">
+                                                                <h4>Microbial Tests</h4>
+                                                                {Object.entries(result.chemMicrobialTestResults[0])
+                                                                    .filter(([key, value]) => 
+                                                                        !key.includes('Date') && 
+                                                                        !key.includes('Id') && 
+                                                                        !key.includes('sample') &&
+                                                                        value !== null
+                                                                    )
+                                                                    .map(([key, value]) => {
+                                                                        const formattedKey = key
+                                                                            .replace(/([A-Z])/g, ' $1')
+                                                                            .replace(/^./, str => str.toUpperCase());
+                                                                        return (
+                                                                            <div key={key} className="result-item">
+                                                                                <strong>{formattedKey}:</strong> {value}
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Molecular Biology Results */}
+                                                {request.molBio && result.molBioTestResults && result.molBioTestResults.length > 0 && (
+                                                    <div className="molbio-results">
+                                                        <h3>Molecular Biology Results</h3>
+                                                        {Object.entries(result.molBioTestResults[0])
+                                                            .filter(([key, value]) => 
+                                                                !key.includes('Date') && 
+                                                                !key.includes('Id') && 
+                                                                !key.includes('sample') &&
+                                                                value !== null
+                                                            )
+                                                            .map(([key, value]) => {
+                                                                const formattedKey = key
+                                                                    .replace(/([A-Z])/g, ' $1')
+                                                                    .replace(/^./, str => str.toUpperCase());
+                                                                return (
+                                                                    <div key={key} className="result-item">
+                                                                        <strong>{formattedKey}:</strong> {value}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })
                     ) : (
                         <div className="pendingrequest-2nd-container">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
