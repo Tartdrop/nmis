@@ -25,11 +25,13 @@
 
 .trackmyrequest-1st-container {
     width: 1200px;
-    height: 600px;
+    height: auto;
+    min-height: 600px;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    overflow-y: auto;
 }
 
 .trackmyrequest-2nd-container {
@@ -91,6 +93,7 @@
 }
 
 .request-button {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -99,7 +102,6 @@
     gap: 50px;
     background-color: #2B9DC1;
     border-radius: 10px;
-    width: 1200px;
     height: 40px;
     font-weight: 700;
     color: #fff;
@@ -123,4 +125,87 @@
 
 .request-button:hover {
     opacity: 100%;
+}
+
+.request-details {
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+    font-size: 0.9em;
+    margin-top: -1px;
+}
+
+.test-results-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.microbio-results,
+.chemical-results,
+.molbio-results {
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.result-item {
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+}
+
+.result-item strong {
+    min-width: 150px;
+    color: #666;
+}
+
+.microbio-results h3,
+.chemical-results h3,
+.molbio-results h3 {
+    font-size: 1em;
+    margin: 0 0 8px 0;
+    color: #004e65;
+}
+
+.chemical-results h4 {
+    font-size: 0.95em;
+    margin: 8px 0;
+    color: #2B9DC1;
+}
+
+.elisa-results,
+.microbial-results {
+    padding: 8px 0;
+}
+
+.elisa-results:not(:last-child) {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 8px;
+}
+
+.requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.request-container-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.request-details-dropdown {
+    margin-top: 4px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
