@@ -213,16 +213,17 @@
 
 .test-result-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 12px;
     margin-bottom: 10px;
-    padding: 8px;
+    padding: 12px;
     border-radius: 4px;
     background-color: white;
 }
 
 .test-result-input {
-    width: 200px;
+    width: 150px;
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -238,4 +239,20 @@
 .test-result-input:disabled {
     background-color: #f5f5f5;
     cursor: not-allowed;
+}
+
+.date-picker {
+    width: 130px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    justify-content: right;
+}
+
+.date-picker:focus {
+    border-color: #2B9DC1;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(43, 157, 193, 0.2);
 }

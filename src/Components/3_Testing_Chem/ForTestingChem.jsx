@@ -14,6 +14,7 @@ const TestingList = () => {
     const [userType, setUserType] = useState('');
     const [testResults, setTestResults] = useState({});
     const [saveStatus, setSaveStatus] = useState('');
+    const [analysisDateUpdates, setAnalysisDateUpdates] = useState({});
 
     useEffect(() => {
         const userType = localStorage.getItem('userType');
@@ -123,36 +124,18 @@ const TestingList = () => {
         );
     };
 
-    const toggleMicrobial = (controlNumber) => {
-        setExpandedMicrobial(prevExpanded => 
-            prevExpanded === controlNumber ? null : controlNumber
-        );
-    };
-
     const toggleChem = (controlNumber) => {
         setExpandedChem(prevExpanded => 
             prevExpanded === controlNumber ? null : controlNumber
         );
     };
 
-    const toggleMolBio = (controlNumber) => {
-        setExpandedMolBio(prevExpanded => 
-            prevExpanded === controlNumber ? null : controlNumber
-        );
-    };
 
-    // Helper functions to check permissions
-    const canAccessMolBio = (userType) => {
-        return ['TESTER', 'MOLBIOTESTER'].includes(userType.toUpperCase());
-    };
 
     const canAccessChem = (userType) => {
         return ['TESTER', 'CHEMTESTER'].includes(userType.toUpperCase());
     };
 
-    const canAccessMicrobio = (userType) => {
-        return ['TESTER', 'MICROBIOTESTER'].includes(userType.toUpperCase());
-    };
 
     const handleTestResultChange = (requestId, testType, value) => {
         setTestResults(prev => ({
@@ -164,128 +147,111 @@ const TestingList = () => {
         }));
     };
 
+    const handleAnalysisDateChange = (requestId, testType, date) => {
+        setAnalysisDateUpdates(prev => ({
+            ...prev,
+            [`${requestId}_${testType}_analysis_date`]: date
+        }));
+    };
+
     const handleSaveChanges = async (request) => {
         try {
-            setSaveStatus('Saving...');
-            
-            if (!request.sample || !request.sample.length) {
-                throw new Error('No sample ID found for this request');
+            const sampleId = request.sample[0]?.sampleId;
+            if (!sampleId) {
+                throw new Error('Sample ID not found');
             }
-            
-            const sampleId = request.sample[0].sampleId;
-            const currentResults = testResults[request.requestId] || {};
-            
-            // Microbio tests
-            if (request.microbio) {
-                // Only include properties that have values
-                const microbioData = {};
-                if (currentResults.eColi) microbioData.eColi = currentResults.eColi;
-                if (currentResults.eColiAndeColi0O157) microbioData.eColiAndeColi0O157 = currentResults.eColiAndeColi0O157;
-                if (currentResults.standardPlateCount) microbioData.standardPlateCount = currentResults.standardPlateCount;
-                if (currentResults.staphylococcusAureus) microbioData.staphylococcusAureus = currentResults.staphylococcusAureus;
-                if (currentResults.salmonellaSp) microbioData.salmonellaSp = currentResults.salmonellaSp;
-                if (currentResults.campylobacter) microbioData.campylobacter = currentResults.campylobacter;
-                if (currentResults.cultureAndSensitivityTest) microbioData.cultureAndSensitivityTest = currentResults.cultureAndSensitivityTest;
-                if (currentResults.coliformCount) microbioData.coliformCount = currentResults.coliformCount;
-                if (currentResults.yeastAndMolds) microbioData.yeastAndMolds = currentResults.yeastAndMolds;
 
-                console.log('Sending microbio data:', microbioData);
-                const response = await fetch(`http://localhost:8080/microbioTestResults/${sampleId}`, {
+            const currentResults = testResults[request.requestId] || {};
+
+            // Chemical ELISA tests
+            const elisaData = {};
+            if (currentResults.chloramphenicol) {
+                elisaData.chloramphenicol = currentResults.chloramphenicol;
+                elisaData.chloramphenicolAnalysisDate = analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || null;
+            }
+            if (currentResults.nitrofuranAoz) {
+                elisaData.nitrofuranAoz = currentResults.nitrofuranAoz;
+                elisaData.nitrofuranAozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || null;
+            }
+            if (currentResults.beta_agonists) {
+                elisaData.beta_agonists = currentResults.beta_agonists;
+                elisaData.beta_agonistsAnalysisDate = analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || null;
+            }
+            if (currentResults.corticosteroids) {
+                elisaData.corticosteroids = currentResults.corticosteroids;
+                elisaData.corticosteroidsAnalysisDate = analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || null;
+            }
+            if (currentResults.olaquindox) {
+                elisaData.olaquindox = currentResults.olaquindox;
+                elisaData.olaquindoxAnalysisDate = analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || null;
+            }
+            if (currentResults.nitrufuranAmoz) {
+                elisaData.nitrufuranAmoz = currentResults.nitrufuranAmoz;
+                elisaData.nitrufuranAmozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || null;
+            }
+            if (currentResults.stilbenes) {
+                elisaData.stilbenes = currentResults.stilbenes;
+                elisaData.stilbenesAnalysisDate = analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || null;
+            }
+            if (currentResults.ractopamine) {
+                elisaData.ractopamine = currentResults.ractopamine;
+                elisaData.ractopamineAnalysisDate = analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || null;
+            }
+
+            // Chemical Microbial tests
+            const chemMicrobialData = {};
+            if (currentResults.betaLactams) {
+                chemMicrobialData.betaLactams = currentResults.betaLactams;
+                chemMicrobialData.betaLactamsAnalysisDate = analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || null;
+            }
+            if (currentResults.tetracyclines) {
+                chemMicrobialData.tetracyclines = currentResults.tetracyclines;
+                chemMicrobialData.tetracyclinesAnalysisDate = analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || null;
+            }
+            if (currentResults.sulfonamides) {
+                chemMicrobialData.sulfonamides = currentResults.sulfonamides;
+                chemMicrobialData.sulfonamidesAnalysisDate = analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || null;
+            }
+            if (currentResults.aminoglycosides) {
+                chemMicrobialData.aminoglycosides = currentResults.aminoglycosides;
+                chemMicrobialData.aminoglycosidesAnalysisDate = analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || null;
+            }
+            if (currentResults.macrolides) {
+                chemMicrobialData.macrolides = currentResults.macrolides;
+                chemMicrobialData.macrolidesAnalysisDate = analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || null;
+            }
+            if (currentResults.quinolones) {
+                chemMicrobialData.quinolones = currentResults.quinolones;
+                chemMicrobialData.quinolonesAnalysisDate = analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || null;
+            }
+
+            // Send ELISA data if there are any updates
+            if (Object.keys(elisaData).length > 0) {
+                const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(microbioData)
+                    body: JSON.stringify(elisaData)
                 });
 
                 if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Failed to save microbio results: ${errorText}`);
+                    throw new Error('Failed to save ELISA results');
                 }
             }
 
-            // Chemical tests
-            if (request.chem) {
-                // ELISA tests
-                const elisaData = {};
-                if (currentResults.chloramphenicol) elisaData.chloramphenicol = currentResults.chloramphenicol;
-                if (currentResults.nitrofuranAoz) elisaData.nitrofuranAoz = currentResults.nitrofuranAoz;
-                if (currentResults.beta_agonists) elisaData.beta_agonists = currentResults.beta_agonists;
-                if (currentResults.corticosteroids) elisaData.corticosteroids = currentResults.corticosteroids;
-                if (currentResults.olaquindox) elisaData.olaquindox = currentResults.olaquindox;
-                if (currentResults.nitrufuranAmoz) elisaData.nitrufuranAmoz = currentResults.nitrufuranAmoz;
-                if (currentResults.stilbenes) elisaData.stilbenes = currentResults.stilbenes;
-                if (currentResults.ractopamine) elisaData.ractopamine = currentResults.ractopamine;
+            // Send Chemical Microbial data if there are any updates
+            if (Object.keys(chemMicrobialData).length > 0) {
+                const response = await fetch(`http://localhost:8080/chemTestMicrobialResults/${sampleId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(chemMicrobialData)
+                });
 
-                if (Object.keys(elisaData).length > 0) {
-                    console.log('Sending ELISA data:', elisaData);
-                    const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(elisaData)
-                    });
-
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Failed to save ELISA results: ${errorText}`);
-                    }
-                }
-
-                // Chemical Microbial tests
-                const chemMicrobialData = {};
-                if (currentResults.betaLactams) chemMicrobialData.betaLactams = currentResults.betaLactams;
-                if (currentResults.tetracyclines) chemMicrobialData.tetracyclines = currentResults.tetracyclines;
-                if (currentResults.sulfonamides) chemMicrobialData.sulfonamides = currentResults.sulfonamides;
-                if (currentResults.aminoglycosides) chemMicrobialData.aminoglycosides = currentResults.aminoglycosides;
-                if (currentResults.macrolides) chemMicrobialData.macrolides = currentResults.macrolides;
-                if (currentResults.quinolones) chemMicrobialData.quinolones = currentResults.quinolones;
-
-                if (Object.keys(chemMicrobialData).length > 0) {
-                    console.log('Sending chemical microbial data:', chemMicrobialData);
-                    const response = await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(chemMicrobialData)
-                    });
-
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Failed to save chemical microbial results: ${errorText}`);
-                    }
-                }
-            }
-
-            // Mol Bio tests
-            if (request.molBio) {
-                const molBioData = {};
-                if (currentResults.dog) molBioData.dog = currentResults.dog;
-                if (currentResults.cat) molBioData.cat = currentResults.cat;
-                if (currentResults.chicken) molBioData.chicken = currentResults.chicken;
-                if (currentResults.buffalo) molBioData.buffalo = currentResults.buffalo;
-                if (currentResults.cattle) molBioData.cattle = currentResults.cattle;
-                if (currentResults.horse) molBioData.horse = currentResults.horse;
-                if (currentResults.goat) molBioData.goat = currentResults.goat;
-                if (currentResults.sheep) molBioData.sheep = currentResults.sheep;
-                if (currentResults.swine) molBioData.swine = currentResults.swine;
-
-                if (Object.keys(molBioData).length > 0) {
-                    console.log('Sending mol bio data:', molBioData);
-                    const response = await fetch(`http://localhost:8080/molBioTestResults/${sampleId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(molBioData)
-                    });
-
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Failed to save mol bio results: ${errorText}`);
-                    }
+                if (!response.ok) {
+                    throw new Error('Failed to save Chemical Microbial results');
                 }
             }
 
@@ -318,131 +284,7 @@ const TestingList = () => {
                             <div key={index} className="request-item">
                                 <div className="request-header">
                                     <span>{request.controlNumber}</span>
-                                    <span>
-                                        {request.microbio ? (
-                                            canAccessMicrobio(userType) ? (
-                                                <button 
-                                                    className="test-btn" 
-                                                    onClick={() => toggleMicrobial(request.controlNumber)}
-                                                >
-                                                    Microbio
-                                                </button>
-                                            ) : (
-                                                <button 
-                                                    className="test-btn-disabled" 
-                                                    disabled
-                                                    title="You don't have permission to access this section"
-                                                >
-                                                    Microbio
-                                                </button>
-                                            )
-                                        ) : (
-                                            "no testing...."
-                                        )}
-                                        {expandedMicrobial === request.controlNumber && (
-                                            <div className="microbial-list">
-                                                {request.standardPlateCount && (
-                                                    <div className="test-result-item">
-                                                        <strong>Standard/Aerobic Plate Count:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.standardPlateCount || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'standardPlateCount', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.coliformCount && (
-                                                    <div className="test-result-item">
-                                                        <strong>Coliform count:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.coliformCount || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'coliformCount', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.salmonellaSp && (
-                                                    <div className="test-result-item">
-                                                        <strong>Salmonella sp.:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.salmonellaSp || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'salmonellaSp', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.staphylococcusAureus && (
-                                                    <div className="test-result-item">
-                                                        <strong>Staphylococcus aureus:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.staphylococcusAureus || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'staphylococcusAureus', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.eColi && (
-                                                    <div className="test-result-item">
-                                                        <strong>E.Coli:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.eColi || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'eColi', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.eColiAndeColi0O157 && (
-                                                    <div className="test-result-item">
-                                                        <strong>E. coli and E.Coli 0157:H7:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.eColiAndeColi0O157 || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'eColiAndeColi0O157', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.campylobacter && (
-                                                    <div className="test-result-item">
-                                                        <strong>Campylobacter:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.campylobacter || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'campylobacter', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.yeastAndMolds && (
-                                                    <div className="test-result-item">
-                                                        <strong>Yeast and Molds:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.yeastAndMolds || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'yeastAndMolds', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.cultureAndSensitivityTest && (
-                                                    <div className="test-result-item">
-                                                        <strong>Culture and Sensitivity Test:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.cultureAndSensitivityTest || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'cultureAndSensitivityTest', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-                                    </span>
+                                    
                                     <span>
                                         {request.chem ? (
                                             canAccessChem(userType) ? (
@@ -479,6 +321,12 @@ const TestingList = () => {
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'betaLactams', e.target.value)}
                                                                         className="test-result-input"
                                                                     />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'betaLactams', e.target.value)}
+                                                                        className="date-picker"
+                                                                    />
                                                                 </div>
                                                             )}
                                                             {request.tetracyclines && (
@@ -489,6 +337,12 @@ const TestingList = () => {
                                                                         value={testResults[request.requestId]?.tetracyclines || ''}
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'tetracyclines', e.target.value)}
                                                                         className="test-result-input"
+                                                                    />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'tetracyclines', e.target.value)}
+                                                                        className="date-picker"
                                                                     />
                                                                 </div>
                                                             )}
@@ -501,6 +355,12 @@ const TestingList = () => {
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'sulfonamides', e.target.value)}
                                                                         className="test-result-input"
                                                                     />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'sulfonamides', e.target.value)}
+                                                                        className="date-picker"
+                                                                    />
                                                                 </div>
                                                             )}
                                                             {request.aminoglycosides && (
@@ -511,6 +371,12 @@ const TestingList = () => {
                                                                         value={testResults[request.requestId]?.aminoglycosides || ''}
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'aminoglycosides', e.target.value)}
                                                                         className="test-result-input"
+                                                                    />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'aminoglycosides', e.target.value)}
+                                                                        className="date-picker"
                                                                     />
                                                                 </div>
                                                             )}
@@ -523,6 +389,12 @@ const TestingList = () => {
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'macrolides', e.target.value)}
                                                                         className="test-result-input"
                                                                     />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'macrolides', e.target.value)}
+                                                                        className="date-picker"
+                                                                    />
                                                                 </div>
                                                             )}
                                                             {request.quinolones && (
@@ -533,6 +405,12 @@ const TestingList = () => {
                                                                         value={testResults[request.requestId]?.quinolones || ''}
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'quinolones', e.target.value)}
                                                                         className="test-result-input"
+                                                                    />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'quinolones', e.target.value)}
+                                                                        className="date-picker"
                                                                     />
                                                                 </div>
                                                             )}
@@ -552,6 +430,12 @@ const TestingList = () => {
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'chloramphenicol', e.target.value)}
                                                                         className="test-result-input"
                                                                     />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'chloramphenicol', e.target.value)}
+                                                                        className="date-picker"
+                                                                    />
                                                                 </div>
                                                             )}
                                                             {request.nitrofuranAoz && (
@@ -562,6 +446,12 @@ const TestingList = () => {
                                                                         value={testResults[request.requestId]?.nitrofuranAoz || ''}
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'nitrofuranAoz', e.target.value)}
                                                                         className="test-result-input"
+                                                                    />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'nitrofuranAoz', e.target.value)}
+                                                                        className="date-picker"
                                                                     />
                                                                 </div>
                                                             )}
@@ -574,6 +464,12 @@ const TestingList = () => {
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'beta_agonists', e.target.value)}
                                                                         className="test-result-input"
                                                                     />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'beta_agonists', e.target.value)}
+                                                                        className="date-picker"
+                                                                    />
                                                                 </div>
                                                             )}
                                                             {request.corticosteroids && (
@@ -584,6 +480,12 @@ const TestingList = () => {
                                                                         value={testResults[request.requestId]?.corticosteroids || ''}
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'corticosteroids', e.target.value)}
                                                                         className="test-result-input"
+                                                                    />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'corticosteroids', e.target.value)}
+                                                                        className="date-picker"
                                                                     />
                                                                 </div>
                                                             )}
@@ -596,6 +498,12 @@ const TestingList = () => {
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'olaquindox', e.target.value)}
                                                                         className="test-result-input"
                                                                     />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'olaquindox', e.target.value)}
+                                                                        className="date-picker"
+                                                                    />
                                                                 </div>
                                                             )}
                                                             {request.nitrufuranAmoz && (
@@ -606,6 +514,12 @@ const TestingList = () => {
                                                                         value={testResults[request.requestId]?.nitrufuranAmoz || ''}
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
                                                                         className="test-result-input"
+                                                                    />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
+                                                                        className="date-picker"
                                                                     />
                                                                 </div>
                                                             )}
@@ -618,6 +532,12 @@ const TestingList = () => {
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'stilbenes', e.target.value)}
                                                                         className="test-result-input"
                                                                     />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'stilbenes', e.target.value)}
+                                                                        className="date-picker"
+                                                                    />
                                                                 </div>
                                                             )}
                                                             {request.ractopamine && (
@@ -628,6 +548,12 @@ const TestingList = () => {
                                                                         value={testResults[request.requestId]?.ractopamine || ''}
                                                                         onChange={(e) => handleTestResultChange(request.requestId, 'ractopamine', e.target.value)}
                                                                         className="test-result-input"
+                                                                    />
+                                                                    <input
+                                                                        type="date"
+                                                                        value={analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || ''}
+                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'ractopamine', e.target.value)}
+                                                                        className="date-picker"
                                                                     />
                                                                 </div>
                                                             )}
@@ -640,131 +566,7 @@ const TestingList = () => {
                                             </div>
                                         )}
                                     </span>
-                                    <span>
-                                        {request.molBio ? (
-                                            canAccessMolBio(userType) ? (
-                                                <button 
-                                                    className="test-btn" 
-                                                    onClick={() => toggleMolBio(request.controlNumber)}
-                                                >
-                                                    Mol Bio
-                                                </button>
-                                            ) : (
-                                                <button 
-                                                    className="test-btn-disabled" 
-                                                    disabled
-                                                    title="You don't have permission to access this section"
-                                                >
-                                                    Mol Bio
-                                                </button>
-                                            )
-                                        ) : (
-                                            "no testing...."
-                                        )}
-                                        {expandedMolBio === request.controlNumber && (
-                                            <div className="molbio-list">
-                                                {request.dog && (
-                                                    <div className="test-result-item">
-                                                        <strong>Dog:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.dog || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'dog', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.cat && (
-                                                    <div className="test-result-item">
-                                                        <strong>Cat:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.cat || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'cat', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.chicken && (
-                                                    <div className="test-result-item">
-                                                        <strong>Chicken:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.chicken || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'chicken', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.buffalo && (
-                                                    <div className="test-result-item">
-                                                        <strong>Buffalo:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.buffalo || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'buffalo', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.cattle && (
-                                                    <div className="test-result-item">
-                                                        <strong>Cattle:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.cattle || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'cattle', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.horse && (
-                                                    <div className="test-result-item">
-                                                        <strong>Horse:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.horse || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'horse', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.goat && (
-                                                    <div className="test-result-item">
-                                                        <strong>Goat:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.goat || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'goat', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.sheep && (
-                                                    <div className="test-result-item">
-                                                        <strong>Sheep:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.sheep || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'sheep', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                                {request.swine && (
-                                                    <div className="test-result-item">
-                                                        <strong>Swine:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.swine || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'swine', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-                                    </span>
+                                
                                     <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
                                         Sample Info
                                     </button>
