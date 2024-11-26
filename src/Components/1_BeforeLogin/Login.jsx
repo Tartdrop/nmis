@@ -7,16 +7,18 @@ import eyeOpen from '../Assets/EyeOpen.png';
 import eyeClose from '../Assets/EyeClose.png';
 
 const Login = () => {
-    //console.log("onLogin is detected: ", onLogin)
     const navigate = useNavigate();
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = async (event) => {
         event.preventDefault();
+        setLoading(true);
+        setError(null);
         try {
             const url = new URL(`${process.env.REACT_APP_API_URL}login`);
             url.searchParams.append('identifier', identifier);
@@ -39,15 +41,17 @@ const Login = () => {
             console.error('Error during login:', error);
             setError('An error occurred during login');
             setSuccessMessage(null);
+        } finally {
+            setLoading(false);
         }
     };
     
     const handleForgetPassword = () => {
-        navigate("/forget")
+        navigate("/forget");
     };
 
     const handleRegister = () => {
-        navigate("/register")
+        navigate("/register");
     };
 
     return (
@@ -86,6 +90,7 @@ const Login = () => {
                         </div>
                     </div>
 
+                    {loading && <div className="loading-message">Loading...</div>}
                     {successMessage && <div className="success-message">{successMessage}</div>}
                     {error && <div className="error-message">{error}</div>}
 
