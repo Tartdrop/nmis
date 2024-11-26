@@ -12,6 +12,7 @@ const Login = () => {
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
     const [visible, setVisible] = useState(false);
 
     const handleLogin = async (event) => {
@@ -26,33 +27,20 @@ const Login = () => {
             });
     
             if (response.ok) {
-                console.log("Login successful")
-                navigate(`/tfa/${identifier}`)
-                /*
-                const responseData = await response.text();
-    
-                // Extract userType and userId
-                const [type, id] = responseData.split('/');
-                
-                // Validate that type and id exist
-                if (type && id) {
-                    console.log(identifier)
-                    //onLogin(id, type);  // Call onLogin prop to set login state in App.js
-                    navigate(`tfa/${identifier}`);
-                } else {
-                    setError("User not found"); // Display error if type or id is missing
-                }
-                    */
+                setSuccessMessage("Login successful!");
+                setError(null);
+                navigate(`/tfa/${identifier}`);
             } else {
                 const errorMessage = await response.text();
-                setError(errorMessage || "User not found");
+                setError(errorMessage || "Login failed. Please check if your email or password is correct.");
+                setSuccessMessage(null);
             }
         } catch (error) {
             console.error('Error during login:', error);
             setError('An error occurred during login');
+            setSuccessMessage(null);
         }
     };
-    
     
     const handleForgetPassword = () => {
         navigate("/forget")
@@ -97,6 +85,9 @@ const Login = () => {
                             </div>
                         </div>
                     </div>
+
+                    {successMessage && <div className="success-message">{successMessage}</div>}
+                    {error && <div className="error-message">{error}</div>}
 
                     <div className="login-button" onClick={handleLogin}>
                         <button className="text-button">Log In</button>
