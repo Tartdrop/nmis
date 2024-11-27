@@ -15,7 +15,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
+    width: 500px;
     height: 805px;
     background-color: #2b9ec1b0;
     border-radius: 10px;
@@ -25,22 +25,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 48px;
+    font-size: 52px;
     font-weight: 700;
     color: #fff;
     margin-top: 45px;
 }
 
 .s-c-a-l-e-text {
-    margin-top: -20px;
+    margin-top: -25px;
 }
 
 .s-c-a-l-whiteline {
-    margin-top: 20px;
+    margin-top: 15px;
+    width: 400px;
+    border-radius: 20px;
 }
 
 .s-c-a-l-information {
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 .s-c-a-l-i-text {
@@ -57,9 +59,9 @@
 .s-c-a-l-information input {
     font-family: 'Poppins';
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
     color: #2B9DC1;
-    width: 335px;
+    width: 400px;
     height: 35px;
     border: none;
     border-radius: 100px;
@@ -72,7 +74,7 @@
     align-items: center;
     justify-content: center;
     padding-top: 3px;
-    font-size: 16px;
+    font-size: 18px;
     color: #ffffff;
     opacity: 60%;
     transition: opacity 0.3s ease;
@@ -96,7 +98,7 @@
     font-weight: 700;
     font-size: 68px;
     color: #004e65;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .s-c-a-r-container-everything {
@@ -106,7 +108,7 @@
     background-color: #fff;
     margin-top: 15px;
     width: 1120px;
-    height: 640px;
+    height: 630px;
     border-radius: 10px;
 }
 
@@ -176,7 +178,7 @@
     flex-direction: row;
     padding-left: 30px;
     color: #004e65;
-    gap: 79px;
+    gap: 81px;
     margin: 10px 0 10px;
 }
 
@@ -198,14 +200,23 @@
 .s-c-a-r-c-e-s-n-co-input {
     display: flex;
     gap: 7px;
-    font-size: 20px;
+    font-size: 26px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
 }
-
+/*
 .s-c-a-r-c-e-s-n-co-o-choices {
     padding-left: 26.5px;
+}
+*/
+
+.s-c-a-r-c-e-s-n-maincontainer{
+    display: grid;
+    padding-left: 30px;
+    margin-top: 10px;
+    grid-template-rows: 50px 50px 50px;
+    grid-template-columns: 500px 500px;
 }
 
 .s-c-a-r-c-e-s-n-co-input,
@@ -214,7 +225,7 @@
     justify-content: space-between;
     margin-right: 20px;
     gap: 7px;
-    font-size: 20px;
+    font-size: 26px;
     align-items: start;
     margin-left: 10px;
     cursor: auto;
@@ -228,13 +239,13 @@
 
 .s-c-a-r-c-e-s-n-co-input input,
 .s-c-a-r-c-e-s-n-co-input-samples input {
-    width: 630px;
-    height: 25px;
+    width: 565px;
+    height: 30px;
     border: 2px solid #004e65;
     border-radius: 8px;
     font-family: 'Poppins';
     padding: 0 20px;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
     color: #004e65 ;
 }
@@ -253,15 +264,15 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin: -9px -24px -40px 0;
+    margin: -5px -12px -40px -2px;
 }
 
 .s-c-a-r-c-e-s-n-co-i-s-buttons button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     font-size: 18px;
     font-weight: 300;
     cursor: pointer;
@@ -309,10 +320,10 @@
     font-weight: 500;
     color: #004e65;
     width: 900px;
-    height: 25px;
+    height: 35px;
     background: #ffffff;
     border-radius: 8px;
-    padding: 0 25px;
+    padding: 0 0 0 25px ;
     margin-bottom: 20px;
     border: 2px solid #004e65;
 }
@@ -327,19 +338,25 @@
 }
 
 .s-c-a-r-c-e-s-n-co-o-input.show {
-    margin: 10px 50px -20px;
+    margin: 5px 50px -20px;
     max-height: 200px;
     opacity: 1;
 }
 
+.s-c-a-r-c-e-s-n-co-o-input input {
+    font-size: 18px;
+    color:#004d65b7;
+}
+
 .s-c-a-r-c-e-s-n-co-o-input input::placeholder {
+    font-size: 18px;
     color:#004d65b7;
 }
 
 .s-c-a-r-c-e-s-n-co-choices-test {
     display: flex;
     gap: 19px;
-    font-size: 22px;
+    font-size: 30px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
@@ -398,10 +415,14 @@
     color: #004e65;
 }
 
+.s-c-a-r-c-e-s-n-co-t-choices .checkmark {
+    font-size: 24px;
+}
+
 .s-c-a-r-c-e-s-n-co-t-choices-cst {
     display: flex;
     gap: 19px;
-    font-size: 16px;
+    font-size: 24px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
@@ -454,7 +475,7 @@
 .s-c-a-r-c-e-s-n-co-t-subtests {
     display: flex;
     gap: 19px;
-    font-size: 16px;
+    font-size: 20px;
     align-items: center;
     cursor: pointer;
     color: #004e65;
@@ -505,6 +526,7 @@
 .s-c-a-r-c-e-s-n-co-t-s-c-text {
     display: flex;
     gap: 10px;
+    font-size: 18px;
 }
 
 .s-c-a-r-c-e-s-n-c-notes {
@@ -516,7 +538,7 @@
 .s-c-a-r-c-e-s-n-c-note {
     display: flex;
     flex-direction: column;
-    font-size: 14px;
+    font-size: 20px;
     padding-left: 50px;
     color: #004e65;
     opacity: 30%;
@@ -542,9 +564,10 @@
 .s-c-a-r-c-e-s-n-co-t-s-container input[type="text"] {
     font-family: 'Poppins';
     font-weight: 500;
+    font-size: 20px;
     color: #004e65;
-    width: 670px;
-    height: 25px;
+    width: 620px;
+    height: 35px;
     background: #ffffff;
     border-radius: 8px;
     padding: 0 25px;
@@ -553,7 +576,7 @@
 }
 
 .s-c-a-r-c-e-s-n-co-t-s-container input[type="text"]::placeholder {
-    font-size: 13px;
+    font-size: 16px;
 }
 
 .s-c-a-r-c-e-s-n-co-t-subchoices input::placeholder {
@@ -585,10 +608,10 @@
     align-items: center;
     justify-content: center;
     width: 985px;
-    height: 85px;
+    height: 90px;
     background-color: #2B9DC1;
     border-radius: 10px;
-    margin: 20px 0 10px;
+    margin: 20px 0 20px;
     font-size: 36px;
     font-weight: 700;
     color: #ffffff;

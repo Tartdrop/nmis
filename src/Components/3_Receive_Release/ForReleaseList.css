@@ -152,7 +152,7 @@
     background-color: #e3e3e3;
 }
 
-.pendingrequest-all-container {
+.forrelease-all-container {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -161,7 +161,7 @@
     font-family: 'Poppins';
 }
 
-.pendingrequest-container {
+.forrelease-container {
     display: flex;
     flex-direction: column;
     width: 1280px;
@@ -171,7 +171,7 @@
     background-color: #ffffffb5;
 }
 
-.pendingrequest-title {
+.forrelease-title {
     font-weight: 700;
     font-size: 64px;
     color: #004e65;
@@ -179,7 +179,7 @@
     text-align: center;
 }
 
-.pendingrequest-1st-container {
+.forrelease-1st-container {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -195,21 +195,21 @@
     scrollbar-color: #2B9DC1 #f0f0f0;
 }
 
-.pendingrequest-1st-container::-webkit-scrollbar {
+.forrelease-1st-container::-webkit-scrollbar {
     width: 8px;
 }
 
-.pendingrequest-1st-container::-webkit-scrollbar-track {
+.forrelease-1st-container::-webkit-scrollbar-track {
     background: #f0f0f0;
     border-radius: 4px;
 }
 
-.pendingrequest-1st-container::-webkit-scrollbar-thumb {
+.forrelease-1st-container::-webkit-scrollbar-thumb {
     background: #2B9DC1;
     border-radius: 4px;
 }
 
-.pendingrequest-1st-container::-webkit-scrollbar-thumb:hover {
+.forrelease-1st-container::-webkit-scrollbar-thumb:hover {
     background: #238aa8;
 }
 

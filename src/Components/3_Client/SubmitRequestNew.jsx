@@ -392,39 +392,35 @@ const Submit = () => {
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">1. Purpose of Testing</div>
                             <div className="s-c-a-r-c-e-s-n-maincontainer">
-                                <div className="s-c-a-r-c-e-s-n-container-row">
-                                    <label className="s-c-a-r-c-e-s-n-co-choices">
-                                        <input type="radio" name="purpose-choices" value="Monitoring" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                        <span className="checkmark">NMIS Monitoring Program</span>
-                                    </label>
-                                    <label className="s-c-a-r-c-e-s-n-co-choices">
-                                        <input type="radio" name="purpose-choices" value="Local_Trade" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                        <span className="checkmark">For Local Trade</span>
-                                    </label>
-                                    <label className="s-c-a-r-c-e-s-n-co-choices">
-                                        <input type="radio" name="purpose-choices" value="Imported" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                        <span className="checkmark">Imported (COMI Issuance)</span>
-                                    </label>
-                                </div>
-                                <div className="s-c-a-r-c-e-s-n-container-row-2">
-                                    <label className="s-c-a-r-c-e-s-n-co-choices">
-                                        <input type="radio" name="purpose-choices" value="Export" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                        <span className="checkmark">Export (OMIC Issuance)</span>
-                                    </label>
-                                    <label className="s-c-a-r-c-e-s-n-co-choices">
-                                        <input type="radio" name="purpose-choices" value="Complaint" onChange={(e) => setTestingPurpose(e.target.value)} />
-                                        <span className="checkmark">Complaint</span>
-                                    </label>
-                                    <label className="s-c-a-r-c-e-s-n-co-o-choices">
-                                        <input 
-                                            type="radio" 
-                                            name="purpose-choices" 
-                                            value="Others" 
-                                            onChange={(e) => setTestingPurpose(e.target.value)} 
-                                        />
-                                        <span className="checkmark">Others</span>
-                                    </label>
-                                </div>
+                                <label className="s-c-a-r-c-e-s-n-co-choices">
+                                    <input type="radio" name="purpose-choices" value="Monitoring" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                    <span className="checkmark">NMIS Monitoring Program</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-co-choices">
+                                    <input type="radio" name="purpose-choices" value="Local_Trade" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                    <span className="checkmark">For Local Trade</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-co-choices">
+                                    <input type="radio" name="purpose-choices" value="Imported" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                    <span className="checkmark">Imported (COMI Issuance)</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-co-choices">
+                                    <input type="radio" name="purpose-choices" value="Export" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                    <span className="checkmark">Export (OMIC Issuance)</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-co-choices">
+                                    <input type="radio" name="purpose-choices" value="Complaint" onChange={(e) => setTestingPurpose(e.target.value)} />
+                                    <span className="checkmark">Complaint</span>
+                                </label>
+                                <label className="s-c-a-r-c-e-s-n-co-o-choices">
+                                    <input 
+                                        type="radio" 
+                                        name="purpose-choices" 
+                                        value="Others" 
+                                        onChange={(e) => setTestingPurpose(e.target.value)} 
+                                    />
+                                    <span className="checkmark">Others</span>
+                                </label>
                                 <div className="s-c-a-r-c-e-s-n-container-others">
                                     <div className="s-c-a-r-c-e-s-n-co-others">
                                         <div className={`s-c-a-r-c-e-s-n-co-o-input ${testingPurpose === "Others" ? "show" : ""}`}>
@@ -592,7 +588,7 @@ const Submit = () => {
                                                             </div>
                                                         </>
                                                     )}
-                                                    </div>
+                                                </div>
                                                 <label className="s-c-a-r-c-e-s-n-co-t-choices">
                                                     <input 
                                                         type="checkbox" 

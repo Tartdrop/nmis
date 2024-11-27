@@ -278,7 +278,7 @@ const RequestDetails = () => {
                     <div className='s-c-a-r-c-e-scroll'>
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">1. Purpose of Testing</div>
-                            <div className="s-c-a-r-c-e-s-n-container">
+                            <div className="s-c-a-r-c-e-s-n-maincontainer">
                                 <label className="s-c-a-r-c-e-s-n-co-choices">
                                     <input type="radio" name="purpose-choices" value="Monitoring" checked={testingPurpose === 'Monitoring'} readOnly/>
                                     <span className="checkmark">NMIS Monitoring Program</span>
@@ -310,13 +310,16 @@ const RequestDetails = () => {
                                         />
                                         <span className="checkmark">Others</span>
                                     </label>
-                                    <div className={`s-c-a-r-c-e-s-n-co-o-input ${testingPurpose === "Others" ? "show" : ""}`}>
-                                        →
-                                        <input 
-                                            type="text"
-                                            value={otherTestingPurpose}
-                                            readOnly
-                                        />
+                                </div>
+                                <div className="s-c-a-r-c-e-s-n-container-others">
+                                    <div className="s-c-a-r-c-e-s-n-co-others">
+                                        <div className={`s-c-a-r-c-e-s-n-co-o-input ${testingPurpose === "Others" ? "show" : ""}`}>
+                                            <input 
+                                                type="text"
+                                                value={otherTestingPurpose}
+                                                readOnly
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -386,407 +389,502 @@ const RequestDetails = () => {
                         <div className='s-c-a-r-c-e-s-numbered'>
                             <div className="s-c-a-r-c-e-s-n-title">4. Test Selection</div>
                             <div className="s-c-a-r-c-e-s-n-container">
-                                <label className="s-c-a-r-c-e-s-n-co-choices-test">
-                                    <input 
-                                        type="checkbox" 
-                                        name="test-selection" 
-                                        checked={microbio === true}
-                                        disabled
-                                    />
-                                    <span className="checkmark"><b>Microbiological Tests</b> (7 - 16 Days)</span>
-                                </label>
-                                    <div className="s-c-a-r-c-e-s-n-c-notes">
-                                        <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample temperature must be 10°C or below
-                                        </div>
-                                        <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight must be 250g for meat, minimum
-                                        </div>
-                                        <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight must be 50g for cecal content or intact ceccum, minimum;
-                                        </div>
-                                    </div>
-                                
-                                    <div className="s-c-a-r-c-e-s-n-co-tests">
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                {microbio && (
+                                    <div className="s-c-a-r-c-e-s-n-co-microbio">
+                                        <label className="s-c-a-r-c-e-s-n-co-choices-test">
                                             <input 
                                                 type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={standardPlateCount === true} 
+                                                name="test-selection" 
+                                                checked={microbio === true}
                                                 disabled
                                             />
-                                            <span className="checkmark">Standard Plate Count/ Aerobic Plate Count (Php 150.00)</span>
+                                            <span className="checkmark"><b>Microbiological Tests</b> (7 - 16 Days)</span>
                                         </label>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={staphylococcusAureus === true} 
-                                                disabled
-                                            />
-                                            <span className="checkmark">Staphylococcus aureus (Php 350.00)</span>
-                                        </label>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={salmonellaSp === true} 
-                                                disabled
-                                            />
-                                            <span className="checkmark">Salmonella sp. (Php 350.00)</span>
-                                        </label>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={campylobacter === true} 
-                                                disabled
-                                            />
-                                            <span className="checkmark">Campylobacter (Php 1,500.00)</span>
-                                        </label>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices-cst">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={cultureAndSensitivityTest === true} 
-                                                disabled
-                                            />
-                                            <span className="checkmark">Culture and Sensitivity Test (Php 1,500/panel)</span>
-                                        </label>
-                                        <div className="s-c-a-r-c-e-s-n-co-t-subchoices">
-                                            <div className="s-c-a-r-c-e-s-n-co-t-s-container">
-                                                <div className="s-c-a-r-c-e-s-n-co-t-s-c-text">
-                                                    <p>→</p>
-                                                    <p>Gram Positive AST</p>
+
+                                            <div className="s-c-a-r-c-e-s-n-c-notes-req">
+                                                <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample temperature must be 10°C or below
                                                 </div>
-                                                <input 
-                                                    type="text"
-                                                    value={gramPositiveAst}
-                                                    disabled
-                                                />
-                                            </div>
-                                            <div className="s-c-a-r-c-e-s-n-co-t-s-container">
-                                                <div className="s-c-a-r-c-e-s-n-co-t-s-c-text">
-                                                    <p>→</p>
-                                                    <p>Gram Negative AST</p>
+                                                <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight must be 250g for meat, minimum
                                                 </div>
-                                                <input 
-                                                    type="text"
-                                                    value={gramNegativeAst}
-                                                    disabled
-                                                />
+                                                <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight must be 50g for cecal content or intact ceccum, minimum;
+                                                </div>
                                             </div>
-                                            </div>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={coliformCount === true} 
-                                                disabled
-                                            />
-                                            <span className="checkmark">Coliform Count (Php 150.00)</span>
-                                        </label>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={eColi === true} 
-                                                disabled 
-                                            />
-                                            <span className="checkmark">E. Coli (Php 350.00)</span>
-                                        </label>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={eColiAndeColi0O157 === true} 
-                                                disabled
-                                            />
-                                            <span className="checkmark">E. Coli & E. Coli O157;H7 (Php 700.00)</span>
-                                        </label>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="microbiological-choices" 
-                                                checked={yeastAndMolds === true} 
-                                                disabled
-                                            />
-                                            <span className="checkmark">Yeast and Molds (Php 300.00)</span>
-                                        </label>
-                                    </div>
-                                    
-                                <label className="s-c-a-r-c-e-s-n-co-choices-test">
-                                    <input 
-                                        type="checkbox" 
-                                        name="test-selection" 
-                                        checked={chem === true}
-                                        disabled
-                                    />
-                                    <span className="checkmark" ><b>Chemical/Veterinary Drug Residue Tests</b> (5 - 6 Days)</span>
-                                </label>
-                                    <div className="s-c-a-r-c-e-s-n-c-notes">
-                                        <div className="s-c-a-r-c-e-s-n-c-note"> → Samples should not include fat tissues
-                                        </div>
-                                        <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight must be 250g, minimum
-                                        </div>
-                                    </div>
 
-                                    <div className="s-c-a-r-c-e-s-n-co-tests">
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
-                                            <input 
-                                                type="checkbox" 
-                                                name="chemical-container-choices"
-                                                checked={microbial === true}
-                                                disabled 
-                                            />
-                                            <span className="checkmark"><b>Microbial Inhibition Test</b> (5 Days)</span>
-                                        </label>
                                             <div className="s-c-a-r-c-e-s-n-co-tests">
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={betaLactams === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Beta-lactams (Php 375.00)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={tetracyclines === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Tetracyclines (Php 375.00)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={sulfonamides === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Sulfonamides (Php 375.00)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={aminoglycosides === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Aminoglycosides (Php 375.00)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={macrolides === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Macrolides (Php 375.00)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={quinolones === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Quinolones (Php 375.00)</span>
-                                                </label>
+                                                {standardPlateCount && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={standardPlateCount === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">Standard Plate Count/ Aerobic Plate Count (Php 150.00)</span>
+                                                    </label>
+                                                )}
+                                                {staphylococcusAureus && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={staphylococcusAureus === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">Staphylococcus aureus (Php 350.00)</span>
+                                                    </label>
+                                                )}
+                                                {salmonellaSp && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={salmonellaSp === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">Salmonella sp. (Php 350.00)</span>
+                                                    </label>
+                                                )}
+                                                {campylobacter && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={campylobacter === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">Campylobacter (Php 1,500.00)</span>
+                                                    </label>
+                                                )}
+                                                {cultureAndSensitivityTest && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices-cst">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={cultureAndSensitivityTest === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">Culture and Sensitivity Test (Php 1,500/panel)</span>
+                                                    </label>
+                                                )}
+                                                {cultureAndSensitivityTest && (
+                                                    <div className="s-c-a-r-c-e-s-n-co-t-subchoices">
+                                                        <div className="s-c-a-r-c-e-s-n-co-t-s-container">
+                                                            <div className="s-c-a-r-c-e-s-n-co-t-s-c-text">
+                                                                <p>→</p>
+                                                                <p>Gram Positive AST</p>
+                                                            </div>
+                                                            <input 
+                                                                type="text"
+                                                                value={gramPositiveAst}
+                                                                onChange={(e) => setGramPositiveAst(e.target.value)}
+                                                                placeholder="Specify Gram Positive AST"
+                                                            />
+                                                        </div>
+                                                        <div className="s-c-a-r-c-e-s-n-co-t-s-container">
+                                                            <div className="s-c-a-r-c-e-s-n-co-t-s-c-text">
+                                                                <p>→</p>
+                                                                <p>Gram Negative AST</p>
+                                                            </div>
+                                                            <input 
+                                                                type="text"
+                                                                value={gramNegativeAst}
+                                                                onChange={(e) => setGramNegativeAst(e.target.value)}
+                                                                placeholder="Specify Gram Negative AST"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {coliformCount && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={coliformCount === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">Coliform Count (Php 150.00)</span>
+                                                    </label>
+                                                )}
+                                                {eColi && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={eColi === true} 
+                                                            disabled 
+                                                        />
+                                                        <span className="checkmark">E. Coli (Php 350.00)</span>
+                                                    </label>
+                                                )}
+                                                {eColiAndeColi0O157 && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={eColiAndeColi0O157 === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">E. Coli & E. Coli O157;H7 (Php 700.00)</span>
+                                                    </label>
+                                                )}
+                                                {yeastAndMolds && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="microbiological-choices" 
+                                                            checked={yeastAndMolds === true} 
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark">Yeast and Molds (Php 300.00)</span>
+                                                    </label>
+                                                )}                                
                                             </div>
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                    </div>
+                                )}
+
+                                {chem && (
+                                    <div className="s-c-a-r-c-e-s-n-co-chem">
+                                        <label className="s-c-a-r-c-e-s-n-co-choices-test">
                                             <input 
                                                 type="checkbox" 
-                                                name="chemical-container-choices" 
-                                                checked={elisa === true}
+                                                name="test-selection" 
+                                                checked={chem === true}
                                                 disabled
                                             />
-                                            <span className="checkmark"><b>ELISA: Enzyme-Linked ImmunoSorbent Assay</b> (6 Days)</span>
+                                            <span className="checkmark"><b>Chemical/Veterinary Drug Residue Tests</b> (5 - 6 Days)</span>
                                         </label>
+
+                                            <div className="s-c-a-r-c-e-s-n-c-notes-req">
+                                                <div className="s-c-a-r-c-e-s-n-c-note"> → Samples should not include fat tissues
+                                                </div>
+                                                <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight must be 250g, minimum
+                                                </div>
+                                            </div>
+
                                             <div className="s-c-a-r-c-e-s-n-co-tests">
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={chloramphenicol === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Chloramphenicol (Php 1,500)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={nitrofuranAoz === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Nitrofuran AOZ (Php 1,500)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={beta_agonists === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Beta-agonists (Php 1,500)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={corticosteroids === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Corticosteroids (Php 1,500)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={olaquindox === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Olaquindox (Php 1,500)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={nitrufuranAmoz === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Nitrofuran AMOZ (Php 1,500)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={stilbenes === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Stilbenes (Php 1,500)</span>
-                                                </label>
-                                                <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="chemical-choices" 
-                                                        checked={ractopamine === true} 
-                                                        disabled
-                                                    />
-                                                    <span className="checkmark">Ractopamine (Php 1,500)</span>
-                                                </label>
+                                                {microbial && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="chemical-container-choices"
+                                                            checked={microbial === true}
+                                                            disabled 
+                                                        />
+                                                        <span className="checkmark"><b>Microbial Inhibition Test</b> (5 Days)</span>
+                                                    </label>
+                                                )}
+                                                {microbial && (
+                                                    <div className="s-c-a-r-c-e-s-n-co-tests">
+                                                        {betaLactams && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={betaLactams === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Beta-lactams (Php 375.00)</span>
+                                                            </label>
+                                                        )}
+                                                        {tetracyclines && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={tetracyclines === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Tetracyclines (Php 375.00)</span>
+                                                            </label>
+                                                        )}
+                                                        {sulfonamides && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={sulfonamides === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Sulfonamides (Php 375.00)</span>
+                                                            </label>
+                                                        )}
+                                                        {aminoglycosides && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={aminoglycosides === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Aminoglycosides (Php 375.00)</span>
+                                                            </label>
+                                                        )}
+                                                        {macrolides && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={macrolides === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Macrolides (Php 375.00)</span>
+                                                            </label>
+                                                        )}
+                                                        {quinolones && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={quinolones === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Quinolones (Php 375.00)</span>
+                                                            </label>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                {elisa && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="chemical-container-choices" 
+                                                            checked={elisa === true}
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark"><b>ELISA: Enzyme-Linked ImmunoSorbent Assay</b> (6 Days)</span>
+                                                    </label>
+                                                )}
+                                                {elisa && (
+                                                    <div className="s-c-a-r-c-e-s-n-co-tests">
+                                                        {chloramphenicol && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={chloramphenicol === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Chloramphenicol (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {nitrofuranAoz && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={nitrofuranAoz === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Nitrofuran AOZ (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {beta_agonists && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={beta_agonists === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Beta-agonists (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {corticosteroids && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={corticosteroids === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Corticosteroids (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {olaquindox && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={olaquindox === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Olaquindox (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {nitrufuranAmoz && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={nitrufuranAmoz === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Nitrofuran AMOZ (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {stilbenes && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={stilbenes === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Stilbenes (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {ractopamine && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="chemical-choices" 
+                                                                    checked={ractopamine === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Ractopamine (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                    </div>
+                                                )}
                                             </div>
                                     </div>
+                                )}
 
-                                <label className="s-c-a-r-c-e-s-n-co-choices-test">
-                                    <input 
-                                        type="checkbox" 
-                                        name="test-selection" 
-                                        checked={molBio === true}
-                                        disabled
-                                    />
-                                    <span className="checkmark"><b>Molecular Biology Tests</b> (5 Days)</span>
-                                </label>
-                                    <div className="s-c-a-r-c-e-s-n-c-notes">
-                                        <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight is 5g at minimum
-                                        </div>
-                                    </div>
-
-                                    <div className="s-c-a-r-c-e-s-n-co-tests">
-                                        <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                {molBio && (
+                                    <div className="s-c-a-r-c-e-s-n-co-chem">
+                                        <label className="s-c-a-r-c-e-s-n-co-choices-test">
                                             <input 
                                                 type="checkbox" 
-                                                name="molbio-container-choices" 
-                                                checked={speciesIdentification === true}
+                                                name="test-selection" 
+                                                checked={molBio === true}
                                                 disabled
                                             />
-                                            <span className="checkmark"><b>Species Identification</b></span>
+                                            <span className="checkmark"><b>Molecular Biology Tests</b> (5 Days)</span>
                                         </label>
-                                        <div className="s-c-a-r-c-e-s-n-co-tests">
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={dog === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Dog (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={cat === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Cat (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={chicken === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Chicken (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={buffalo === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Buffalo (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={cattle === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Cattle (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={horse === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Horse (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={goat === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Goat (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={sheep === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Sheep (Php 1,500)</span>
-                                            </label>
-                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="molbio-choices" 
-                                                    checked={swine === true} 
-                                                    disabled
-                                                />
-                                                <span className="checkmark">Swine (Php 1,500)</span>
-                                            </label>
-                                        </div>
+
+                                            <div className="s-c-a-r-c-e-s-n-c-notes-req">
+                                                <div className="s-c-a-r-c-e-s-n-c-note"> → Average sample weight is 5g at minimum
+                                                </div>
+                                            </div>
+
+                                            <div className="s-c-a-r-c-e-s-n-co-tests">
+                                                {speciesIdentification && (
+                                                    <label className="s-c-a-r-c-e-s-n-co-t-choices">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            name="molbio-container-choices" 
+                                                            checked={speciesIdentification === true}
+                                                            disabled
+                                                        />
+                                                        <span className="checkmark"><b>Species Identification</b></span>
+                                                    </label>
+                                                )}
+                                                {speciesIdentification && (
+                                                    <div className="s-c-a-r-c-e-s-n-co-tests">
+                                                        {dog && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={dog === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Dog (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {cat && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={cat === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Cat (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {chicken && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={chicken === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Chicken (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {buffalo && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={buffalo === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Buffalo (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {cattle && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={cattle === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Cattle (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {horse && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={horse === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Horse (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {goat && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={goat === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Goat (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {sheep && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={sheep === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Sheep (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                        {swine && (
+                                                            <label className="s-c-a-r-c-e-s-n-co-t-subtests">
+                                                                <input 
+                                                                    type="checkbox" 
+                                                                    name="molbio-choices" 
+                                                                    checked={swine === true} 
+                                                                    disabled
+                                                                />
+                                                                <span className="checkmark">Swine (Php 1,500)</span>
+                                                            </label>
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </div>
                                     </div>
+                                )}
                             </div>
                         </div>
                         <div className='request-details-button'>

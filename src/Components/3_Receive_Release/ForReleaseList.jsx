@@ -97,10 +97,10 @@ const ForReleasing = () => {
     };
 
     return (
-        <div className="pendingrequest-all-container">
-            <div className='pendingrequest-container'>
-                <div className='pendingrequest-title'>For Releasing</div>
-                <div className="pendingrequest-1st-container">
+        <div className="forrelease-all-container">
+            <div className='forrelease-container'>
+                <div className='forrelease-title'>For Releasing</div>
+                <div className="forrelease-1st-container">
                     {requests.length > 0 ? (
                         requests.map((request) => {
                             const result = testResults[request.requestId];
@@ -260,7 +260,7 @@ const ForReleasing = () => {
                             );
                         })
                     ) : (
-                        <div className="pendingrequest-2nd-container">
+                        <div className="forrelease-2nd-container">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
                             <h1 className='msg-noreqres1'>
                                 There are no requests for release at the moment.
