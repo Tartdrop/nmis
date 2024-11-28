@@ -240,7 +240,7 @@
 .s-c-a-r-c-e-s-n-co-input input,
 .s-c-a-r-c-e-s-n-co-input-samples input {
     width: 565px;
-    height: 30px;
+    height: 35px;
     border: 2px solid #004e65;
     border-radius: 8px;
     font-family: 'Poppins';
@@ -526,7 +526,7 @@
 .s-c-a-r-c-e-s-n-co-t-s-c-text {
     display: flex;
     gap: 10px;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .s-c-a-r-c-e-s-n-c-notes {
@@ -555,18 +555,18 @@
     justify-content: space-between;
     margin: 10px 20px 0 50px;
     font-size: 14px;
-    /*overflow: hidden;
-    max-height: 0;
-    opacity: 0;*/
     transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .s-c-a-r-c-e-s-n-co-t-s-container input[type="text"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Poppins';
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     color: #004e65;
-    width: 620px;
+    width: 600px;
     height: 35px;
     background: #ffffff;
     border-radius: 8px;
@@ -576,7 +576,7 @@
 }
 
 .s-c-a-r-c-e-s-n-co-t-s-container input[type="text"]::placeholder {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .s-c-a-r-c-e-s-n-co-t-subchoices input::placeholder {
