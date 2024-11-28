@@ -59,7 +59,8 @@ const TrackRequest = () => {
             REJECTED: "REJECTED",
             FOR_TESTING: "FOR TESTING",
             FOR_RELEASE: "FOR RELEASE",
-            PENDING_REVIEW: "PENDING REVIEW"
+            PENDING_REVIEW: "PENDING REVIEW",
+            RELEASED: "RELEASED"
         };
         return statusMap[status] || status;
     };
@@ -157,8 +158,7 @@ const TrackRequest = () => {
                                 return (
                                     <div key={index} className="request-container-item">
                                         <button
-                                            className="request-button"
-                                            onClick={() => request.requestStatus === "RELEASED" && toggleRequestDetails(request.requestId)}
+                                            className={`request-button ${request.requestStatus.toLowerCase()}`}
                                         >
                                             <div className="req-side">{request.controlNumber}</div>
                                             <p className="req-lineseparator">|</p>

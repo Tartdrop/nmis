@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './XMessages.css'; // Import the CSS file
 import Userfront from "@userfront/core";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
 
 Userfront.init("jb7ywq8b");
 
 const RequestAddInfo = () => {
+    const {userId} = useParams();
     const [additionalInfo, setAdditionalInfo] = useState('');
 
     const handleAdditionalInfoChange = (event) => {
@@ -15,7 +16,7 @@ const RequestAddInfo = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate("/");
+        navigate(`/home/staff/${userId}`);
     };
 
     return (
@@ -27,12 +28,14 @@ const RequestAddInfo = () => {
                     <p className="left-text">Information</p>
                 </div>
                     <p className="left-text-small">Type your comments down below</p>
-                <textarea
-                    value={additionalInfo}
-                    onChange={handleAdditionalInfoChange}
-                    placeholder="Enter additional information"
-                    className="input-text" // Add the input-text class here
-                />
+                <div>
+                    <textarea
+                        value={additionalInfo}
+                        onChange={handleAdditionalInfoChange}
+                        placeholder="Enter additional information"
+                        className="input-text"
+                    />
+                </div>
                 <div className="messages-button">
                     <button className="messages-button-text" onClick={handleBack}>
                         Done

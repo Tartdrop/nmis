@@ -45,7 +45,7 @@
 .req-text {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 60px;
     margin-left: -110px;
 }
 
@@ -137,51 +137,55 @@
     display: flex;
     justify-content: center; 
     align-items: center;
-    width: 227px;
+    width: 405px;
     height: 70px;
     color: #fff;
     background: #2B9DC1;
-    border-radius: 35px;
+    border-radius: 12px;
     font-size: 24px;
     font-weight: 700;
     font-family:'Poppins';
     cursor: pointer;
 }
 
-textarea {
+.messages-container textarea {
     width: 408px;
-    height: 500px;
+    height: 340px;
     padding: 10px;
-    margin: 5px;
-    margin-top: 10px;
+    margin-bottom: 0px;
     font-family: 'Poppins', cursive;
     font-size: 16px;
-    color: #333;
+    color: #01232e;
     border: 4px solid #2B9DC1;
     border-radius: 12px;
     box-sizing: border-box;
     text-align: left;
-    resize: none; /* Disable default resize */
-    overflow-y: auto;
-    position: relative; /* Ensure pseudo-element stays inside */
+    resize: none;
+    overflow-y: auto; /* Ensure the scrollbar is only visible when necessary */
 }
 
-.input-text::-webkit-scrollbar {
-    width: 10px;
-    cursor: pointer;
-}  
-
-.input-text::-webkit-scrollbar-thumb {
-    background: #95CFE1;
-    border-radius: 100px;
-    cursor: pointer;
-}
-  
-.input-text::-webkit-scrollbar-thumb:hover {
-    background: #47a3c0;
-    cursor: pointer;
+.messages-container textarea::placeholder {
+    color: #004d65c2;
 }
 
-textarea:focus {
+.messages-container textarea:focus {
     outline: none;
+}
+.messages-container textarea::-webkit-scrollbar {
+    width: 12px;
+}
+
+.messages-container textarea::-webkit-scrollbar-track {
+    border-radius: 8px;
+}
+
+.messages-container textarea::-webkit-scrollbar-thumb {
+    background: #2B9DC1;
+    border-radius: 8px;
+    border: 2px solid #f1f1f1;
+}
+
+.messages-container textarea::-webkit-scrollbar-thumb:hover {
+    background: #227c97;
+    cursor: pointer;
 }
