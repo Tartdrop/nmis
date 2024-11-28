@@ -160,7 +160,7 @@ function App() {
                     <Route path="/pending-requests/:userId" element={<PagePendingRequest />} />
                     <Route path="/request-details/:userId/:requestId" element={<PageRequestDetailsNew />} />
                     <Route path="/approved/:userId" element={<PageShowControlNumber />} />
-                    <Route path="/request-additional-info/:userId" element={<PageRequestAddInfo />} />
+                    <Route path="/request-additional-info/:userId/:requestId" element={<PageRequestAddInfo />} />
                     <Route path="/for-release/:userId" element={<PageForReleaseList />} />
                     <Route path="/receive-release-database/:userId" element={<PageViewDatabaseRR />} />
                     

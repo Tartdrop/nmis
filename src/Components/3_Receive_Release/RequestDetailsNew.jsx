@@ -211,7 +211,7 @@ const RequestDetails = () => {
     };
     
     const handleRequestAdditionalInformation = () => {
-        navigate("/request-additional-info");
+        navigate(`/request-additional-info/${userId}/${requestId}`);
     };
 
     const handleSampleDescriptionChange = (index, value) => {
