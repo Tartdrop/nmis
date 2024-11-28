@@ -18,16 +18,53 @@
 }
 
 .pendingrequest-title {
+    display: flex;
+    align-items:baseline;
     font-weight: 700;
     font-size: 64px;
     color: #004e65;
 }
 
+.pendingrequest-popup {
+    display: inline-block;
+    margin-left: 25px;
+    cursor: pointer;
+    font-size: 52px;
+    font-weight: bold;
+    position: relative;
+}
+
+.popup-container {
+    position: absolute;
+    top: 6px;
+    right: -210px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(-10px); 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none; 
+    font-size: 14px;
+    width: 150px;
+}
+
+.pendingrequest-popup:hover .popup-container {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
 .pendingrequest-1st-container {
-    width: 1200px;
-    height: 600px;
-    margin-top: 20px;
     display: flex;
+    align-items: center;
+    width: 1280px;
+    height: 616px;
+    margin-top: 20px;
     flex-direction: column;
     gap: 16px;
 }
@@ -146,4 +183,23 @@
     margin-top: 30px;
     display: flex;
     gap: 30px;
+}
+
+.pendingrequests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    overflow: hidden;
+    height: 560px;
+    cursor: grab;
+}
+
+.pendingrequests-list:active {
+    cursor: grabbing;
+}
+
+.request-container-item {
+    display: flex;
+    align-items: center;
 }

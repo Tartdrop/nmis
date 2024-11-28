@@ -19,7 +19,7 @@ const Guide = () => {
                         <h1 className='msg-noreqres1'>For the <b>Chemical/Veterinary Drug Residue Test</b>, the average sample weight is 250 grams excluding fat tissues.</h1>
                         <br></br>
                         <h1 className='msg-noreqres1'>For the <b>Molecular Biology Test</b>, the average sample weight is a minimum of 5g.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ </h1>
-                        <br></br>
+                        
                         <h1 className='msg-noreqres1'>For laboratory tests that entail the <b>Issuance of Official Meat Inspection Certificate</b>, samples must comply with requirements of the importing country.</h1>
                         <br></br><br></br>
                         <table className="lab-test-table">
