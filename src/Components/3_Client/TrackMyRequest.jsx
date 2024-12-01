@@ -11,7 +11,7 @@ const TrackRequest = () => {
     const [expandedRequest, setExpandedRequest] = useState(null);
     const navigate = useNavigate();
     const requestListRef = useRef(null);
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:8080/requests/clientrequest/${userId}`)
@@ -67,10 +67,6 @@ const TrackRequest = () => {
 
     const toggleRequestDetails = (requestId) => {
         setExpandedRequest(expandedRequest === requestId ? null : requestId);
-    };
-
-    const togglePopup = () => {
-        setShowPopup(!showPopup);
     };
 
     useEffect(() => {
@@ -171,7 +167,7 @@ const TrackRequest = () => {
                             })}
                         </div>
                     ) : (
-                        <div className="pendingrequest-2nd-container">
+                        <div className="empty-2nd-container">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
                             <h1 className='msg-noreqres1'>You have no ongoing requests and results.</h1>
                         </div>

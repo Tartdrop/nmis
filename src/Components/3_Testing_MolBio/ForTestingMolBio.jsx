@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import '../3A_Testing/ForTesting.css';
 import './ForTestingMolBio.css';
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
-const TestingList = () => {
+const ForTestingMolBio = () => {
     const { userId, requestId } = useParams();
     const [requests, setRequests] = useState([]);
     const [expandedSample, setExpandedSample] = useState(null);
@@ -15,6 +16,57 @@ const TestingList = () => {
     const [testResults, setTestResults] = useState({});
     const [saveStatus, setSaveStatus] = useState('');
     const [analysisDateUpdates, setAnalysisDateUpdates] = useState({});
+    const [showPopup] = useState(false);
+    const requestListRef = useRef(null);
+
+    useEffect(() => {
+        const requestList = requestListRef.current;
+        if (!requestList) return;
+    
+        let isDown = false;
+        let startY;
+        let scrollTop;
+    
+        const handleMouseDown = (e) => {
+            e.preventDefault();
+            isDown = true;
+            requestList.classList.add('grabbing');
+            startY = e.pageY - requestList.offsetTop;
+            scrollTop = requestList.scrollTop;
+        };
+    
+        const handleMouseLeave = (e) => {
+            e.preventDefault();
+            isDown = false;
+            requestList.classList.remove('grabbing');
+        };
+    
+        const handleMouseUp = (e) => {
+            e.preventDefault();
+            isDown = false;
+            requestList.classList.remove('grabbing');
+        };
+    
+        const handleMouseMove = (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const y = e.pageY - requestList.offsetTop;
+            const walk = (y - startY) * 2; // Adjust scrolling speed
+            requestList.scrollTop = scrollTop - walk;
+        };
+    
+        requestList.addEventListener('mousedown', handleMouseDown);
+        requestList.addEventListener('mouseleave', handleMouseLeave);
+        requestList.addEventListener('mouseup', handleMouseUp);
+        requestList.addEventListener('mousemove', handleMouseMove);
+    
+        return () => {
+            requestList.removeEventListener('mousedown', handleMouseDown);
+            requestList.removeEventListener('mouseleave', handleMouseLeave);
+            requestList.removeEventListener('mouseup', handleMouseUp);
+            requestList.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [requests.length]);
 
     useEffect(() => {
         const userType = localStorage.getItem('userType');
@@ -124,35 +176,14 @@ const TestingList = () => {
         );
     };
 
-    const toggleMicrobial = (controlNumber) => {
-        setExpandedMicrobial(prevExpanded => 
-            prevExpanded === controlNumber ? null : controlNumber
-        );
-    };
-
-    const toggleChem = (controlNumber) => {
-        setExpandedChem(prevExpanded => 
-            prevExpanded === controlNumber ? null : controlNumber
-        );
-    };
-
     const toggleMolBio = (controlNumber) => {
         setExpandedMolBio(prevExpanded => 
             prevExpanded === controlNumber ? null : controlNumber
         );
     };
 
-    // Helper functions to check permissions
     const canAccessMolBio = (userType) => {
         return ['TESTER', 'MOLBIOTESTER'].includes(userType.toUpperCase());
-    };
-
-    const canAccessChem = (userType) => {
-        return ['TESTER', 'CHEMTESTER'].includes(userType.toUpperCase());
-    };
-
-    const canAccessMicrobio = (userType) => {
-        return ['TESTER', 'MICROBIOTESTER'].includes(userType.toUpperCase());
     };
 
     const handleTestResultChange = (requestId, testType, value) => {
@@ -334,34 +365,54 @@ const TestingList = () => {
     };
 
     return (
-        <div className="request-all-container">
-            <div className='request-container'>
-                <div className='request-title'>For Testing</div>
-                
-                {/* Header for the table */}
-                <div className="request-1st-container-header">
-                    <div className="header-item">Control Number</div>
-                    <div className="header-item">Microbio</div>
-                    <div className="header-item">Chemical</div>
-                    <div className="header-item">Mol. Bio</div>
-                    <div className="header-item">Sample Info</div>
+        <div className="fortesting-all-container">
+            <div className='fortesting-container'>
+                <div className="fortesting-title">
+                    For Testing
+                    <div className="fortesting-popup">
+                        ⓘ
+                        <div className="popup-container">Drag the sides of the container to scroll!</div>
+                    </div>
                 </div>
+                {showPopup && (
+                    <div className="popup-container">
+                        <p>Drag the page to scroll.</p>
+                    </div>
+                )}
+                <div className="fortesting-1st-container">
+                    <div className="fortesting-1st-container-header">
+                        <div className="fortesting-1st-container-header-title-left">
+                            Control Number
+                        </div>
+                        <div className="lineseparator">|</div>
+                        <div className="fortesting-1st-container-header-title">
+                            Molecular Biology Tests
+                        </div>
+                        <div className="lineseparator">|</div>
+                        <div className="fortesting-1st-container-header-title">
+                            Sample Info
+                        </div>
+                        <div className="lineseparator">|</div>
+                        <div className="fortesting-1st-container-header-title-right">
+                            Save Changes
+                        </div>
+                    </div>
 
-                <div className="request-1st-container">
                     {requests.length > 0 ? (
-                        requests.map((request, index) => (
+                        <div className="fortesting-list" ref={requestListRef}>
+                        {requests.map((request, index) => (
                             <div key={index} className="request-item">
-                                <div className="request-header">
-                                    <span>{request.controlNumber}</span>
-                                    
-                                    <span>
+                                <div className="fortesting-header">
+                                    <span className="fortesting-controlnumber">{request.controlNumber}</span>
+                                    <div className="lineseparator-left">|</div>
+                                    <span className="fortesting-tests">
                                         {request.molBio ? (
                                             canAccessMolBio(userType) ? (
                                                 <button 
                                                     className="test-btn" 
                                                     onClick={() => toggleMolBio(request.controlNumber)}
                                                 >
-                                                    Mol Bio
+                                                    Show Molecular Biology Tests
                                                 </button>
                                             ) : (
                                                 <button 
@@ -378,198 +429,223 @@ const TestingList = () => {
                                         {expandedMolBio === request.controlNumber && (
                                             <div className="molbio-list">
                                                 {request.dog && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Dog:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.dog || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'dog', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_dog_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'dog', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.dog || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'dog', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_dog_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'dog', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.cat && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Cat:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.cat || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'cat', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_cat_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'cat', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.cat || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'cat', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_cat_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'cat', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.chicken && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Chicken:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.chicken || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'chicken', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_chicken_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'chicken', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.chicken || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'chicken', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_chicken_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'chicken', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.buffalo && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Buffalo:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.buffalo || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'buffalo', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_buffalo_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'buffalo', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.buffalo || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'buffalo', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_buffalo_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'buffalo', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.cattle && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Cattle:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.cattle || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'cattle', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_cattle_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'cattle', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.cattle || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'cattle', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_cattle_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'cattle', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.horse && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Horse:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.horse || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'horse', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_horse_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'horse', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.horse || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'horse', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_horse_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'horse', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.goat && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Goat:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.goat || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'goat', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_goat_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'goat', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.goat || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'goat', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_goat_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'goat', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.sheep && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Sheep:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.sheep || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'sheep', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_sheep_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'sheep', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.sheep || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'sheep', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_sheep_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'sheep', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {request.swine && (
-                                                    <div className="test-result-item">
+                                                    <div className="test-result-item-3">
                                                         <strong>Swine:</strong>
-                                                        <input
-                                                            type="text"
-                                                            value={testResults[request.requestId]?.swine || ''}
-                                                            onChange={(e) => handleTestResultChange(request.requestId, 'swine', e.target.value)}
-                                                            className="test-result-input"
-                                                        />
-                                                        <input
-                                                            type="date"
-                                                            value={analysisDateUpdates[`${request.requestId}_swine_analysis_date`] || ''}
-                                                            onChange={(e) => handleAnalysisDateChange(request.requestId, 'swine', e.target.value)}
-                                                            className="date-picker"
-                                                        />
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                value={testResults[request.requestId]?.swine || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'swine', e.target.value)}
+                                                                className="test-result-input"
+                                                            />
+                                                            <input
+                                                                type="date"
+                                                                value={analysisDateUpdates[`${request.requestId}_swine_analysis_date`] || ''}
+                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'swine', e.target.value)}
+                                                                className="date-picker"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 )}
                                             </div>
                                         )}
                                     </span>
-                                    <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
-                                        Sample Info
-                                    </button>
-                                </div>
+                                    <div className="lineseparator">|</div>
+                                    <span className="fortesting-sampleinfo">
+                                        <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
+                                            View Sample Information
+                                        </button>
+                                        {expandedSample === request.controlNumber && (
+                                            <div className="sample-list">
+                                                {request.sample.map((sample, index) => (
+                                                        <div key={sample.sampleId} className="sample-item">
+                                                            <div>
+                                                                <strong><u>Sample Type Description {index + 1}</u>:</strong>
+                                                                <br />
+                                                                <span>→ {sample.sampleTypeDescription}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
 
-                                {expandedSample === request.controlNumber && (
-                                    <div className="sample-list">
-                                        {request.sample.map(sample => (
-                                            <div key={sample.sampleId} className="sample-item">
-                                                <div><strong>Sample Description:</strong> {sample.sampleTypeDescription}</div>
+                                                    <div><strong><u>Lot Batch No</u>:</strong> <br /> <span>→ {request.lotBatchNo}</span></div>
+                                                    <div><strong><u>Sampler Name</u>:</strong> <br /> <span>→ {request.samplerName}</span></div>
+                                                    <div><strong><u>Sample Source</u>:</strong> <br /> <span>→ {request.sampleSource}</span></div>
+                                                    <div><strong><u>Production Date</u>:</strong> <br /> <span>→ {request.productionDate}</span></div>
+                                                    <div><strong><u>Expiry Date</u>:</strong> <br /> <span>→ {request.expiryDate}</span></div>
+                                                    <div><strong><u>Sampling Date</u>:</strong> <br /> <span>→ {request.samplingDate}</span></div>
                                             </div>
-                                        ))}
-
-                                        {/* Assuming these fields are common for all samples */}
-                                        <div><strong>Lot Batch No:</strong> {request.lotBatchNo}</div>
-                                        <div><strong>Sampler Name:</strong> {request.samplerName}</div>
-                                        <div><strong>Sample Source:</strong> {request.sampleSource}</div>
-                                        <div><strong>Production Date:</strong> {request.productionDate}</div>
-                                        <div><strong>Expiry Date:</strong> {request.expiryDate}</div>
-                                        <div><strong>Sampling Date:</strong> {request.samplingDate}</div>
-                                    </div>
-                                )}      
-                                <div className="save-changes-section">
-                                    <button 
-                                        className="save-changes-btn"
-                                        onClick={() => handleSaveChanges(request)}
-                                    >
-                                        Save Changes
-                                    </button>
-                                    {saveStatus && <div className="save-status">{saveStatus}</div>}
+                                        )}  
+                                    </span>
+                                    <div className="lineseparator-right">|</div>
+                                    <span className="fortesting-save">
+                                        <button 
+                                            className="save-changes-btn"
+                                            onClick={() => handleSaveChanges(request)}
+                                        >
+                                            Save Changes
+                                        </button>
+                                        {saveStatus && <div className="save-status">{saveStatus}</div>}
+                                    </span>
                                 </div>
                             </div>
-                        ))
+                        ))}
+                        </div>
                     ) : (
-                        <div className="no-requests-container">
+                        <div className="empty-2nd-container">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
-                            <h1 className='msg-noreqres1'>All work is done! Great job!</h1>
+                            <h1 className='msg-noreqres1'>There are no ongoing Molecular Biology tests. </h1>
                         </div>
                     )}
                 </div>
@@ -578,4 +654,4 @@ const TestingList = () => {
     );
 }
 
-export default TestingList;
+export default ForTestingMolBio;

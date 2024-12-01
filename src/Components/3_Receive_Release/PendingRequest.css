@@ -58,7 +58,6 @@
     pointer-events: auto;
 }
 
-
 .pendingrequest-1st-container {
     display: flex;
     align-items: center;
@@ -69,9 +68,9 @@
     gap: 16px;
 }
 
-.pendingrequest-2nd-container {
+.empty-2nd-container {
     width: 1200px;
-    height: 470px;
+    height: 485px;
     margin-top: 20px;
     padding-top: 40px;
     padding-bottom: 10px;
@@ -80,6 +79,9 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+}
+.empty-2nd-container img {
+    margin-top: -10px;
 }
 
 .pendingrequest-1st-container-column-row {
@@ -202,4 +204,8 @@
 .request-container-item {
     display: flex;
     align-items: center;
+}
+
+.request-container-item button {
+    cursor: pointer;
 }

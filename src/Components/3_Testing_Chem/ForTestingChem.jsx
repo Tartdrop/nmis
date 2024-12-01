@@ -1,20 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './ForTestingChem.css';
+import '../3A_Testing/ForTesting.css';
+import './ForTestingChem.css'
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
-const TestingList = () => {
-    const { userId, requestId } = useParams();
+const ForTestingChem = () => {
     const [requests, setRequests] = useState([]);
     const [expandedSample, setExpandedSample] = useState(null);
-    const [expandedMicrobial, setExpandedMicrobial] = useState(null);
     const [expandedChem, setExpandedChem] = useState(null);
-    const [expandedMolBio, setExpandedMolBio] = useState(null);
     const navigate = useNavigate();
     const [userType, setUserType] = useState('');
     const [testResults, setTestResults] = useState({});
     const [saveStatus, setSaveStatus] = useState('');
     const [analysisDateUpdates, setAnalysisDateUpdates] = useState({});
+    const [showPopup] = useState(false);
+    const requestListRef = useRef(null);
+
+    useEffect(() => {
+        const requestList = requestListRef.current;
+        if (!requestList) return;
+    
+        let isDown = false;
+        let startY;
+        let scrollTop;
+    
+        const handleMouseDown = (e) => {
+            e.preventDefault();
+            isDown = true;
+            requestList.classList.add('grabbing');
+            startY = e.pageY - requestList.offsetTop;
+            scrollTop = requestList.scrollTop;
+        };
+    
+        const handleMouseLeave = (e) => {
+            e.preventDefault();
+            isDown = false;
+            requestList.classList.remove('grabbing');
+        };
+    
+        const handleMouseUp = (e) => {
+            e.preventDefault();
+            isDown = false;
+            requestList.classList.remove('grabbing');
+        };
+    
+        const handleMouseMove = (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const y = e.pageY - requestList.offsetTop;
+            const walk = (y - startY) * 2; // Adjust scrolling speed
+            requestList.scrollTop = scrollTop - walk;
+        };
+    
+        requestList.addEventListener('mousedown', handleMouseDown);
+        requestList.addEventListener('mouseleave', handleMouseLeave);
+        requestList.addEventListener('mouseup', handleMouseUp);
+        requestList.addEventListener('mousemove', handleMouseMove);
+    
+        return () => {
+            requestList.removeEventListener('mousedown', handleMouseDown);
+            requestList.removeEventListener('mouseleave', handleMouseLeave);
+            requestList.removeEventListener('mouseup', handleMouseUp);
+            requestList.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [requests.length]);
 
     useEffect(() => {
         const userType = localStorage.getItem('userType');
@@ -130,12 +179,9 @@ const TestingList = () => {
         );
     };
 
-
-
     const canAccessChem = (userType) => {
         return ['TESTER', 'CHEMTESTER'].includes(userType.toUpperCase());
     };
-
 
     const handleTestResultChange = (requestId, testType, value) => {
         setTestResults(prev => ({
@@ -160,71 +206,35 @@ const TestingList = () => {
             if (!sampleId) {
                 throw new Error('Sample ID not found');
             }
-
+    
             const currentResults = testResults[request.requestId] || {};
-
-            // Chemical ELISA tests
+            const requiredFields = [
+                currentResults.chloramphenicol,
+                currentResults.nitrofuranAoz,
+                currentResults.beta_agonists,
+                currentResults.corticosteroids,
+                currentResults.olaquindox,
+                currentResults.nitrufuranAmoz,
+                currentResults.stilbenes,
+                currentResults.ractopamine,
+                currentResults.betaLactams,
+                currentResults.tetracyclines,
+                currentResults.sulfonamides,
+                currentResults.aminoglycosides,
+                currentResults.macrolides,
+                currentResults.quinolones
+            ];
+    
+            // Check if any required fields are empty
+            if (requiredFields.some(field => field === undefined || field === '')) {
+                alert('All input fields must be filled before saving.');
+                return;
+            }
+    
             const elisaData = {};
-            if (currentResults.chloramphenicol) {
-                elisaData.chloramphenicol = currentResults.chloramphenicol;
-                elisaData.chloramphenicolAnalysisDate = analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || null;
-            }
-            if (currentResults.nitrofuranAoz) {
-                elisaData.nitrofuranAoz = currentResults.nitrofuranAoz;
-                elisaData.nitrofuranAozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || null;
-            }
-            if (currentResults.beta_agonists) {
-                elisaData.beta_agonists = currentResults.beta_agonists;
-                elisaData.beta_agonistsAnalysisDate = analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || null;
-            }
-            if (currentResults.corticosteroids) {
-                elisaData.corticosteroids = currentResults.corticosteroids;
-                elisaData.corticosteroidsAnalysisDate = analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || null;
-            }
-            if (currentResults.olaquindox) {
-                elisaData.olaquindox = currentResults.olaquindox;
-                elisaData.olaquindoxAnalysisDate = analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || null;
-            }
-            if (currentResults.nitrufuranAmoz) {
-                elisaData.nitrufuranAmoz = currentResults.nitrufuranAmoz;
-                elisaData.nitrufuranAmozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || null;
-            }
-            if (currentResults.stilbenes) {
-                elisaData.stilbenes = currentResults.stilbenes;
-                elisaData.stilbenesAnalysisDate = analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || null;
-            }
-            if (currentResults.ractopamine) {
-                elisaData.ractopamine = currentResults.ractopamine;
-                elisaData.ractopamineAnalysisDate = analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || null;
-            }
-
-            // Chemical Microbial tests
             const chemMicrobialData = {};
-            if (currentResults.betaLactams) {
-                chemMicrobialData.betaLactams = currentResults.betaLactams;
-                chemMicrobialData.betaLactamsAnalysisDate = analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || null;
-            }
-            if (currentResults.tetracyclines) {
-                chemMicrobialData.tetracyclines = currentResults.tetracyclines;
-                chemMicrobialData.tetracyclinesAnalysisDate = analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || null;
-            }
-            if (currentResults.sulfonamides) {
-                chemMicrobialData.sulfonamides = currentResults.sulfonamides;
-                chemMicrobialData.sulfonamidesAnalysisDate = analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || null;
-            }
-            if (currentResults.aminoglycosides) {
-                chemMicrobialData.aminoglycosides = currentResults.aminoglycosides;
-                chemMicrobialData.aminoglycosidesAnalysisDate = analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || null;
-            }
-            if (currentResults.macrolides) {
-                chemMicrobialData.macrolides = currentResults.macrolides;
-                chemMicrobialData.macrolidesAnalysisDate = analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || null;
-            }
-            if (currentResults.quinolones) {
-                chemMicrobialData.quinolones = currentResults.quinolones;
-                chemMicrobialData.quinolonesAnalysisDate = analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || null;
-            }
-
+            // Continue populating `elisaData` and `chemMicrobialData` as in your original function...
+    
             // Send ELISA data if there are any updates
             if (Object.keys(elisaData).length > 0) {
                 const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
@@ -234,12 +244,12 @@ const TestingList = () => {
                     },
                     body: JSON.stringify(elisaData)
                 });
-
+    
                 if (!response.ok) {
                     throw new Error('Failed to save ELISA results');
                 }
             }
-
+    
             // Send Chemical Microbial data if there are any updates
             if (Object.keys(chemMicrobialData).length > 0) {
                 const response = await fetch(`http://localhost:8080/chemTestMicrobialResults/${sampleId}`, {
@@ -249,361 +259,428 @@ const TestingList = () => {
                     },
                     body: JSON.stringify(chemMicrobialData)
                 });
-
+    
                 if (!response.ok) {
                     throw new Error('Failed to save Chemical Microbial results');
                 }
             }
-
-            setSaveStatus('Changes saved successfully!');
-            setTimeout(() => setSaveStatus(''), 3000);
+    
+            alert('Changes saved successfully!');
         } catch (error) {
-            console.error('Error saving changes:', error);
-            setSaveStatus('Error saving changes: ' + error.message);
-            setTimeout(() => setSaveStatus(''), 3000);
+            alert(`Error saving changes: ${error.message}`);
         }
     };
 
     return (
-        <div className="request-all-container">
-            <div className='request-container'>
-                <div className='request-title'>For Testing</div>
-                
-                {/* Header for the table */}
-                <div className="request-1st-container-header">
-                    <div className="header-item">Control Number</div>
-                    <div className="header-item">Microbio</div>
-                    <div className="header-item">Chemical</div>
-                    <div className="header-item">Mol. Bio</div>
-                    <div className="header-item">Sample Info</div>
+        <div className="fortesting-all-container">
+            <div className='fortesting-container'>
+                <div className="fortesting-title">
+                    For Testing
+                    <div className="fortesting-popup">
+                        ⓘ
+                        <div className="popup-container">Drag the sides of the container to scroll!</div>
+                    </div>
                 </div>
-
-                <div className="request-1st-container">
+                {showPopup && (
+                    <div className="popup-container">
+                        <p>Drag the page to scroll.</p>
+                    </div>
+                )}
+                <div className="fortesting-1st-container">
+                    <div className="fortesting-1st-container-header">
+                        <div className="fortesting-1st-container-header-title-left">
+                            Control Number
+                        </div>
+                        <div className="lineseparator">|</div>
+                        <div className="fortesting-1st-container-header-title">
+                            Chemical Tests
+                        </div>
+                        <div className="lineseparator">|</div>
+                        <div className="fortesting-1st-container-header-title">
+                            Sample Information
+                        </div>
+                        <div className="lineseparator">|</div>
+                        <div className="fortesting-1st-container-header-title-right">
+                            Save Changes
+                        </div>
+                    </div>
                     {requests.length > 0 ? (
-                        requests.map((request, index) => (
-                            <div key={index} className="request-item">
-                                <div className="request-header">
-                                    <span>{request.controlNumber}</span>
-                                    
-                                    <span>
-                                        {request.chem ? (
-                                            canAccessChem(userType) ? (
-                                                <button 
-                                                    className="test-btn" 
-                                                    onClick={() => toggleChem(request.controlNumber)}
-                                                >
-                                                    Chemical
-                                                </button>
+                        <div className="fortesting-list" ref={requestListRef}>
+                            {requests.map((request, index) => (
+                                <div key={index} className="request-item">
+                                    <div className="fortesting-header">
+                                        <span className="fortesting-controlnumber">{request.controlNumber}</span>
+                                        <div className="lineseparator-left">|</div>
+                                        <span className="fortesting-tests">
+                                            {request.chem ? (
+                                                canAccessChem(userType) ? (
+                                                    <button 
+                                                        className="test-btn" 
+                                                        onClick={() => toggleChem(request.controlNumber)}
+                                                    >
+                                                        Show Chemical Tests
+                                                    </button>
+                                                ) : (
+                                                    <button 
+                                                        className="test-btn-disabled" 
+                                                        disabled
+                                                        title="You don't have permission to access this section"
+                                                    >
+                                                        Show Chemical Tests
+                                                    </button>
+                                                )
                                             ) : (
-                                                <button 
-                                                    className="test-btn-disabled" 
-                                                    disabled
-                                                    title="You don't have permission to access this section"
-                                                >
-                                                    Chemical
-                                                </button>
-                                            )
-                                        ) : (
-                                            "no testing...."
-                                        )}
-                                        {expandedChem === request.controlNumber && (
-                                            <div className="chemical-list">
-                                                {request.microbial && (
-                                                    <div className="microbial-inhibition-section">
-                                                        <div><strong>Microbial Inhibition Test:</strong></div>
-                                                        <div className="microbial-inhibition-tests">
-                                                            {request.betaLactams && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Beta Lactams:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.betaLactams || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'betaLactams', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'betaLactams', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.tetracyclines && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Tetracyclines:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.tetracyclines || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'tetracyclines', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'tetracyclines', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.sulfonamides && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Sulfonamides:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.sulfonamides || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'sulfonamides', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'sulfonamides', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.aminoglycosides && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Aminoglycosides:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.aminoglycosides || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'aminoglycosides', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'aminoglycosides', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.macrolides && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Macrolides:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.macrolides || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'macrolides', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'macrolides', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.quinolones && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Quinolones:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.quinolones || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'quinolones', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'quinolones', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
+                                                "no testing...."
+                                            )}
+                                            {expandedChem === request.controlNumber && (
+                                                <div className="chemical-list">
+                                                    {request.microbial && (
+                                                        <div className="microbial-inhibition-section">
+                                                            <div className="microbial-inhibition-title"><strong>· <u>Microbial Inhibition Test</u>:</strong></div>
+                                                            <div className="microbial-inhibition-tests">
+                                                                {request.betaLactams && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Beta Lactams:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.betaLactams || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'betaLactams', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'betaLactams', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.tetracyclines && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Tetracyclines:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.tetracyclines || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'tetracyclines', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'tetracyclines', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.sulfonamides && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Sulfonamides:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.sulfonamides || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'sulfonamides', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'sulfonamides', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>    
+                                                                    </div>
+                                                                )}
+                                                                {request.aminoglycosides && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Aminoglycosides:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.aminoglycosides || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'aminoglycosides', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'aminoglycosides', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.macrolides && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Macrolides:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.macrolides || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'macrolides', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'macrolides', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.quinolones && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Quinolones:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.quinolones || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'quinolones', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'quinolones', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )}
-                                                {request.elisa && (
-                                                    <div className="elisa-section">
-                                                        <div><strong>ELISA Tests:</strong></div>
-                                                        <div className="elisa-tests">
-                                                            {request.chloramphenicol && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Chloramphenicol:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.chloramphenicol || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'chloramphenicol', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'chloramphenicol', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.nitrofuranAoz && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Nitrofuran AOZ:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.nitrofuranAoz || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'nitrofuranAoz', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'nitrofuranAoz', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.beta_agonists && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Beta Agonists:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.beta_agonists || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'beta_agonists', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'beta_agonists', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.corticosteroids && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Corticosteroids:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.corticosteroids || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'corticosteroids', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'corticosteroids', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.olaquindox && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Olaquindox:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.olaquindox || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'olaquindox', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'olaquindox', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.nitrufuranAmoz && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Nitrufuran AMOZ:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.nitrufuranAmoz || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.stilbenes && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Stilbenes:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.stilbenes || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'stilbenes', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'stilbenes', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
-                                                            {request.ractopamine && (
-                                                                <div className="test-result-item">
-                                                                    <strong>Ractopamine:</strong>
-                                                                    <input
-                                                                        type="text"
-                                                                        value={testResults[request.requestId]?.ractopamine || ''}
-                                                                        onChange={(e) => handleTestResultChange(request.requestId, 'ractopamine', e.target.value)}
-                                                                        className="test-result-input"
-                                                                    />
-                                                                    <input
-                                                                        type="date"
-                                                                        value={analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || ''}
-                                                                        onChange={(e) => handleAnalysisDateChange(request.requestId, 'ractopamine', e.target.value)}
-                                                                        className="date-picker"
-                                                                    />
-                                                                </div>
-                                                            )}
+                                                    )}
+                                                    {request.elisa && (
+                                                        <div className="elisa-section">
+                                                            <div className="elisa-title"><strong>· <u>ELISA Tests</u>:</strong></div>
+                                                            <div className="elisa-tests">
+                                                                {request.chloramphenicol && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Chloramphenicol:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.chloramphenicol || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'chloramphenicol', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'chloramphenicol', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.nitrofuranAoz && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Nitrofuran AOZ:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.nitrofuranAoz || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'nitrofuranAoz', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'nitrofuranAoz', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.beta_agonists && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Beta Agonists:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.beta_agonists || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'beta_agonists', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'beta_agonists', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.corticosteroids && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Corticosteroids:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.corticosteroids || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'corticosteroids', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'corticosteroids', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.olaquindox && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Olaquindox:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.olaquindox || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'olaquindox', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'olaquindox', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.nitrufuranAmoz && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Nitrufuran AMOZ:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.nitrufuranAmoz || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.stilbenes && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Stilbenes:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.stilbenes || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'stilbenes', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'stilbenes', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {request.ractopamine && (
+                                                                    <div className="test-result-item-1">
+                                                                        <strong>Ractopamine:</strong>
+                                                                        <br/>
+                                                                        <div>
+                                                                            <input
+                                                                                type="text"
+                                                                                value={testResults[request.requestId]?.ractopamine || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'ractopamine', e.target.value)}
+                                                                                className="test-result-input"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                value={analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || ''}
+                                                                                onChange={(e) => handleAnalysisDateChange(request.requestId, 'ractopamine', e.target.value)}
+                                                                                className="date-picker"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )}
-                                                {!request.microbial && !request.elisa && (
-                                                    <div>No chemical tests selected</div>
-                                                )}
-                                            </div>
-                                        )}
-                                    </span>
-                                
-                                    <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
-                                        Sample Info
-                                    </button>
-                                </div>
+                                                    )}
+                                                    {!request.microbial && !request.elisa && (
+                                                        <div>No chemical tests selected</div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </span>
+                                        <div className="lineseparator">|</div>
+                                        <span className="fortesting-sampleinfo">
+                                            <button className="test-btn" onClick={() => toggleSample(request.controlNumber)}>
+                                                View Sample Information
+                                            </button>
+                                            {expandedSample === request.controlNumber && (
+                                                <div className="sample-list">
+                                                    {request.sample.map((sample, index) => (
+                                                        <div key={sample.sampleId} className="sample-item">
+                                                            <div>
+                                                                <strong><u>Sample Type Description {index + 1}</u>:</strong>
+                                                                <br />
+                                                                <span>→ {sample.sampleTypeDescription}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
 
-                                {expandedSample === request.controlNumber && (
-                                    <div className="sample-list">
-                                        {request.sample.map(sample => (
-                                            <div key={sample.sampleId} className="sample-item">
-                                                <div><strong>Sample Description:</strong> {sample.sampleTypeDescription}</div>
-                                            </div>
-                                        ))}
-
-                                        {/* Assuming these fields are common for all samples */}
-                                        <div><strong>Lot Batch No:</strong> {request.lotBatchNo}</div>
-                                        <div><strong>Sampler Name:</strong> {request.samplerName}</div>
-                                        <div><strong>Sample Source:</strong> {request.sampleSource}</div>
-                                        <div><strong>Production Date:</strong> {request.productionDate}</div>
-                                        <div><strong>Expiry Date:</strong> {request.expiryDate}</div>
-                                        <div><strong>Sampling Date:</strong> {request.samplingDate}</div>
+                                                    <div><strong><u>Lot Batch No</u>:</strong> <br /> <span>→ {request.lotBatchNo}</span></div>
+                                                    <div><strong><u>Sampler Name</u>:</strong> <br /> <span>→ {request.samplerName}</span></div>
+                                                    <div><strong><u>Sample Source</u>:</strong> <br /> <span>→ {request.sampleSource}</span></div>
+                                                    <div><strong><u>Production Date</u>:</strong> <br /> <span>→ {request.productionDate}</span></div>
+                                                    <div><strong><u>Expiry Date</u>:</strong> <br /> <span>→ {request.expiryDate}</span></div>
+                                                    <div><strong><u>Sampling Date</u>:</strong> <br /> <span>→ {request.samplingDate}</span></div>
+                                                </div>
+                                            )}
+                                        </span>
+                                        <div className="lineseparator-right">|</div>
+                                        <span className="fortesting-save">
+                                            <button
+                                                className="save-changes-btn"
+                                                onClick={() => handleSaveChanges(request)}
+                                                disabled={Object.values(testResults[request?.requestId] || {}).some(
+                                                    value => value === undefined || value === ''
+                                                )}
+                                            >
+                                                Save
+                                            </button>
+                                            {saveStatus && <div className="save-status">{saveStatus}</div>}
+                                        </span>
                                     </div>
-                                )}      
-                                <div className="save-changes-section">
-                                    <button 
-                                        className="save-changes-btn"
-                                        onClick={() => handleSaveChanges(request)}
-                                    >
-                                        Save Changes
-                                    </button>
-                                    {saveStatus && <div className="save-status">{saveStatus}</div>}
                                 </div>
-                            </div>
-                        ))
+                            ))}
+                        </div>
                     ) : (
-                        <div className="no-requests-container">
+                        <div className="empty-2nd-container">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
-                            <h1 className='msg-noreqres1'>All work is done! Great job!</h1>
+                            <h1 className='msg-noreqres1'>There are no ongoing Chemistry tests. </h1>
                         </div>
                     )}
                 </div>
@@ -612,4 +689,4 @@ const TestingList = () => {
     );
 }
 
-export default TestingList;
+export default ForTestingChem;

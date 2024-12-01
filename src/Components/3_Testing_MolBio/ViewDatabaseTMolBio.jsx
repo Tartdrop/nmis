@@ -1,4 +1,5 @@
 import React from 'react';
+import '../3A_Testing/ViewDatabaseT.css';
 import './ViewDatabaseTMolBio.css';
 import Userfront from "@userfront/core";
 

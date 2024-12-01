@@ -126,7 +126,7 @@ const PendingRequest = () => {
                             })}
                         </div>
                     ) : (
-                        <div className="pendingrequest-2nd-container">
+                        <div className="empty-2nd-container">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
                             <h1 className='msg-noreqres1'>
                                 There are no pending requests as of the moment.
