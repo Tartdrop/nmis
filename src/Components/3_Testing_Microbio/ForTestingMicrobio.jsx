@@ -26,6 +26,9 @@ const ForTestingMicrobio = () => {
         let scrollTop;
     
         const handleMouseDown = (e) => {
+            // Ignore dragging for input fields
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+    
             e.preventDefault();
             isDown = true;
             requestList.classList.add('grabbing');
@@ -47,6 +50,7 @@ const ForTestingMicrobio = () => {
     
         const handleMouseMove = (e) => {
             if (!isDown) return;
+    
             e.preventDefault();
             const y = e.pageY - requestList.offsetTop;
             const walk = (y - startY) * 2; // Adjust scrolling speed
@@ -65,6 +69,7 @@ const ForTestingMicrobio = () => {
             requestList.removeEventListener('mousemove', handleMouseMove);
         };
     }, [requests.length]);
+    
 
     useEffect(() => {
         const userType = localStorage.getItem('userType');
