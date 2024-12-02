@@ -139,6 +139,19 @@
     margin-left: -5px;
 }
 
+.empty-2nd-container-1 {
+    width: 1720px;
+    height: 485px;
+    margin-top: 20px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
 .fortesting-list {
     display: flex;
     align-items: center;
@@ -217,6 +230,26 @@
     color: #fff;
     cursor: pointer;
     transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.fortesting-tests div button {
+    font-family: 'Poppins';
+    border-radius: 10px;
+    width: 550px;
+    height: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    background-color: #50505062;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.fortesting-tests div button:hover {
+    border: none;
+    color: #fff;
+    background-color: #a41d2dbf;
 }
 
 .fortesting-sampleinfo button {

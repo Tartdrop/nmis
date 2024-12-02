@@ -68,8 +68,6 @@ const ForTestingChem = () => {
             requestList.removeEventListener('mousemove', handleMouseMove);
         };
     }, [requests.length]);
-    
-    
 
     useEffect(() => {
         const userType = localStorage.getItem('userType');
@@ -212,35 +210,71 @@ const ForTestingChem = () => {
             if (!sampleId) {
                 throw new Error('Sample ID not found');
             }
-    
+
             const currentResults = testResults[request.requestId] || {};
-            const requiredFields = [
-                currentResults.chloramphenicol,
-                currentResults.nitrofuranAoz,
-                currentResults.beta_agonists,
-                currentResults.corticosteroids,
-                currentResults.olaquindox,
-                currentResults.nitrufuranAmoz,
-                currentResults.stilbenes,
-                currentResults.ractopamine,
-                currentResults.betaLactams,
-                currentResults.tetracyclines,
-                currentResults.sulfonamides,
-                currentResults.aminoglycosides,
-                currentResults.macrolides,
-                currentResults.quinolones
-            ];
-    
-            // Check if any required fields are empty
-            if (requiredFields.some(field => field === undefined || field === '')) {
-                alert('All input fields must be filled before saving.');
-                return;
-            }
-    
+
+            // Chemical ELISA tests
             const elisaData = {};
+            if (currentResults.chloramphenicol) {
+                elisaData.chloramphenicol = currentResults.chloramphenicol;
+                elisaData.chloramphenicolAnalysisDate = analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || null;
+            }
+            if (currentResults.nitrofuranAoz) {
+                elisaData.nitrofuranAoz = currentResults.nitrofuranAoz;
+                elisaData.nitrofuranAozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || null;
+            }
+            if (currentResults.beta_agonists) {
+                elisaData.beta_agonists = currentResults.beta_agonists;
+                elisaData.beta_agonistsAnalysisDate = analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || null;
+            }
+            if (currentResults.corticosteroids) {
+                elisaData.corticosteroids = currentResults.corticosteroids;
+                elisaData.corticosteroidsAnalysisDate = analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || null;
+            }
+            if (currentResults.olaquindox) {
+                elisaData.olaquindox = currentResults.olaquindox;
+                elisaData.olaquindoxAnalysisDate = analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || null;
+            }
+            if (currentResults.nitrufuranAmoz) {
+                elisaData.nitrufuranAmoz = currentResults.nitrufuranAmoz;
+                elisaData.nitrufuranAmozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || null;
+            }
+            if (currentResults.stilbenes) {
+                elisaData.stilbenes = currentResults.stilbenes;
+                elisaData.stilbenesAnalysisDate = analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || null;
+            }
+            if (currentResults.ractopamine) {
+                elisaData.ractopamine = currentResults.ractopamine;
+                elisaData.ractopamineAnalysisDate = analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || null;
+            }
+
+            // Chemical Microbial tests
             const chemMicrobialData = {};
-            // Continue populating `elisaData` and `chemMicrobialData` as in your original function...
-    
+            if (currentResults.betaLactams) {
+                chemMicrobialData.betaLactams = currentResults.betaLactams;
+                chemMicrobialData.betaLactamsAnalysisDate = analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || null;
+            }
+            if (currentResults.tetracyclines) {
+                chemMicrobialData.tetracyclines = currentResults.tetracyclines;
+                chemMicrobialData.tetracyclinesAnalysisDate = analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || null;
+            }
+            if (currentResults.sulfonamides) {
+                chemMicrobialData.sulfonamides = currentResults.sulfonamides;
+                chemMicrobialData.sulfonamidesAnalysisDate = analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || null;
+            }
+            if (currentResults.aminoglycosides) {
+                chemMicrobialData.aminoglycosides = currentResults.aminoglycosides;
+                chemMicrobialData.aminoglycosidesAnalysisDate = analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || null;
+            }
+            if (currentResults.macrolides) {
+                chemMicrobialData.macrolides = currentResults.macrolides;
+                chemMicrobialData.macrolidesAnalysisDate = analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || null;
+            }
+            if (currentResults.quinolones) {
+                chemMicrobialData.quinolones = currentResults.quinolones;
+                chemMicrobialData.quinolonesAnalysisDate = analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || null;
+            }
+
             // Send ELISA data if there are any updates
             if (Object.keys(elisaData).length > 0) {
                 const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
@@ -250,12 +284,12 @@ const ForTestingChem = () => {
                     },
                     body: JSON.stringify(elisaData)
                 });
-    
+
                 if (!response.ok) {
                     throw new Error('Failed to save ELISA results');
                 }
             }
-    
+
             // Send Chemical Microbial data if there are any updates
             if (Object.keys(chemMicrobialData).length > 0) {
                 const response = await fetch(`http://localhost:8080/chemTestMicrobialResults/${sampleId}`, {
@@ -265,15 +299,18 @@ const ForTestingChem = () => {
                     },
                     body: JSON.stringify(chemMicrobialData)
                 });
-    
+
                 if (!response.ok) {
                     throw new Error('Failed to save Chemical Microbial results');
                 }
             }
-    
-            alert('Changes saved successfully!');
+
+            setSaveStatus('Changes saved successfully!');
+            setTimeout(() => setSaveStatus(''), 3000);
         } catch (error) {
-            alert(`Error saving changes: ${error.message}`);
+            console.error('Error saving changes:', error);
+            setSaveStatus('Error saving changes: ' + error.message);
+            setTimeout(() => setSaveStatus(''), 3000);
         }
     };
 
@@ -327,13 +364,15 @@ const ForTestingChem = () => {
                                                         Show Chemical Tests
                                                     </button>
                                                 ) : (
-                                                    <button 
-                                                        className="test-btn-disabled" 
-                                                        disabled
-                                                        title="You don't have permission to access this section"
-                                                    >
-                                                        Show Chemical Tests
-                                                    </button>
+                                                    <div>
+                                                        <button 
+                                                            className="test-btn-disabled" 
+                                                            disabled
+                                                            title="You don't have permission to access this section"
+                                                        >
+                                                            Show Chemical Tests
+                                                        </button>
+                                                    </div>
                                                 )
                                             ) : (
                                                 "no testing...."
@@ -684,7 +723,7 @@ const ForTestingChem = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="empty-2nd-container">
+                        <div className="empty-2nd-container-1">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
                             <h1 className='msg-noreqres1'>There are no ongoing Chemistry tests. </h1>
                         </div>

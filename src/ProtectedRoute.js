@@ -10,8 +10,8 @@ const ProtectedRoute = ({ isLoggedIn, userType, userId, redirectPath = '/login' 
 
     // Define allowed paths for each user type
     const allowedPaths = {
-        client: ['/home/client', '/submit-a-request', '/track-my-request', '/guide'],
-        staff: ['/home/staff', '/pending-requests', '/request-details', '/approved', '/request-additional-info', '/for-release', '/receive-release-database'],
+        client: ['/home/client', '/submit-a-request', '/request-submitted','/track-my-request', '/guide'],
+        staff: ['/home/staff', '/pending-requests', '/request-details', '/request-control-number', '/approved', '/request-additional-info', '/for-release', '/receive-release-database'],
         chemtester: ['/home/chemtester', '/for-testing-chem', '/test-results-chem', '/testing-database-chem'],
         microbiotester: ['/home/microbiotester', '/for-testing-microbio', '/test-results-microbio', '/testing-database-microbio'],
         molbiotester: ['/home/molbiotester', '/for-testing-molbio', '/test-results-molbio', '/testing-database-molbio'],

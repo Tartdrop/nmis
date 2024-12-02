@@ -34,7 +34,7 @@ const TFAVerification = () => {
           if (response.ok) {
               // Successful verification
               console.log('Successful verification.');
-              navigate('/login'); // Navigate to the login page
+              navigate('/registered');
           } else {
               // Unsuccessful verification
               console.log('Unsuccessful verification.');

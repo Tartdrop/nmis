@@ -146,7 +146,6 @@ const RequestDetails = () => {
 
     const handleApprove = async () => {
         try {
-            // First approve the request
             const response = await fetch(`http://localhost:8080/requests/approve/${requestId}`, {
                 method: 'PUT'
             });
@@ -173,8 +172,7 @@ const RequestDetails = () => {
                 });
 
                 if (responseResultGen.ok) {
-                    alert('Request approved successfully!');
-                    navigate(`/home/staff/${userId}`);
+                    navigate(`/request-control-number/${userId}/${requestId}`);
                 } else {
                     const errorData = await responseResultGen.text();
                     console.error('Server error:', errorData);

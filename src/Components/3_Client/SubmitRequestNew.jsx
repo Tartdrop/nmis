@@ -177,9 +177,11 @@ const Submit = () => {
             return;
         }
 
-        if (cultureAndSensitivityTest && (!gramPositiveAst || !gramNegativeAst)) {
-            alert("Please fill in both Gram Positive AST and Gram Negative AST.");
-            return;
+        if (cultureAndSensitivityTest) {
+            if (!gramPositiveAst || !gramNegativeAst) {
+                alert("Please fill in both Gram Positive AST and Gram Negative AST.");
+                return;
+            }
         }
 
         const sample = sampleTypeDescription.map(item => ({
@@ -263,9 +265,7 @@ const Submit = () => {
                 const errorData = await response.json();
                 throw new Error(errorData.message || "Request submission failed.");
             }
-    
-            alert("Request submitted successfully!");
-            navigate(`/home/client/${userId}`);
+            navigate(`/request-submitted/${userId}`);
         } catch (error) {
             console.error("Error:", error);
             alert(error.message);

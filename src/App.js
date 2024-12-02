@@ -14,7 +14,7 @@ import PageHomeRecRel from "./PageHomeRecRel";
     import PageHomeTestingChem from "./PageHomeTestingChem";
     import PageHomeTestingMicrobio from "./PageHomeTestingMicrobio";
     import PageHomeTestingMolBio from "./PageHomeTestingMolBio";
-/* import PageSubmitRequest from "./PageSubmitRequest"; */
+import PageRequestSubmitted from "./PageRequestSubmitted"; 
 import PageSubmitRequestNew from "./PageSubmitRequestNew";
 import PageSubmitRequestReview from "./PageSubmitRequestReview";
 import PageTrackMyRequest from "./PageTrackMyRequest";
@@ -152,12 +152,14 @@ function App() {
                     <Route path="/home/client/:userId" element={<PageHomeClient />} />
                     <Route path="/submit-a-request/:userId" element={<PageSubmitRequestNew />} />
                     <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
+                    <Route path="/request-submitted/:userId" element={<PageRequestSubmitted />} />
                     <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
                     <Route path="/guide/:userId" element={<PageGuide />} />
                     
                     {/* Staff Routes */}
                     <Route path="/home/staff/:userId" element={<PageHomeRecRel />} />
                     <Route path="/pending-requests/:userId" element={<PagePendingRequest />} />
+                    <Route path="/request-control-number/:userId/:requestId" element={<PageShowControlNumber />} />
                     <Route path="/request-details/:userId/:requestId" element={<PageRequestDetailsNew />} />
                     <Route path="/approved/:userId" element={<PageShowControlNumber />} />
                     <Route path="/request-additional-info/:userId/:requestId" element={<PageRequestAddInfo />} />

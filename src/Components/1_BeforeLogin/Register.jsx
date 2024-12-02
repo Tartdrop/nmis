@@ -16,7 +16,7 @@ const Register = () => {
     const [middleInitial, setMiddleInitial] = useState("");
     const [lastName, setLastName] = useState("");
     const [companyName, setCompanyName] = useState("");
-    const [ltoNumber, setLtoNumber] = useState(""); // Simple input without specific length requirement
+    const [ltoNumber, setLtoNumber] = useState("");
     const [contactNumber, setContactNumber] = useState("(+63)");
     const [clientClassification, setClientClassification] = useState("");
     const [otherClientClassification, setOtherClientClassification] = useState("");
@@ -34,8 +34,8 @@ const Register = () => {
             !companyName.trim() ||
             !ltoNumber.trim() ||
             !contactNumber.trim() ||
-            !clientClassification.trim() || // Ensure client classification is filled
-            contactNumber.trim().length !== 18 // Ensure contact number is 18 characters long
+            !clientClassification.trim() ||
+            contactNumber.trim().length !== 18 
         ) {
             alert("Please fill in all required fields, ensure contact number is 18 characters long, and client classification is provided.");
             return;
@@ -72,7 +72,6 @@ const Register = () => {
                 throw new Error(errorData.message || "Registration failed.");
             }
     
-            alert("Registration successful!");
             navigateAfterLogin();
         } catch (error) {
             console.error("Error:", error);
@@ -89,12 +88,12 @@ const Register = () => {
     };
 
     const handleContactNumberChange = (e) => {
-        let value = e.target.value.replace(/[^0-9]/g, ""); // Only keep digits
+        let value = e.target.value.replace(/[^0-9]/g, "");
         if (!value.startsWith("63")) {
-            value = "63" + value; // Add "63" if not present
+            value = "63" + value;
         }
         if (value.length > 12) {
-            value = value.slice(0, 12); // Limit to 12 digits (after the +63)
+            value = value.slice(0, 12);
         }
         const formattedValue = `(+63) ${value.slice(2, 5)} ${value.slice(5, 8)} ${value.slice(8)}`.trim();
         setContactNumber(formattedValue);
