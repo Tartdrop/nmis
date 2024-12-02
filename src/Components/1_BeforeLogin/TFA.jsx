@@ -60,10 +60,10 @@ const TFA = ({ onLogin }) => {
             }
           } else {
               // Unsuccessful verification
-              console.log('Unsuccessful verification.', error);
+              alert('Unsuccessful verification.', error);
           }
       } catch (error) {
-          console.error('Error verifying user:', error);
+          alert('Error verifying user:', error);
       }
   };
 
