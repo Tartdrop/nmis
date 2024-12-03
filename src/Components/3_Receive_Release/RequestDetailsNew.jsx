@@ -220,7 +220,6 @@ const RequestDetails = () => {
 
     return (
         <div className="submit-container-all">
-
             <div className="s-c-a-right">
                 <div className='s-c-a-r-title'>Request Details</div>
                 <div className='s-c-a-r-container-everything'>

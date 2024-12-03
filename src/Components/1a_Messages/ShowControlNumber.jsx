@@ -1,51 +1,57 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './XMessages.css';
-import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
-
 import logo_icon from '../Assets/BlueLogo.png';
 
 const ControlNumber = () => {
+    const { userId, requestId } = useParams(); // Extract userId and requestId from URL params
     const navigate = useNavigate();
-    const { userId } = useParams();
-    const [requests, setRequests] = useState([]);
-    const [testResults, setTestResults] = useState({}); 
-
-    const handleBack = () => {
-        navigate(`/home/staff/${userId}`);
-        window.location.reload();
-    };
+    const [controlNumber, setControlNumber] = useState(''); // State for the control number
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
 
     useEffect(() => {
-        fetch(`http://localhost:8080/requests/clientrequest/${userId}`)
-            .then(response => {
+        // Fetch the control number from the backend
+        const fetchControlNumber = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/requests/ctrlnumber/${requestId}`);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Failed to fetch control number');
                 }
-                return response.json();
-            })
-            .then(data => {
-                setRequests(data);
-            })
-            .catch(error => {
-                console.error('Error fetching pending requests:', error);
-            });
-    }, [userId]);
+                const data = await response.text(); // Assuming the control number is plain text
+                setControlNumber(data); // Update state with control number
+            } catch (err) {
+                setError(err.message); // Handle any errors
+            } finally {
+                setLoading(false); // Stop loading state
+            }
+        };
+
+        fetchControlNumber();
+    }, [requestId]);
+
+    const handleBack = () => {
+        navigate(`/home/staff/${userId}`); // Navigate back to the staff home
+        window.location.reload(); // Reload the page
+    };
 
     return (
-        <div className='messages-all-container'>
-            <div className='messages-container'>
+        <div className="messages-all-container">
+            <div className="messages-container">
                 <div className="messages-logo">
                     <img src={logo_icon} alt="Logo" />
                 </div>
                 <div className="messages-text">
-                    <p className="es-text">Control Number:</p><br></br>
-                    {requests.map((request, index) => (
-                        <div key={index} className="request-item">
-                            <p className="bigger-text">{request.controlNumber}</p>
-                        </div>
-                    ))};
+                    <p className="es-text">Control Number:</p>
+                    <br />
+                    {loading ? (
+                        <p className="bigger-text">Loading...</p>
+                    ) : error ? (
+                        <p className="error-text">{error}</p>
+                    ) : (
+                        <p className="bigger-text">{controlNumber}</p>
+                    )}
                 </div>
-
                 <div className="messages-button">
                     <button className="messages-button-text" onClick={handleBack}>
                         Done
@@ -54,6 +60,6 @@ const ControlNumber = () => {
             </div>
         </div>
     );
-}
+};
 
 export default ControlNumber;
