@@ -220,55 +220,6 @@ const RequestDetails = () => {
 
     return (
         <div className="submit-container-all">
-            <div className="s-c-a-left">
-                <div className="s-c-a-l-epithet">
-                    <div className="s-c-a-l-e-text">Their</div>
-                    <div className="s-c-a-l-e-text">Information</div>
-                </div>
-                <img className="s-c-a-l-whiteline" src={white_line_submit} alt="white line submit"/>
-                <div className="s-c-a-l-information">
-                    <div className='s-c-a-l-i-text'>
-                        Username
-                        <input type="text" 
-                            value={requestData?.representativeName || ''}
-                            readOnly />
-                    </div>
-                    <div className='s-c-a-l-i-text'>
-                        Contact Number
-                        <input type="text" 
-                            value={requestData?.contactNumber || ''} 
-                            readOnly />
-                    </div>
-                    <div className='s-c-a-l-i-text'>
-                        Email Address
-                        <input type="text" 
-                            value={requestData?.emailAddress || ''} 
-                            readOnly />
-                    </div>
-                    <div className='s-c-a-l-i-text'>
-                        Company Name
-                        <input type="text" 
-                            value={requestData?.companyName || ''}
-                            readOnly />
-                    </div>
-                    <div className='s-c-a-l-i-text'>
-                        Client Classification
-                        <input type="text" 
-                            value={requestData?.clientClassification || ''}
-                            readOnly />
-                    </div>
-                    <div className='s-c-a-l-i-text'>
-                        LTO Number
-                        <input type="text" 
-                            value={requestData?.ltoNumber || ''}
-                            readOnly />
-                    </div>
-                    <div className='s-c-a-l-i-additionalinfo'>
-                        <div>* these information were prefilled with</div>
-                        <div>their logged-in details</div>
-                    </div>
-                </div>
-            </div>
 
             <div className="s-c-a-right">
                 <div className='s-c-a-r-title'>Request Details</div>
