@@ -265,7 +265,7 @@ const Submit = () => {
                 const errorData = await response.json();
                 throw new Error(errorData.message || "Request submission failed.");
             }
-            navigate(`/request-submitted/${userId}`);
+            navigate(`/request-submitted/${userId}`, { replace: true });
         } catch (error) {
             console.error("Error:", error);
             alert(error.message);

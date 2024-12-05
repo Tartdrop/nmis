@@ -172,7 +172,7 @@ const RequestDetails = () => {
                 });
 
                 if (responseResultGen.ok) {
-                    navigate(`/request-control-number/${userId}/${requestId}`);
+                    navigate(`/request-control-number/${userId}/${requestId}`, { replace: true });
                 } else {
                     const errorData = await responseResultGen.text();
                     console.error('Server error:', errorData);
@@ -196,7 +196,7 @@ const RequestDetails = () => {
             if (response.ok) {
                 // Handle successful rejection, e.g., show a success message, navigate to a different page
                 alert('Request rejected successfully!');
-                navigate(`/home/staff/${userId}`); // Navigate to the staff dashboard
+                navigate(`/home/staff/${userId}`, { replace: true }); // Navigate to the staff dashboard
             } else {
                 // Handle error, e.g., show an error message
                 console.error('Failed to reject request');
@@ -209,7 +209,7 @@ const RequestDetails = () => {
     };
     
     const handleRequestAdditionalInformation = () => {
-        navigate(`/request-additional-info/${userId}/${requestId}`);
+        navigate(`/request-additional-info/${userId}/${requestId}`, { replace: true });
     };
 
     const handleSampleDescriptionChange = (index, value) => {

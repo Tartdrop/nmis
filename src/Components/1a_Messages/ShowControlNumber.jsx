@@ -31,8 +31,7 @@ const ControlNumber = () => {
     }, [requestId]);
 
     const handleBack = () => {
-        navigate(`/home/staff/${userId}`); // Navigate back to the staff home
-        window.location.reload(); // Reload the page
+        navigate(`/home/staff/${userId}`, { replace: true }); // Navigate back to the staff home
     };
 
     return (

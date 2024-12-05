@@ -39,6 +39,7 @@ import PageTFAVerify from "./PageTFA-Verify-Reg";
 import PublicRoute from "./PublicRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import { user } from "@userfront/core";
+import { clear } from "localforage";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,24 +48,31 @@ function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        localStorage.clear();
         const storedUserId = localStorage.getItem("userId");
         const storedUserType = localStorage.getItem("userType");
-
+    
+        console.log("Restored userId:", storedUserId);
+        console.log("Restored userType:", storedUserType);
+    
         if (storedUserId && storedUserType) {
             setIsLoggedIn(true);
             setUserId(storedUserId);
             setUserType(storedUserType);
         } else {
-            setIsLoggedIn(false);  // Ensure isLoggedIn is set to false if no user data is found
+            setIsLoggedIn(false);
         }
-    }, []);
+    }, []);    
 
-    const handleLogin = (id, type) => {
+    const handleLogin = (id, type) => { 
+        localStorage.clear();
+    
         setIsLoggedIn(true);
         setUserId(id);
         setUserType(type);
         localStorage.setItem("userId", id);
         localStorage.setItem("userType", type);
+    
         navigate(`/home/${type}/${id}`);
     };
 

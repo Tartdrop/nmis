@@ -11,17 +11,17 @@ const Header = ({ onLogout, userId, userType }) => {
         // Clear local storage and reset user state through the onLogout prop
         localStorage.removeItem('responseData');
         onLogout(); // Call the onLogout prop to update the app state
-        navigate('/login'); // Redirect to login page
+        navigate('/login', { replace: true }); // Redirect to login page
     };
 
     const navigateHome = () => {
         if (userType && userId) {
             // Navigate to the home URL once userType and userId are available
             console.log('Navigating to: ', `/home/${userType}/${userId}`);
-            navigate(`/home/${userType}/${userId}`);
+            navigate(`/home/${userType}/${userId}`, { replace: true });
         } else {
             console.log('UserType or UserId is missing. Redirecting to login.');
-            navigate('/login');
+            navigate('/login', { replace: true });
         }
     };
 

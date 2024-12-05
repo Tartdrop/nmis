@@ -13,7 +13,7 @@ const RegisterTY = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate(`/home/client/${userId}`);
+        navigate(`/home/staff/${userId}`, { replace: true });
     };
 
     return (

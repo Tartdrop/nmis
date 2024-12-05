@@ -282,7 +282,7 @@
 }
 
 .s-c-a-r-c-e-s-n-co-i-s-b-add {
-    background-color: #2BC192;
+    background-color: #2b9ec1aa;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -291,13 +291,13 @@
 
 .s-c-a-r-c-e-s-n-co-i-s-b-add:hover {
     background-color: #fff;
-    color: #2BC192;
-    border: 2px solid #2BC192;
+    color: #2b9ec1c0;
+    border: 3px solid #2b9ec1c0;
     border-radius: 5px;
 }
 
 .s-c-a-r-c-e-s-n-co-i-s-b-delete {
-    background-color: #E85557;
+    background-color: #2b9ec1c0;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -307,8 +307,8 @@
 
 .s-c-a-r-c-e-s-n-co-i-s-b-delete:hover {
     background-color: #fff;
-    color: #E85557;
-    border: 2px solid #E85557;
+    color: #2b9ec1c0;
+    border: 3px solid #2b9ec1c0;
     border-radius: 5px;
 }
 

@@ -16,7 +16,7 @@ const RequestAddInfo = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate(`/home/staff/${userId}`);
+        navigate(`/home/staff/${userId}`, { replace: true });
     };
 
     return (

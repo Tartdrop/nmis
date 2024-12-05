@@ -12,7 +12,7 @@ const ForgotNIS = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate("/forget")
+        navigate("/forget", { replace: true })
     };
 
     return (

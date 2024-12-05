@@ -13,7 +13,7 @@ const RegisterTY = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate("/login")
+        navigate("/login", { replace: true });
     };
 
     return (
