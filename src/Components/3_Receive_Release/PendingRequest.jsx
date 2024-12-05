@@ -80,7 +80,7 @@ const PendingRequest = () => {
     return (
         <div className="pendingrequest-all-container">
             <div className='pendingrequest-container'>
-            <div className="pendingrequest-title">
+                <div className="pendingrequest-title">
                     Pending Requests
                     <div className="pendingrequest-popup">
                         ⓘ
@@ -90,13 +90,13 @@ const PendingRequest = () => {
                 <div className="pendingrequest-1st-container">
                     <div className="pendingrequest-1st-container-header">
                         <div className="pendingrequest-1st-container-header-title">
-                            Username
+                            Client Classification
                         </div>
                         <div className="lineseparator">
                             |
                         </div>
                         <div className="pendingrequest-1st-container-header-title-middle">
-                            Email Address
+                            Tests Selected
                         </div>
                         <div className="lineseparator">
                             |
@@ -114,9 +114,17 @@ const PendingRequest = () => {
                                             className="my-requests"
                                             onClick={() => navigate(`/request-details/${userId}/${request.requestId}`)}
                                         >
-                                            <div className="req-side">{request.representativeName}</div>
+                                            <div className="req-side">{request.clientClassification}</div>
                                             <p className="req-lineseparator">|</p>
-                                            <div className="req-middle">{request.emailAddress}</div>
+                                            <div className="req-middle">
+                                                {[
+                                                    request.microbio && 'Microbiological',
+                                                    request.chem && 'Chemical',
+                                                    request.molBio && 'Micro Biological',
+                                                ]
+                                                    .filter(Boolean)
+                                                    .join(', ')} 
+                                            </div>
                                             <p className="req-lineseparator">|</p>
                                             <div className="req-side">{request.submissionDate}</div>
                                         </button>

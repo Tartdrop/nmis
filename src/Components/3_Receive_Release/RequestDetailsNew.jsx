@@ -230,6 +230,10 @@ const RequestDetails = () => {
                     ←
                     </div>
                     Request Details
+                    <div className="s-c-a-r-t-requestdetailspopup">
+                        ⓘ
+                        <div className="s-c-a-r-t-rdp-container">Press the back arrow to go the pending requests page!</div>
+                    </div>
                 </div>
                 <div className='s-c-a-r-container-everything'>
                     <div className='s-c-a-r-c-e-scroll'>

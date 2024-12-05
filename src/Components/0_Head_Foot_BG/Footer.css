@@ -10,6 +10,7 @@
     font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
     'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
+    z-index: 10000;
   }
 
 p {

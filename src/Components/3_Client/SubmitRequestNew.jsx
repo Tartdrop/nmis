@@ -177,12 +177,13 @@ const Submit = () => {
             return;
         }
 
-        if (cultureAndSensitivityTest) {
+        if (isCSTChecked) {
             if (!gramPositiveAst || !gramNegativeAst) {
                 alert("Please fill in both Gram Positive AST and Gram Negative AST.");
                 return;
             }
         }
+        
 
         const sample = sampleTypeDescription.map(item => ({
             sampleId: item.sampleId,
@@ -299,8 +300,14 @@ const Submit = () => {
     };
 
         const handleCSTCheckboxChange = (e) => {
-            setIsCSTChecked(e.target.checked);
+            const isChecked = e.target.checked;
+            setIsCSTChecked(isChecked);
             setCultureAndSensitivityTest(true);
+
+            if (!isChecked) {
+                setGramPositiveAst('');
+                setGramNegativeAst('');
+            }
         };
 
     const handleChemicalCheckboxChange = (e) => {

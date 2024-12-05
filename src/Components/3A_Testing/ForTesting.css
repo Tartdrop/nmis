@@ -328,7 +328,7 @@
 
 .test-result-item-1 strong {
     font-size: 24px;
-    margin-left: -40px;
+    margin-left: -45px;
 }
 
 .test-result-item-2 strong {
@@ -345,12 +345,12 @@
     font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
     'Lucida Sans', Arial, sans-serif;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     color: #004e65;
     border-radius: 12px;
     border: 2px solid #004e65;
     padding: 0 20px;
-    width: 250px;
+    width: 165px;
     height: 35px;
 }
 
@@ -358,12 +358,12 @@
     font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
     'Lucida Sans', Arial, sans-serif;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     color: #004e65;
     border-radius: 12px;
     border: 2px solid #004e65;
     padding: 0 20px;
-    width: 270px;
+    width: 165px;
     height: 35px;
 }
 
@@ -386,9 +386,48 @@
     align-items: center;
     justify-content: right;
     gap: 20px;
-    padding: 5px 0 10px;
+    padding: 5px 0px 10px;
 }
 
 .microbio-list, .molbio-list {
     padding-top: 20px;
+}
+
+.test-result-item-1 div .positive, .test-result-item-2 div .positive, .test-result-item-3 div .positive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    background-color: #2BC192;
+    border: 2px solid #2BC192;
+    height: 40px;
+}
+
+.test-result-item-1 div .positive:hover, .test-result-item-2 div .positive:hover, .test-result-item-3 div .positive:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #2BC192;
+    color: #2BC192;
+}
+
+.test-result-item-1 div .negative, .test-result-item-2 div .negative, .test-result-item-3 div .negative {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    background-color: #E85557;
+    height: 40px;
+}
+
+.test-result-item-1 div .negative:hover, .test-result-item-2 div .negative:hover, .test-result-item-3 div .negative:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #E85557;
+    color: #E85557;
 }

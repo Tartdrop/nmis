@@ -507,6 +507,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'standardPlateCount', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_standardPlateCount_analysis_date`] || ''}
@@ -526,6 +528,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'coliformCount', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_coliformCount_analysis_date`] || ''}
@@ -545,6 +549,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'salmonellaSp', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_salmonellaSp_analysis_date`] || ''}
@@ -564,6 +570,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'staphylococcusAureus', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_staphylococcusAureus_analysis_date`] || ''}
@@ -583,6 +591,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'eColi', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_eColi_analysis_date`] || ''}
@@ -602,6 +612,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'eColiAndeColi0O157', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_eColiAndeColi0O157_analysis_date`] || ''}
@@ -621,6 +633,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'campylobacter', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_campylobacter_analysis_date`] || ''}
@@ -640,6 +654,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'yeastAndMolds', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_yeastAndMolds_analysis_date`] || ''}
@@ -659,6 +675,8 @@ const ForTestingMicrobio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'cultureAndSensitivityTest', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_cultureAndSensitivityTest_analysis_date`] || ''}

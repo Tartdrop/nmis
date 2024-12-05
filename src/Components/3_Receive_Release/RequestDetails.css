@@ -5,6 +5,7 @@
 
 .s-c-a-r-title {
     display: flex;
+    align-items: center;
 }
 
 .s-c-a-r-t-back {
@@ -120,4 +121,38 @@
     gap: 10px;
     max-height: 165px;
     overflow-y: auto;
+}
+
+.s-c-a-r-t-requestdetailspopup {
+    display: inline-block;
+    margin-left: 25px;
+    cursor: pointer;
+    font-size: 52px;
+    font-weight: bold;
+    position: relative;
+}
+
+.s-c-a-r-t-rdp-container {
+    position: absolute;
+    top: -2px;
+    right: -204px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(-10px); 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none; 
+    font-size: 12px;
+    width: 150px;
+}
+
+.s-c-a-r-t-requestdetailspopup:hover .s-c-a-r-t-rdp-container {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }

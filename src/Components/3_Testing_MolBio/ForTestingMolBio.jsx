@@ -508,6 +508,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'dog', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_dog_analysis_date`] || ''}
@@ -527,6 +529,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'cat', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_cat_analysis_date`] || ''}
@@ -546,6 +550,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'chicken', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_chicken_analysis_date`] || ''}
@@ -565,6 +571,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'buffalo', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_buffalo_analysis_date`] || ''}
@@ -584,6 +592,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'cattle', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_cattle_analysis_date`] || ''}
@@ -603,6 +613,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'horse', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_horse_analysis_date`] || ''}
@@ -622,6 +634,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'goat', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_goat_analysis_date`] || ''}
@@ -641,6 +655,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'sheep', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_sheep_analysis_date`] || ''}
@@ -660,6 +676,8 @@ const ForTestingMolBio = () => {
                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'swine', e.target.value)}
                                                                 className="test-result-input"
                                                             />
+                                                            <button className='positive'>+</button> 
+                                                            <button className='negative'>-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_swine_analysis_date`] || ''}

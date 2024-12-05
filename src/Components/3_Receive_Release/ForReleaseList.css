@@ -63,11 +63,12 @@
 .forrelease-1st-container {
     display: flex;
     align-items: center;
-    width: 1200px;
+    width: 1280px;
     height: 616px;
     margin-top: 20px;
     flex-direction: column;
-    gap: 16px;
+    cursor: grab;
+    gap: 20px;
 }
 
 .empty-2nd-container {
@@ -132,11 +133,21 @@
     width: 1000px;
 }
 
-.release-request-row {
-    width: 100%;
-    border-radius: 8px;
+.forrelease-list {
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
-    background-color: #004e65;
+    width: 1280px;
+    gap: 15px;
+}
+
+.release-request-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 1280px;
+    border-radius: 8px;
 }
 
 .release-request-summary {
@@ -146,13 +157,22 @@
     padding: 15px;
     width: 1170px;
     background-color: #f5f5f5;
-    overflow: hidden;
     cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.release-request-summary.expanded {
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
 }
 
 .control-number {
-    font-weight: bold;
+    font-weight: 800;
     min-width: 150px;
+    color: #004e65;
+    padding-left: 15px;
 }
 
 .test-results-summary {
@@ -175,21 +195,55 @@
 }
 
 .release-btn {
-    background-color: #4CAF50;
+    display: flex;
+    align-items: center;
+    height: 35px;
+    justify-content: center;
+    font-size: 14px;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
+    background-color: #2BC192;
     color: white;
+    width: 90px;
+    border: 2px solid #2BC192;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.release-btn:hover {
+    border: 2px solid #2BC192;
+    background-color: #fff;
+    color: #2BC192;
 }
 
 .reject-btn {
-    background-color: #f44336;
+    display: flex;
+    align-items: center;
+    height: 35px;
+    justify-content: center;
+    font-size: 14px;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
+    background-color: #E85557;
     color: white;
+    width: 90px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.reject-btn:hover {
+    border: 2px solid #E85557;
+    background-color: #fff;
+    color: #E85557;
 }
 
 .request-details {
-    padding: 15px;
+    padding: 50px 15px 15px;
+    margin-top: -35px;
     background-color: white;
     border: 1px solid #ddd;
+    border-radius: 10px;
     font-size: 0.9em;
-    overflow: auto;
+    width: 1170px;
+    z-index: 0;
 }
 
 .test-results-details {
@@ -204,6 +258,11 @@
     padding: 12px;
     border: 1px solid #eee;
     border-radius: 4px;
+    font-size: 20px;
+}
+
+.result-item {
+    padding-left: 25px;
 }
 
 .microbio-summary,
@@ -211,5 +270,60 @@
 .molbio-summary {
     padding: 5px 10px;
     border-radius: 4px;
-    background-color: #e3e3e3;
+    color: #fff;
+    font-weight: 700;
+}
+
+.microbio-summary {
+    background-color: #2B9DC1;
+}
+
+.chem-summary {
+    background-color: #5CAFCA;
+}
+
+.molbio-summary {
+    background-color: #88BFD1;
+}
+
+.result-line-1 {
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+    margin: 0 50px 0 110px;
+}
+
+.result-line-2 {
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+    margin: 0 50px 0 110px;
+}
+
+.result-line-3 {
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+    margin: 0 50px 0 110px;
+}
+
+.result-line-4 {
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+    margin: 0 50px 0 50px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    font-size: 16px;
+    color: #004e65;
+}
+
+.result-item strong {
+    color: #6c8e98;
+    font-weight: 500;
+    margin-right: -90px
+}
+
+.result-value {
+    white-space: nowrap;
 }

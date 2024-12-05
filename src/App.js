@@ -67,6 +67,12 @@ function App() {
         localStorage.clear();
         setUserId(null);
         setUserType(null);
+
+        const storedUserId = localStorage.getItem("userId");
+        const storedUserType = localStorage.getItem("userType");
+    
+        console.log("Restored userId:", storedUserId);
+        console.log("Restored userType:", storedUserType);
     
         setIsLoggedIn(true);
         setUserId(id);

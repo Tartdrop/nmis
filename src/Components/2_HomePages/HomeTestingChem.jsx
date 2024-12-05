@@ -57,7 +57,7 @@ const HomeTesting = () => {
         </div>
 
         <div className="announcement-box">
-          <h4>Welcome to the Chemisty Testing Portal!</h4>
+          <h4>Welcome to the Chemistry Testing Portal!</h4>
         </div>
 
         <div className="options-container">

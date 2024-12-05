@@ -512,6 +512,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'betaLactams', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || ''}
@@ -532,6 +534,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'tetracyclines', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || ''}
@@ -552,6 +556,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'sulfonamides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || ''}
@@ -572,6 +578,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'aminoglycosides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || ''}
@@ -592,6 +600,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'macrolides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || ''}
@@ -612,6 +622,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'quinolones', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || ''}
@@ -639,6 +651,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'chloramphenicol', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || ''}
@@ -659,6 +673,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'nitrofuranAoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || ''}
@@ -679,6 +695,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'beta_agonists', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || ''}
@@ -699,6 +717,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'corticosteroids', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || ''}
@@ -719,6 +739,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'olaquindox', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || ''}
@@ -739,6 +761,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || ''}
@@ -759,6 +783,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'stilbenes', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || ''}
@@ -779,6 +805,8 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'ractopamine', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
+                                                                            <button className='positive'>+</button> 
+                                                                            <button className='negative'>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || ''}
