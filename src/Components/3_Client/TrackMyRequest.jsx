@@ -154,6 +154,7 @@ const TrackRequest = () => {
                                     <div key={index} className="request-container-item">
                                         <button
                                             className={`request-button ${request.requestStatus.toLowerCase()}`}
+                                            onClick={() => navigate(`/request-review/${userId}/${request.requestId}`)}
                                         >
                                             <div className="req-side">{request.controlNumber}</div>
                                             <p className="req-lineseparator">|</p>

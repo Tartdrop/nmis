@@ -48,7 +48,6 @@ function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        localStorage.clear();
         const storedUserId = localStorage.getItem("userId");
         const storedUserType = localStorage.getItem("userType");
     
@@ -66,6 +65,8 @@ function App() {
 
     const handleLogin = (id, type) => { 
         localStorage.clear();
+        setUserId(null);
+        setUserType(null);
     
         setIsLoggedIn(true);
         setUserId(id);
@@ -159,7 +160,7 @@ function App() {
                     {/* Client Routes */}
                     <Route path="/home/client/:userId" element={<PageHomeClient />} />
                     <Route path="/submit-a-request/:userId" element={<PageSubmitRequestNew />} />
-                    <Route path="/submit-review/:userId" element={<PageSubmitRequestReview />} />
+                    <Route path="/request-review/:userId/:requestId" element={<PageSubmitRequestReview />} />
                     <Route path="/request-submitted/:userId" element={<PageRequestSubmitted />} />
                     <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
                     <Route path="/guide/:userId" element={<PageGuide />} />

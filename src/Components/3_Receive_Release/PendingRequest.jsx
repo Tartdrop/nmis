@@ -108,7 +108,6 @@ const PendingRequest = () => {
                     {requests.length > 0 ? (
                         <div className="pendingrequests-list" ref={requestListRef}>
                             {requests.map((request, index) => {
-                                const result = testResults[request.requestId];
                                 return (
                                     <div key={index} className="request-container-item">
                                         <button

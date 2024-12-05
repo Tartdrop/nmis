@@ -6,6 +6,7 @@ const ROUTES = {
         '/home/client',
         '/submit-a-request',
         '/request-submitted',
+        '/request-review',
         '/track-my-request',
         '/guide',
     ],

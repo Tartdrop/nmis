@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './RequestDetails.css';
+import './RequestReview.css';
 import { useNavigate, useParams } from 'react-router-dom'; 
-import white_line_submit from '../Assets/WhiteLineSubmit.png';
 
 const RequestDetails = () => {
     const { userId, requestId } = useParams();
@@ -144,74 +143,6 @@ const RequestDetails = () => {
 
     const navigate = useNavigate();
 
-    const handleApprove = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/requests/approve/${requestId}`, {
-                method: 'PUT'
-            });
-    
-            if (response.ok) {
-                // Prepare the result data
-                const resultData = {
-                    testerId: parseInt(userId),
-                    testerUsername: "",
-                    chemElisaTestResults: [],
-                    chemMicrobialTestResults: [],
-                    molBioTestResults: [],
-                    microbioTestResults: []
-                };
-
-                console.log('Sending resultData:', resultData);
-
-                const responseResultGen = await fetch(`http://localhost:8080/createresult/${requestId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(resultData)
-                });
-
-                if (responseResultGen.ok) {
-                    navigate(`/request-control-number/${userId}/${requestId}`, { replace: true });
-                } else {
-                    const errorData = await responseResultGen.text();
-                    console.error('Server error:', errorData);
-                    throw new Error(errorData || 'Failed to create result');
-                }
-            } else {
-                throw new Error('Failed to approve request');
-            }
-        } catch (error) {
-            console.error('Error details:', error);
-            alert('Error processing request. Please check console for details.');
-        }
-    };
-    
-    const handleReject = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/requests/reject/${requestId}`, {
-                method: 'PUT'
-            });
-    
-            if (response.ok) {
-                // Handle successful rejection, e.g., show a success message, navigate to a different page
-                alert('Request rejected successfully!');
-                navigate(`/home/staff/${userId}`, { replace: true }); // Navigate to the staff dashboard
-            } else {
-                // Handle error, e.g., show an error message
-                console.error('Failed to reject request');
-                alert('Error rejecting request. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error rejecting request:', error);
-            alert('Error rejecting request. Please try again.');
-        }
-    };
-    
-    const handleRequestAdditionalInformation = () => {
-        navigate(`/request-additional-info/${userId}/${requestId}`, { replace: true });
-    };
-
     const handleSampleDescriptionChange = (index, value) => {
         const updatedDescriptions = [...sampleTypeDescription];
         updatedDescriptions[index] = value;
@@ -219,18 +150,13 @@ const RequestDetails = () => {
     };
 
     const handleBack = () => {
-        navigate(`/pending-requests/${userId}`, { replace: true });
+        navigate(`/track-my-request/${userId}`, { replace: true });
     };
 
     return (
         <div className="submit-container-all">
             <div className="s-c-a-right">
-                <div className="s-c-a-r-title">
-                    <div className="s-c-a-r-t-back" onClick={handleBack}>
-                    ←
-                    </div>
-                    Request Details
-                </div>
+                <div className='s-c-a-r-title'>Request Review</div>
                 <div className='s-c-a-r-container-everything'>
                     <div className='s-c-a-r-c-e-scroll'>
                         <div className='s-c-a-r-c-e-s-numbered'>
@@ -844,15 +770,9 @@ const RequestDetails = () => {
                                 )}
                             </div>
                         </div>
-                        <div className='request-details-button'>
-                            <button className="approve-review-text-button" onClick={handleApprove}>
-                                Approve
-                            </button>
-                            <button className="request-additional-information-review-text-button" onClick={handleRequestAdditionalInformation}>
-                                Request Additional Information
-                            </button>
-                            <button className="reject-review-text-button" onClick={handleReject}>
-                                Reject
+                        <div className='request-review-button'>
+                            <button className="back-text-button" onClick={handleBack}>
+                                Back
                             </button>
                         </div>
                     </div>

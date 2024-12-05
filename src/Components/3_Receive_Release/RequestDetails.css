@@ -3,6 +3,21 @@
     gap: 10px;
 }
 
+.s-c-a-r-title {
+    display: flex;
+}
+
+.s-c-a-r-t-back {
+    cursor: pointer;
+    padding-right: 30px;
+    color: #004e65;
+    transition: color 0.3s ease;
+}
+
+.s-c-a-r-t-back:hover {
+    color: #2B9DC1;
+}
+
 .submit-review-text-button {
     font-weight: 700;
     font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
