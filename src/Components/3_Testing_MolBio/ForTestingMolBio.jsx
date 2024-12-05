@@ -16,6 +16,7 @@ const ForTestingMolBio = () => {
     const [analysisDateUpdates, setAnalysisDateUpdates] = useState({});
     const [showPopup] = useState(false);
     const requestListRef = useRef(null);
+    const [testRemarks, setTestRemarks] = useState({});
 
     useEffect(() => {
         const requestList = requestListRef.current;
@@ -176,6 +177,16 @@ const ForTestingMolBio = () => {
         setExpandedSample(prevExpanded => 
             prevExpanded === controlNumber ? null : controlNumber
         );
+    };
+
+    const handleRemarkChange = (requestId, testType, value) => {
+        setTestRemarks(prev => ({
+            ...prev,
+            [requestId]: {
+                ...prev[requestId],
+                [`${testType}Remarks`]: value
+            }
+        }));
     };
 
     const toggleMolBio = (controlNumber) => {
