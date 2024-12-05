@@ -4,7 +4,8 @@
     position: relative;
     width: 100%;
     margin-top: 14vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -43,7 +44,8 @@
 .web-titles {
     display: flex;
     align-items: flex-end;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     color: white;
 }

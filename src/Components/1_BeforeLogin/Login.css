@@ -1,5 +1,6 @@
 .font-link {
-    font-family: 'Poppins', cursive;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
   }
 
 .login-all-container {
@@ -126,7 +127,8 @@
     border-radius: 12px;
     font-size: 24px;
     font-weight: 700;
-    font-family:'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     cursor: pointer;
 }
 
@@ -139,7 +141,8 @@
     border: none;
     background: none;
     cursor: pointer;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 18px;
     font-weight: 700;
     color: #2B9DC1;
@@ -172,7 +175,8 @@
 
 
 .all-right-first-row {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     font-size: 40px;
     color: white;
@@ -189,7 +193,8 @@
 .all-right-second-row {
     display: flex;
     align-items: flex-end;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     color: white;
     margin-top: -70px;
@@ -220,7 +225,8 @@
     padding: 20px 30px;
     width: 870px;
     background: #ffffffb5;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     text-align: justify;
     border-radius: 12px;
 }

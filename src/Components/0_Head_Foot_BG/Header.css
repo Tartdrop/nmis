@@ -42,7 +42,8 @@
     color: #ffffff;
     font-size: 36px;
     text-align: left;
-    font-family:'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 600;
     margin-left: -15px;
     opacity: 50%;
@@ -92,7 +93,8 @@
 .logout-button-text{
     font-size: 26px;
     font-weight: 200;
-    font-family:'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     color: #ffffffa7;
     position: relative; 
     z-index: 1;
@@ -130,7 +132,8 @@ button, summary {
 .login-prompt {
     font-size: 26px;
     font-weight: 200;
-    font-family:'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     color: #ffffffa7;
     padding: 10px 25px;
     transition: color 0.3s ease;

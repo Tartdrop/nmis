@@ -2,7 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     height: 100vh; /* Ensure it takes full height of the viewport */;
 }
 

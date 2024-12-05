@@ -1,5 +1,6 @@
 .font-link {
-    font-family: 'Poppins', cursive;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
   }
 
 .register-all-container {
@@ -12,7 +13,8 @@
 }
 
 .registration {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     font-size: 48px;
     color: #004e65;
@@ -51,14 +53,16 @@
 }
 
 .label-container-left {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     color: #2B9DC1;
     font-size: 16px;
 }
 
 .label-container-right {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     color: #2B9DC1;
     font-size: 16px;
@@ -244,7 +248,8 @@
     border: none;
     background: none;
     cursor: pointer;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 18px;
     font-weight: 700;
     color: #2B9DC1;
@@ -259,7 +264,8 @@
 }
 
 .register-first-row {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     font-size: 62px;
     color: white;
@@ -268,7 +274,8 @@
 .register-second-row {
     display: flex;
     align-items: flex-end;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     color: white;
     margin-top: -70px;
@@ -333,7 +340,8 @@
 }
 
 .cli-class-container input[type="text"] {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     margin-left: 10px;
     width: 300px;
     height: 35px;
@@ -356,7 +364,8 @@ input[type="radio"]:checked {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     padding-top: 30px;
     color: #004e65;
     opacity: 30%;

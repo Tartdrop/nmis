@@ -1,5 +1,6 @@
 .font-link {
-    font-family: 'Poppins', cursive;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
   }
 
 .tfa-all-container {
@@ -35,13 +36,15 @@
 }
 
 .t-c-c-title {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 48px;
     margin-bottom: -20px;
 }
 
 .t-c-c-text {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 24px;
     padding-top: 30px;
     margin-bottom: -20px;
@@ -137,7 +140,8 @@
     border: none;
     background: none;
     cursor: pointer;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 18px;
     font-weight: 700;
     color: #2B9DC1;
@@ -152,7 +156,8 @@
 }
 
 .tfa-first-row {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     font-size: 62px;
     color: white;
@@ -161,7 +166,8 @@
 .tfa-second-row {
     display: flex;
     align-items: flex-end;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     color: white;
     margin-top: -70px;
@@ -175,7 +181,8 @@
     padding: 20px 30px;
     width: 870px;
     background: #ffffffb5;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     text-align: justify;
     border-radius: 15px;
 }

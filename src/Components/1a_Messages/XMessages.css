@@ -1,5 +1,6 @@
 .font-link {
-    font-family: 'Poppins', cursive;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
   }
 
 .messages-all-container {
@@ -52,7 +53,8 @@
 
 .ty-text {
     display: flex;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 48px;
     font-weight: 700;
     color: #004e65;
@@ -61,7 +63,8 @@
 
 .nis-text {
     display: flex;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 36px;
     font-weight: 700;
     color: #004e65;
@@ -70,7 +73,8 @@
 
 .es-text {
     display: flex;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 36px;
     font-weight: 700;
     color: #004e65;
@@ -79,7 +83,8 @@
 
 .rs-text {
     display: flex;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 36px;
     font-weight: 700;
     color: #004e65;
@@ -88,7 +93,8 @@
 
 .left-text {
     text-align: left; /* Keep text aligned to the left */
-    font-family: 'Poppins'; /* Font-family */
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif; /* Font-family */
     font-size: 48px;
     font-weight: 700; /* Font weight */
     color: #2B9DC1; /* Text color */
@@ -98,7 +104,8 @@
 
 .left-text-small {
     text-align: left; /* Keep text aligned to the left */
-    font-family: 'Poppins'; /* Font-family */
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif; /* Font-family */
     font-size: 20px;
     font-weight: 700; /* Font weight */
     color: #2B9DC1; /* Text color */
@@ -111,7 +118,8 @@
 
 .bigger-text {
     display: flex;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 52px;
     font-weight: 700;
     color: #004e65;
@@ -154,7 +162,8 @@
     border-radius: 12px;
     font-size: 24px;
     font-weight: 700;
-    font-family:'Poppins';
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     cursor: pointer;
 }
 
@@ -163,7 +172,8 @@
     height: 340px;
     padding: 10px;
     margin-bottom: 0px;
-    font-family: 'Poppins', cursive;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
     font-size: 16px;
     color: #01232e;
     border: 4px solid #2B9DC1;
