@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../3A_Testing/ForTesting.css';
-import './ForTestingChem.css'
+import './ForTestingChem.css';
 import blue_logo_icon from '../Assets/BlueLogo.png';
 
 const ForTestingChem = () => {
@@ -12,6 +12,7 @@ const ForTestingChem = () => {
     const navigate = useNavigate();
     const [userType, setUserType] = useState('');
     const [testResults, setTestResults] = useState({});
+    const [testRemarks, setTestRemarks] = useState({});
     const [saveStatus, setSaveStatus] = useState('');
     const [analysisDateUpdates, setAnalysisDateUpdates] = useState({});
     const [showPopup] = useState(false);
@@ -26,7 +27,6 @@ const ForTestingChem = () => {
         let scrollTop;
     
         const handleMouseDown = (e) => {
-            // Ignore dragging for input fields
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
     
             e.preventDefault();
@@ -53,7 +53,7 @@ const ForTestingChem = () => {
     
             e.preventDefault();
             const y = e.pageY - requestList.offsetTop;
-            const walk = (y - startY) * 2; // Adjust scrolling speed
+            const walk = (y - startY) * 2;
             requestList.scrollTop = scrollTop - walk;
         };
     
@@ -69,7 +69,7 @@ const ForTestingChem = () => {
             requestList.removeEventListener('mousemove', handleMouseMove);
         };
     }, [requests.length]);
-    
+
     useEffect(() => {
         const userType = localStorage.getItem('userType');
         setUserType(userType);
@@ -83,7 +83,6 @@ const ForTestingChem = () => {
                 const requestsData = await requestsResponse.json();
                 setRequests(requestsData);
 
-                // Fetch test results
                 const [microbioRes, chemElisaRes, chemMicrobialRes, molBioRes] = await Promise.all([
                     fetch('http://localhost:8080/microbioTestResults'),
                     fetch('http://localhost:8080/chemElisaTestResults'),
@@ -98,10 +97,8 @@ const ForTestingChem = () => {
                     molBioRes.json()
                 ]);
 
-                // Map results to requests
                 const mappedResults = {};
 
-                // Map microbio results
                 microbioData.forEach(result => {
                     mappedResults[result.result.requestId] = {
                         ...mappedResults[result.result.requestId],
@@ -117,7 +114,6 @@ const ForTestingChem = () => {
                     };
                 });
 
-                // Map chem ELISA results
                 chemElisaData.forEach(result => {
                     mappedResults[result.result.requestId] = {
                         ...mappedResults[result.result.requestId],
@@ -132,7 +128,6 @@ const ForTestingChem = () => {
                     };
                 });
 
-                // Map chem microbial results
                 chemMicrobialData.forEach(result => {
                     mappedResults[result.result.requestId] = {
                         ...mappedResults[result.result.requestId],
@@ -145,7 +140,6 @@ const ForTestingChem = () => {
                     };
                 });
 
-                // Map mol bio results
                 molBioData.forEach(result => {
                     mappedResults[result.result.requestId] = {
                         ...mappedResults[result.result.requestId],
@@ -198,6 +192,16 @@ const ForTestingChem = () => {
         }));
     };
 
+    const handleRemarkChange = (requestId, testType, value) => {
+        setTestRemarks(prev => ({
+            ...prev,
+            [requestId]: {
+                ...prev[requestId],
+                [`${testType}Remarks`]: value
+            }
+        }));
+    };
+
     const handleAnalysisDateChange = (requestId, testType, date) => {
         setAnalysisDateUpdates(prev => ({
             ...prev,
@@ -213,100 +217,18 @@ const ForTestingChem = () => {
     
             const sampleId = request.sample[0].sampleId;
             const currentResults = testResults[request.requestId] || {};
+            const currentRemarks = testRemarks[request.requestId] || {};
     
-            // Microbio
-            if (request.microbio) {
-                const microbioData = {};
-                if (currentResults.eColi) {
-                    microbioData.eColi = currentResults.eColi;
-                    microbioData.eColiAnalysisDate = analysisDateUpdates[`${request.requestId}_eColi_analysis_date`] || null;
-                }
-                if (currentResults.eColiAndeColi0O157) {
-                    microbioData.eColiAndeColi0O157 = currentResults.eColiAndeColi0O157;
-                    microbioData.eColiAndeColi0O157AnalysisDate = analysisDateUpdates[`${request.requestId}_eColiAndeColi0O157_analysis_date`] || null;
-                }
-                if (currentResults.standardPlateCount) {
-                    microbioData.standardPlateCount = currentResults.standardPlateCount;
-                    microbioData.standardPlateCountAnalysisDate = analysisDateUpdates[`${request.requestId}_standardPlateCount_analysis_date`] || null;
-                }
-                if (currentResults.staphylococcusAureus) {
-                    microbioData.staphylococcusAureus = currentResults.staphylococcusAureus;
-                    microbioData.staphylococcusAureusAnalysisDate = analysisDateUpdates[`${request.requestId}_staphylococcusAureus_analysis_date`] || null;
-                }
-                if (currentResults.salmonellaSp) {
-                    microbioData.salmonellaSp = currentResults.salmonellaSp;
-                    microbioData.salmonellaSpAnalysisDate = analysisDateUpdates[`${request.requestId}_salmonellaSp_analysis_date`] || null;
-                }
-                if (currentResults.campylobacter) {
-                    microbioData.campylobacter = currentResults.campylobacter;
-                    microbioData.campylobacterAnalysisDate = analysisDateUpdates[`${request.requestId}_campylobacter_analysis_date`] || null;
-                }
-                if (currentResults.cultureAndSensitivityTest) {
-                    microbioData.cultureAndSensitivityTest = currentResults.cultureAndSensitivityTest;
-                    microbioData.cultureAndSensitivityTestAnalysisDate = analysisDateUpdates[`${request.requestId}_cultureAndSensitivityTest_analysis_date`] || null;
-                }
-                if (currentResults.coliformCount) {
-                    microbioData.coliformCount = currentResults.coliformCount;
-                    microbioData.coliformCountAnalysisDate = analysisDateUpdates[`${request.requestId}_coliformCount_analysis_date`] || null;
-                }
-                if (currentResults.yeastAndMolds) {
-                    microbioData.yeastAndMolds = currentResults.yeastAndMolds;
-                    microbioData.yeastAndMoldsAnalysisDate = analysisDateUpdates[`${request.requestId}_yeastAndMolds_analysis_date`] || null;
-                }
-    
-                if (Object.keys(microbioData).length > 0) {
-                    console.log('Sending microbio data:', microbioData);
-                    const response = await fetch(`http://localhost:8080/microbioTestResults/${sampleId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(microbioData),
-                    });
-    
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Failed to save microbio results: ${errorText}`);
-                    }
-                }
-            }
-    
-            // Chem (ELISA and microbial)
             if (request.chem) {
                 const elisaData = {};
-                if (currentResults.chloramphenicol) {
-                    elisaData.chloramphenicol = currentResults.chloramphenicol;
-                    elisaData.chloramphenicolAnalysisDate = analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || null;
-                }
-                if (currentResults.nitrofuranAoz) {
-                    elisaData.nitrofuranAoz = currentResults.nitrofuranAoz;
-                    elisaData.nitrofuranAozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || null;
-                }
-                if (currentResults.beta_agonists) {
-                    elisaData.beta_agonists = currentResults.beta_agonists;
-                    elisaData.beta_agonistsAnalysisDate = analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || null;
-                }
-                if (currentResults.corticosteroids) {
-                    elisaData.corticosteroids = currentResults.corticosteroids;
-                    elisaData.corticosteroidsAnalysisDate = analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || null;
-                }
-                if (currentResults.olaquindox) {
-                    elisaData.olaquindox = currentResults.olaquindox;
-                    elisaData.olaquindoxAnalysisDate = analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || null;
-                }
-                if (currentResults.nitrufuranAmoz) {
-                    elisaData.nitrufuranAmoz = currentResults.nitrufuranAmoz;
-                    elisaData.nitrufuranAmozAnalysisDate = analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || null;
-                }
-                if (currentResults.stilbenes) {
-                    elisaData.stilbenes = currentResults.stilbenes;
-                    elisaData.stilbenesAnalysisDate = analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || null;
-                }
-                if (currentResults.ractopamine) {
-                    elisaData.ractopamine = currentResults.ractopamine;
-                    elisaData.ractopamineAnalysisDate = analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || null;
-                }
-    
+                Object.keys(currentResults).forEach(testType => {
+                    if (currentResults[testType]) {
+                        elisaData[testType] = currentResults[testType];
+                        elisaData[`${testType}Remarks`] = currentRemarks[`${testType}Remarks`] || '';
+                        elisaData[`${testType}AnalysisDate`] = analysisDateUpdates[`${request.requestId}_${testType}_analysis_date`] || null;
+                    }
+                });
+
                 if (Object.keys(elisaData).length > 0) {
                     console.log('Sending ELISA data:', elisaData);
                     const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
@@ -324,31 +246,14 @@ const ForTestingChem = () => {
                 }
     
                 const chemMicrobialData = {};
-                if (currentResults.betaLactams) {
-                    chemMicrobialData.betaLactams = currentResults.betaLactams;
-                    chemMicrobialData.betaLactamsAnalysisDate = analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || null;
-                }
-                if (currentResults.tetracyclines) {
-                    chemMicrobialData.tetracyclines = currentResults.tetracyclines;
-                    chemMicrobialData.tetracyclinesAnalysisDate = analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || null;
-                }
-                if (currentResults.sulfonamides) {
-                    chemMicrobialData.sulfonamides = currentResults.sulfonamides;
-                    chemMicrobialData.sulfonamidesAnalysisDate = analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || null;
-                }
-                if (currentResults.aminoglycosides) {
-                    chemMicrobialData.aminoglycosides = currentResults.aminoglycosides;
-                    chemMicrobialData.aminoglycosidesAnalysisDate = analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || null;
-                }
-                if (currentResults.macrolides) {
-                    chemMicrobialData.macrolides = currentResults.macrolides;
-                    chemMicrobialData.macrolidesAnalysisDate = analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || null;
-                }
-                if (currentResults.quinolones) {
-                    chemMicrobialData.quinolones = currentResults.quinolones;
-                    chemMicrobialData.quinolonesAnalysisDate = analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || null;
-                }
-    
+                Object.keys(currentResults).forEach(testType => {
+                    if (currentResults[testType]) {
+                        chemMicrobialData[testType] = currentResults[testType];
+                        chemMicrobialData[`${testType}Remarks`] = currentRemarks[`${testType}Remarks`] || '';
+                        chemMicrobialData[`${testType}AnalysisDate`] = analysisDateUpdates[`${request.requestId}_${testType}_analysis_date`] || null;
+                    }
+                });
+
                 if (Object.keys(chemMicrobialData).length > 0) {
                     console.log('Sending chemical microbial data:', chemMicrobialData);
                     const response = await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
@@ -366,63 +271,6 @@ const ForTestingChem = () => {
                 }
             }
     
-            // MolBio remains unchanged
-            if (request.molBio) {
-                const molBioData = {};
-                if (currentResults.dog) {
-                    molBioData.dog = currentResults.dog;
-                    molBioData.dogAnalysisDate = analysisDateUpdates[`${request.requestId}_dog_analysis_date`] || null;
-                }
-                if (currentResults.cat) {
-                    molBioData.cat = currentResults.cat;
-                    molBioData.catAnalysisDate = analysisDateUpdates[`${request.requestId}_cat_analysis_date`] || null;
-                }
-                if (currentResults.chicken) {
-                    molBioData.chicken = currentResults.chicken;
-                    molBioData.chickenAnalysisDate = analysisDateUpdates[`${request.requestId}_chicken_analysis_date`] || null;
-                }
-                if (currentResults.buffalo) {
-                    molBioData.buffalo = currentResults.buffalo;
-                    molBioData.buffaloAnalysisDate = analysisDateUpdates[`${request.requestId}_buffalo_analysis_date`] || null;
-                }
-                if (currentResults.cattle) {
-                    molBioData.cattle = currentResults.cattle;
-                    molBioData.cattleAnalysisDate = analysisDateUpdates[`${request.requestId}_cattle_analysis_date`] || null;
-                }
-                if (currentResults.horse) {
-                    molBioData.horse = currentResults.horse;
-                    molBioData.horseAnalysisDate = analysisDateUpdates[`${request.requestId}_horse_analysis_date`] || null;
-                }
-                if (currentResults.goat) {
-                    molBioData.goat = currentResults.goat;
-                    molBioData.goatAnalysisDate = analysisDateUpdates[`${request.requestId}_goat_analysis_date`] || null;
-                }
-                if (currentResults.sheep) {
-                    molBioData.sheep = currentResults.sheep;
-                    molBioData.sheepAnalysisDate = analysisDateUpdates[`${request.requestId}_sheep_analysis_date`] || null;
-                }
-                if (currentResults.swine) {
-                    molBioData.swine = currentResults.swine;
-                    molBioData.swineAnalysisDate = analysisDateUpdates[`${request.requestId}_swine_analysis_date`] || null;
-                }
-    
-                if (Object.keys(molBioData).length > 0) {
-                    console.log('Sending mol bio data:', molBioData);
-                    const response = await fetch(`http://localhost:8080/molBioTestResults/${sampleId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(molBioData),
-                    });
-    
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Failed to save mol bio results: ${errorText}`);
-                    }
-                }
-            }
-    
             alert('Changes saved successfully!');
             setTimeout(() => setSaveStatus(''), 3000);
         } catch (error) {
@@ -430,6 +278,14 @@ const ForTestingChem = () => {
             alert('Error saving changes: ' + error.message);
             setTimeout(() => setSaveStatus(''), 3000);
         }
+    };
+
+    const handlePositiveClick = (requestId, testType) => {
+        handleTestResultChange(requestId, testType, 'Positive');
+    };
+
+    const handleNegativeClick = (requestId, testType) => {
+        handleTestResultChange(requestId, testType, 'Negative');
     };
 
     return (
@@ -508,12 +364,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.betaLactams || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'betaLactams', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.betaLactamsRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'betaLactams', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'betaLactams')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'betaLactams')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || ''}
@@ -530,12 +386,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.tetracyclines || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'tetracyclines', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.tetracyclinesRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'tetracyclines', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'tetracyclines')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'tetracyclines')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || ''}
@@ -552,12 +408,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.sulfonamides || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'sulfonamides', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.sulfonamidesRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'sulfonamides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'sulfonamides')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'sulfonamides')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || ''}
@@ -574,12 +430,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.aminoglycosides || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'aminoglycosides', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.aminoglycosidesRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'aminoglycosides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'aminoglycosides')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'aminoglycosides')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || ''}
@@ -596,12 +452,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.macrolides || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'macrolides', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.macrolidesRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'macrolides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'macrolides')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'macrolides')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || ''}
@@ -618,12 +474,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.quinolones || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'quinolones', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.quinolonesRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'quinolones', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'quinolones')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'quinolones')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || ''}
@@ -647,12 +503,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.chloramphenicol || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'chloramphenicol', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.chloramphenicolRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'chloramphenicol', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'chloramphenicol')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'chloramphenicol')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || ''}
@@ -669,12 +525,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.nitrofuranAoz || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'nitrofuranAoz', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.nitrofuranAozRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'nitrofuranAoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'nitrofuranAoz')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'nitrofuranAoz')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || ''}
@@ -691,12 +547,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.beta_agonists || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'beta_agonists', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.beta_agonistsRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'beta_agonists', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'beta_agonists')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'beta_agonists')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || ''}
@@ -713,12 +569,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.corticosteroids || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'corticosteroids', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.corticosteroidsRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'corticosteroids', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'corticosteroids')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'corticosteroids')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || ''}
@@ -735,12 +591,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.olaquindox || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'olaquindox', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.olaquindoxRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'olaquindox', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'olaquindox')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'olaquindox')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || ''}
@@ -757,12 +613,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.nitrufuranAmoz || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.nitrufuranAmozRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'nitrufuranAmoz')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'nitrufuranAmoz')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || ''}
@@ -779,12 +635,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.stilbenes || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'stilbenes', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.stilbenesRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'stilbenes', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'stilbenes')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'stilbenes')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || ''}
@@ -801,12 +657,12 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testResults[request.requestId]?.ractopamine || ''}
-                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'ractopamine', e.target.value)}
+                                                                                value={testRemarks[request.requestId]?.ractopamineRemarks || ''}
+                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'ractopamine', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive'>+</button> 
-                                                                            <button className='negative'>-</button> 
+                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'ractopamine')}>+</button> 
+                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'ractopamine')}>-</button> 
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || ''}
