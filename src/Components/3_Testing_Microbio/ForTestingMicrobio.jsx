@@ -12,11 +12,12 @@ const ForTestingMicrobio = () => {
     const navigate = useNavigate();
     const [userType, setUserType] = useState('');
     const [testResults, setTestResults] = useState({});
+    const [testRemarks, setTestRemarks] = useState({});
     const [saveStatus, setSaveStatus] = useState('');
     const [analysisDateUpdates, setAnalysisDateUpdates] = useState({});
     const [showPopup] = useState(false);
     const requestListRef = useRef(null);
-    const [testRemarks, setTestRemarks] = useState({});
+    const [selectedButtons, setSelectedButtons] = useState({});
 
     useEffect(() => {
         const requestList = requestListRef.current;
@@ -182,26 +183,6 @@ const ForTestingMicrobio = () => {
         return ['TESTER', 'MICROBIOTESTER'].includes(userType.toUpperCase());
     };
 
-    const handleTestResultChange = (requestId, testType, value) => {
-        setTestResults(prev => ({
-            ...prev,
-            [requestId]: {
-                ...prev[requestId],
-                [testType]: value
-            }
-        }));
-    };
-
-    const handleRemarkChange = (requestId, testType, value) => {
-        setTestRemarks(prev => ({
-            ...prev,
-            [requestId]: {
-                ...prev[requestId],
-                [`${testType}Remarks`]: value
-            }
-        }));
-    };
-
     const handleAnalysisDateChange = (requestId, testType, date) => {
         setAnalysisDateUpdates(prev => ({
             ...prev,
@@ -246,8 +227,6 @@ const ForTestingMicrobio = () => {
                 }
             }
     
-            // Repeat similar logic for chem and molBio tests...
-
             alert('Changes saved successfully!');
             setTimeout(() => setSaveStatus(''), 3000);
         } catch (error) {
@@ -257,12 +236,46 @@ const ForTestingMicrobio = () => {
         }
     };
 
-    const handlePositiveClick = (requestId, testType) => {
-        handleTestResultChange(requestId, testType, 'Positive');
+    const handleTestResultChange = (requestId, testType, value) => {
+        setTestResults(prev => ({
+            ...prev,
+            [requestId]: {
+                ...prev[requestId],
+                [testType]: value  // This will store the textbox value in the main field
+            }
+        }));
     };
-
+    
+    const handleRemarkChange = (requestId, testType, value) => {
+        setTestRemarks(prev => ({
+            ...prev,
+            [requestId]: {
+                ...prev[requestId],
+                [`${testType}Remarks`]: value  // This will store "positive" or "negative" in the Remarks field
+            }
+        }));
+    };
+    
+    const handlePositiveClick = (requestId, testType) => {
+        handleRemarkChange(requestId, testType, 'positive');  // This sets the Remarks field
+        setSelectedButtons(prev => ({
+            ...prev,
+            [requestId]: {
+                ...prev[requestId],
+                [testType]: 'positive'  // This is just for UI highlighting
+            }
+        }));
+    };
+    
     const handleNegativeClick = (requestId, testType) => {
-        handleTestResultChange(requestId, testType, 'Negative');
+        handleRemarkChange(requestId, testType, 'negative');  // This sets the Remarks field
+        setSelectedButtons(prev => ({
+            ...prev,
+            [requestId]: {
+                ...prev[requestId],
+                [testType]: 'negative'  // This is just for UI highlighting
+            }
+        }));
     };
 
     return (
@@ -336,12 +349,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.standardPlateCountRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'standardPlateCount', e.target.value)}
+                                                                value={testResults[request.requestId]?.standardPlateCount || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'standardPlateCount', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'standardPlateCount')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'standardPlateCount')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.standardPlateCount === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'standardPlateCount')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.standardPlateCount === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'standardPlateCount')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_standardPlateCount_analysis_date`] || ''}
@@ -357,12 +376,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.coliformCountRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'coliformCount', e.target.value)}
+                                                                value={testResults[request.requestId]?.coliformCount || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'coliformCount', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'coliformCount')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'coliformCount')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.coliformCount === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'coliformCount')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.coliformCount === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'coliformCount')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_coliformCount_analysis_date`] || ''}
@@ -378,12 +403,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.salmonellaSpRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'salmonellaSp', e.target.value)}
+                                                                value={testResults[request.requestId]?.salmonellaSp || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'salmonellaSp', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'salmonellaSp')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'salmonellaSp')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.salmonellaSp === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'salmonellaSp')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.salmonellaSp === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'salmonellaSp')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_salmonellaSp_analysis_date`] || ''}
@@ -399,12 +430,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.staphylococcusAureusRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'staphylococcusAureus', e.target.value)}
+                                                                value={testResults[request.requestId]?.staphylococcusAureus || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'staphylococcusAureus', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'staphylococcusAureus')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'staphylococcusAureus')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.staphylococcusAureus === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'staphylococcusAureus')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.staphylococcusAureus === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'staphylococcusAureus')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_staphylococcusAureus_analysis_date`] || ''}
@@ -420,12 +457,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.eColiRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'eColi', e.target.value)}
+                                                                value={testResults[request.requestId]?.eColi || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'eColi', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'eColi')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'eColi')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.eColi === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'eColi')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.eColi === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'eColi')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_eColi_analysis_date`] || ''}
@@ -441,12 +484,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.eColiAndeColi0O157Remarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'eColiAndeColi0O157', e.target.value)}
+                                                                value={testResults[request.requestId]?.eColiAndeColi0O157 || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'eColiAndeColi0O157', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'eColiAndeColi0O157')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'eColiAndeColi0O157')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.eColiAndeColi0O157 === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'eColiAndeColi0O157')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.eColiAndeColi0O157 === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'eColiAndeColi0O157')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_eColiAndeColi0O157_analysis_date`] || ''}
@@ -462,12 +511,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.campylobacterRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'campylobacter', e.target.value)}
+                                                                value={testResults[request.requestId]?.campylobacter || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'campylobacter', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'campylobacter')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'campylobacter')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.campylobacter === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'campylobacter')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.campylobacter === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'campylobacter')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_campylobacter_analysis_date`] || ''}
@@ -483,12 +538,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.yeastAndMoldsRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'yeastAndMolds', e.target.value)}
+                                                                value={testResults[request.requestId]?.yeastAndMolds || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'yeastAndMolds', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'yeastAndMolds')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'yeastAndMolds')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.yeastAndMolds === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'yeastAndMolds')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.yeastAndMolds === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'yeastAndMolds')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_yeastAndMolds_analysis_date`] || ''}
@@ -504,12 +565,18 @@ const ForTestingMicrobio = () => {
                                                         <div>
                                                             <input
                                                                 type="text"
-                                                                value={testRemarks[request.requestId]?.cultureAndSensitivityTestRemarks || ''}
-                                                                onChange={(e) => handleRemarkChange(request.requestId, 'cultureAndSensitivityTest', e.target.value)}
+                                                                value={testResults[request.requestId]?.cultureAndSensitivityTest || ''}
+                                                                onChange={(e) => handleTestResultChange(request.requestId, 'cultureAndSensitivityTest', e.target.value)}
                                                                 className="test-result-input"
                                                             />
-                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'cultureAndSensitivityTest')}>+</button> 
-                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'cultureAndSensitivityTest')}>-</button> 
+                                                            <button 
+                                                                className={`positive ${selectedButtons[request.requestId]?.cultureAndSensitivityTest === 'positive' ? 'selected' : ''}`} 
+                                                                onClick={() => handlePositiveClick(request.requestId, 'cultureAndSensitivityTest')}
+                                                            >+</button> 
+                                                            <button 
+                                                                className={`negative ${selectedButtons[request.requestId]?.cultureAndSensitivityTest === 'negative' ? 'selected' : ''}`} 
+                                                                onClick={() => handleNegativeClick(request.requestId, 'cultureAndSensitivityTest')}
+                                                            >-</button> 
                                                             <input
                                                                 type="date"
                                                                 value={analysisDateUpdates[`${request.requestId}_cultureAndSensitivityTest_analysis_date`] || ''}

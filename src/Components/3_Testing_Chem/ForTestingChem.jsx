@@ -281,11 +281,11 @@ const ForTestingChem = () => {
     };
 
     const handlePositiveClick = (requestId, testType) => {
-        handleTestResultChange(requestId, testType, 'Positive');
+        handleRemarkChange(requestId, testType, 'positive');
     };
 
     const handleNegativeClick = (requestId, testType) => {
-        handleTestResultChange(requestId, testType, 'Negative');
+        handleRemarkChange(requestId, testType, 'negative');
     };
 
     return (
@@ -364,8 +364,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.betaLactamsRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'betaLactams', e.target.value)}
+                                                                                value={testResults[request.requestId]?.betaLactams || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'betaLactams', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'betaLactams')}>+</button> 
@@ -386,8 +386,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.tetracyclinesRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'tetracyclines', e.target.value)}
+                                                                                value={testResults[request.requestId]?.tetracyclines || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'tetracyclines', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'tetracyclines')}>+</button> 
@@ -408,8 +408,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.sulfonamidesRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'sulfonamides', e.target.value)}
+                                                                                value={testResults[request.requestId]?.sulfonamides || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'sulfonamides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'sulfonamides')}>+</button> 
@@ -430,8 +430,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.aminoglycosidesRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'aminoglycosides', e.target.value)}
+                                                                                value={testResults[request.requestId]?.aminoglycosides || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'aminoglycosides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'aminoglycosides')}>+</button> 
@@ -452,8 +452,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.macrolidesRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'macrolides', e.target.value)}
+                                                                                value={testResults[request.requestId]?.macrolides || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'macrolides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'macrolides')}>+</button> 
@@ -474,8 +474,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.quinolonesRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'quinolones', e.target.value)}
+                                                                                value={testResults[request.requestId]?.quinolones || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'quinolones', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'quinolones')}>+</button> 
@@ -503,8 +503,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.chloramphenicolRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'chloramphenicol', e.target.value)}
+                                                                                value={testResults[request.requestId]?.chloramphenicol || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'chloramphenicol', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'chloramphenicol')}>+</button> 
@@ -525,8 +525,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.nitrofuranAozRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'nitrofuranAoz', e.target.value)}
+                                                                                value={testResults[request.requestId]?.nitrofuranAoz || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'nitrofuranAoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'nitrofuranAoz')}>+</button> 
@@ -547,8 +547,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.beta_agonistsRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'beta_agonists', e.target.value)}
+                                                                                value={testResults[request.requestId]?.beta_agonists || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'beta_agonists', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'beta_agonists')}>+</button> 
@@ -569,8 +569,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.corticosteroidsRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'corticosteroids', e.target.value)}
+                                                                                value={testResults[request.requestId]?.corticosteroids || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'corticosteroids', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'corticosteroids')}>+</button> 
@@ -591,8 +591,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.olaquindoxRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'olaquindox', e.target.value)}
+                                                                                value={testResults[request.requestId]?.olaquindox || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'olaquindox', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'olaquindox')}>+</button> 
@@ -613,8 +613,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.nitrufuranAmozRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
+                                                                                value={testResults[request.requestId]?.nitrufuranAmoz || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'nitrufuranAmoz')}>+</button> 
@@ -635,8 +635,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.stilbenesRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'stilbenes', e.target.value)}
+                                                                                value={testResults[request.requestId]?.stilbenes || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'stilbenes', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'stilbenes')}>+</button> 
@@ -657,8 +657,8 @@ const ForTestingChem = () => {
                                                                         <div>
                                                                             <input
                                                                                 type="text"
-                                                                                value={testRemarks[request.requestId]?.ractopamineRemarks || ''}
-                                                                                onChange={(e) => handleRemarkChange(request.requestId, 'ractopamine', e.target.value)}
+                                                                                value={testResults[request.requestId]?.ractopamine || ''}
+                                                                                onChange={(e) => handleTestResultChange(request.requestId, 'ractopamine', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
                                                                             <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'ractopamine')}>+</button> 
