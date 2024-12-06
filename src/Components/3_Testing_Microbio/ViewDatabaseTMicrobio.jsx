@@ -8,78 +8,41 @@ import { useTable } from 'react-table';
 Userfront.init("jb7ywq8b");
 
 const ViewDatabase = () => {
-    const [data, setData] = useState([]);
-  const [reportData, setReportData] = useState([]);
-
+  const [reportData, setReportData] = useState(null);
+  
   useEffect(() => {
-    // Fetch microbio test results
-    axios.get('http://localhost:8080/microbio-results')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the microbio test results!', error);
-      });
-
-    // Fetch accomplishment report data
-    axios.get('http://localhost:8080/microbio-reports')
-      .then(response => {
-        setReportData(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the report data!', error);
-      });
+    // Fetch data from the API when the component mounts
+    axios.get('http://localhost:8080/api/reports/microbioreport')
+      .then(response => setReportData(response.data))
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-  // Define the columns for the main table
-  const columns = React.useMemo(
-    () => [
-      { Header: 'Sample ID', accessor: 'sampleId' },
-      { Header: 'Standard Plate Count', accessor: 'standardPlateCount' },
-      { Header: 'Staphylococcus Aureus', accessor: 'staphylococcusAureus' },
-      { Header: 'Salmonella Sp', accessor: 'salmonellaSp' },
-      { Header: 'Campylobacter', accessor: 'campylobacter' },
-      { Header: 'Coliform Count', accessor: 'coliformCount' },
-      { Header: 'E. Coli', accessor: 'eColi' },
-      { Header: 'Yeast and Molds', accessor: 'yeastAndMolds' },
-      { Header: 'Sample Source', accessor: 'sampleSourceProvince' },  // Add other fields based on your data model
-      { Header: 'Type of Sample', accessor: 'sampleType' },
-      { Header: 'Purpose of Testing', accessor: 'testingPurpose' }
-    ],
-    []
-  );
+  if (!reportData) return <p>Loading...</p>;
 
-  // Define the columns for the report table
-  const reportColumns = React.useMemo(
-    () => [
-      { Header: 'Year', accessor: 'year' },
-      { Header: 'Month', accessor: 'month' },
-      { Header: 'Total Tests Conducted', accessor: 'totalTests' },
-      { Header: 'Positive Results', accessor: 'positiveResults' },
-      { Header: 'Negative Results', accessor: 'negativeResults' },
-      { Header: 'Sample Source Province/Region', accessor: 'sampleSource' },
-      { Header: 'Purpose of Testing', accessor: 'testingPurpose' },
-    ],
-    []
-  );
+  // Test types and months
+  const tests = ['standardPlateCount', 'staphylococcusAureus', 'salmonellaSp', 'campylobacter', 'cultureAndSensitivityTest', 'coliformCount', 'eColi', 'eColiAndEColi0O157', 'yeastAndMolds'];
+  const months = ['2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06', '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12'];
 
-  // Table instance for microbio results
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({ columns, data });
+  // Helper function to get positive/negative counts for an tests in a given month
+  const getPosNegCounts = (test, month) => {
+    const countKey = `${test}PosNegCountsByMonthAndYear`;
+    return reportData[countKey]?.[month] || { positive: 0, negative: 0 };
+  };
 
-  // Table instance for the report
-  const {
-    getTableProps: getReportTableProps,
-    getTableBodyProps: getReportTableBodyProps,
-    headerGroups: reportHeaderGroups,
-    rows: reportRows,
-    prepareRow: prepareReportRow
-  } = useTable({ columns: reportColumns, data: reportData });
+  // Helper function to get total counts for all testss in a given month
+  const getTotalCountsForMonth = (month) => {
+    let totalPositive = 0;
+    let totalNegative = 0;
+
+    tests.forEach(test => {
+      const { positive, negative } = getPosNegCounts(test, month);
+      totalPositive += positive;
+      totalNegative += negative;
+    });
+
+    return { totalPositive, totalNegative };
+  };
+
 
     return (
         <div className="database-all-container">
@@ -87,54 +50,48 @@ const ViewDatabase = () => {
                 <div className='database-title'>Database</div>
                 <div>
       <h1>Microbio Test Results</h1>
-      <table {...getTableProps()} className="microbio-table">
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+      <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              {tests.map(test => (
+                <th key={test} colSpan="2">{test}</th>
               ))}
+              <th>Total</th>
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
-      <h2>Accomplishment Report</h2>
-      <table {...getReportTableProps()} className="report-table">
-        <thead>
-          {reportHeaderGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            <tr>
+              <th></th>
+              {tests.map(test => (
+                <React.Fragment key={test}>
+                  <th>Positive</th>
+                  <th>Negative</th>
+                </React.Fragment>
               ))}
+              <th>Positive / Negative</th>
             </tr>
-          ))}
-        </thead>
-        <tbody {...getReportTableBodyProps()}>
-          {reportRows.map(row => {
-            prepareReportRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {months.map(month => {
+              const { totalPositive, totalNegative } = getTotalCountsForMonth(month);
+  
+              return (
+                <tr key={month}>
+                  <td>{month}</td>
+                  {tests.map(test => {
+                    const { positive, negative } = getPosNegCounts(test, month);
+                    return (
+                      <React.Fragment key={test}>
+                        <td>{positive}</td>
+                        <td>{negative}</td>
+                      </React.Fragment>
+                    );
+                  })}
+                  <td>{totalPositive} / {totalNegative}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
     </div>
             </div>
         </div>

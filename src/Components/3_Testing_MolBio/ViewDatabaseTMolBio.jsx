@@ -8,138 +8,94 @@ import { useTable } from 'react-table';
 Userfront.init("jb7ywq8b");
 
 const ViewDatabase = () => {
-    const [data, setData] = useState([]);
-    const [reportData, setReportData] = useState([]);
-
+    const [reportData, setReportData] = useState(null);
+  
     useEffect(() => {
-        // Fetch molbio test results
-        axios.get('http://localhost:8080/molbio-results')
-            .then(response => {
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the molbio test results!', error);
-            });
-
-        // Fetch accomplishment report data
-        axios.get('http://localhost:8080/molbio-reports')
-            .then(response => {
-                setReportData(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the report data!', error);
-            });
+      // Fetch data from the API when the component mounts
+      axios.get('http://localhost:8080/api/reports/molbioreport')
+        .then(response => setReportData(response.data))
+        .catch(error => console.error('Error fetching data:', error));
     }, []);
-
-    // Define the columns for the main table
-    const columns = React.useMemo(
-        () => [
-            { Header: 'Sample ID', accessor: 'sampleId' },
-            { Header: 'Dog', accessor: 'dog' },
-            { Header: 'Cat', accessor: 'cat' },
-            { Header: 'Chicken', accessor: 'chicken' },
-            { Header: 'Buffalo', accessor: 'buffalo' },
-            { Header: 'Cattle', accessor: 'cattle' },
-            { Header: 'Horse', accessor: 'horse' },
-            { Header: 'Goat', accessor: 'goat' },
-            { Header: 'Sheep', accessor: 'sheep' },
-            { Header: 'Swine', accessor: 'swine' },
-            { Header: 'Sample Source', accessor: 'sampleSourceProvince' },  // Adjust if necessary
-            { Header: 'Purpose of Testing', accessor: 'testingPurpose' }
-        ],
-        []
-    );
-
-    // Define the columns for the report table
-    const reportColumns = React.useMemo(
-        () => [
-            { Header: 'Year', accessor: 'year' },
-            { Header: 'Month', accessor: 'month' },
-            { Header: 'Total Tests Conducted', accessor: 'totalTests' },
-            { Header: 'Positive Results', accessor: 'positiveResults' },
-            { Header: 'Negative Results', accessor: 'negativeResults' },
-            { Header: 'Sample Source Province/Region', accessor: 'sampleSource' },
-            { Header: 'Purpose of Testing', accessor: 'testingPurpose' },
-        ],
-        []
-    );
-
-    // Table instance for molbio results
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow
-    } = useTable({ columns, data });
-
-    // Table instance for the report
-    const {
-        getTableProps: getReportTableProps,
-        getTableBodyProps: getReportTableBodyProps,
-        headerGroups: reportHeaderGroups,
-        rows: reportRows,
-        prepareRow: prepareReportRow
-    } = useTable({ columns: reportColumns, data: reportData });
-
-    return (
-        <div className="database-all-container">
-            <div className='database-container'>
-                <div className='database-title'>MolBio Database</div>
-                <div>
-                    <h1>MolBio Test Results</h1>
-                    <table {...getTableProps()} className="molbio-table">
-                        <thead>
-                            {headerGroups.map(headerGroup => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map(column => (
-                                        <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {rows.map(row => {
-                                prepareRow(row);
-                                return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map(cell => (
-                                            <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                        ))}
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-
-                    <h2>Accomplishment Report</h2>
-                    <table {...getReportTableProps()} className="report-table">
-                        <thead>
-                            {reportHeaderGroups.map(headerGroup => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map(column => (
-                                        <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getReportTableBodyProps()}>
-                            {reportRows.map(row => {
-                                prepareReportRow(row);
-                                return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map(cell => (
-                                            <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                        ))}
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-export default ViewDatabase;
+  
+    if (!reportData) return <p>Loading...</p>;
+  
+    // Animal types and months
+    const animals = ['dog', 'cat', 'chicken', 'buffalo', 'cattle', 'horse', 'goat', 'sheep', 'swine'];
+    const months = ['2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06', '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12'];
+  
+    // Helper function to get positive/negative counts for an animal in a given month
+    const getPosNegCounts = (animal, month) => {
+      const countKey = `${animal}PosNegCountsByMonthAndYear`;
+      return reportData[countKey]?.[month] || { positive: 0, negative: 0 };
+    };
+  
+    // Helper function to get total counts for all animals in a given month
+    const getTotalCountsForMonth = (month) => {
+      let totalPositive = 0;
+      let totalNegative = 0;
+  
+      animals.forEach(animal => {
+        const { positive, negative } = getPosNegCounts(animal, month);
+        totalPositive += positive;
+        totalNegative += negative;
+      });
+  
+      return { totalPositive, totalNegative };
+    };
+  
+  
+      return (
+          <div className="database-all-container">
+              <div className='database-container'>
+                  <div className='database-title'>Database</div>
+                  <div>
+        <h1>Microbio Test Results</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              {animals.map(animal => (
+                <th key={animal} colSpan="2">{animal}</th>
+              ))}
+              <th>Total</th>
+            </tr>
+            <tr>
+              <th></th>
+              {animals.map(animal => (
+                <React.Fragment key={animal}>
+                  <th>Positive</th>
+                  <th>Negative</th>
+                </React.Fragment>
+              ))}
+              <th>Positive / Negative</th>
+            </tr>
+          </thead>
+          <tbody>
+            {months.map(month => {
+              const { totalPositive, totalNegative } = getTotalCountsForMonth(month);
+  
+              return (
+                <tr key={month}>
+                  <td>{month}</td>
+                  {animals.map(animal => {
+                    const { positive, negative } = getPosNegCounts(animal, month);
+                    return (
+                      <React.Fragment key={animal}>
+                        <td>{positive}</td>
+                        <td>{negative}</td>
+                      </React.Fragment>
+                    );
+                  })}
+                  <td>{totalPositive} / {totalNegative}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+              </div>
+          </div>
+      );
+  }
+  
+  export default ViewDatabase;
