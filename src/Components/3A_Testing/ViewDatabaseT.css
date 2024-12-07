@@ -11,7 +11,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 1280px;
+    width: 1900px; /* Fixed width */
     height: 805px;
     margin-top: 7vh;
     border-radius: 10px;
@@ -30,7 +30,7 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-    width: 1200px;
+    width: 1900px; /* Fixed width */
     height: 603px;
     border-radius: 10px;
     margin-top: 20px;
@@ -73,4 +73,69 @@
     margin-top: 30px;
     display: flex;
     gap: 30px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
+    border: 2px solid #004e65; /* Outer border for the table */
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #e0e0e0; /* Borders between cells */
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.data-table th {
+    background-color: #004e65;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.data-table tbody tr {
+    background-color: white;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5; /* Hover effect for rows */
+}
+
+.data-table .month-header, .data-table .total-header {
+    border-right: 2px solid #004e65; /* Distinct border for month and total columns */
+}
+
+.data-table .result-header {
+    background-color: #2B9DC1;
+    color: white;
+    font-weight: 600;
+}
+
+.data-table .total-cell {
+    background-color: #f0f9fc;
+    font-weight: 600;
+    border-left: 2px solid #004e65; /* Distinct border for total column */
+}
+
+.table-container {
+    width: 1900px; /* Fixed width */
+    margin: 0 auto;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1280px) {
+    .table-container {
+        width: 1900px; /* Fixed width */
+        margin: 0 auto;
+    }
 }

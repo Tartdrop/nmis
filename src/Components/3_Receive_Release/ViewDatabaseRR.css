@@ -11,12 +11,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 1280px;
-    height: 805px;
+    width: 2000px;
+    height: 900px;
     margin-top: 7vh;
     border-radius: 10px;
     background-color: #ffffffb5;
+    overflow-y: scroll; /* Enable vertical scrolling */
 }
+
 
 .database-title {
     font-weight: 700;
