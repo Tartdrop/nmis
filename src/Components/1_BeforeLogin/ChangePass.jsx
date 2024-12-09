@@ -1,21 +1,48 @@
 import React, { useState } from 'react';
 import './ChangePass.css';
 import Userfront from "@userfront/core";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios'; // Import axios for API calls
 import eyeOpen from '../Assets/EyeOpen.png';
 import eyeClose from '../Assets/EyeClose.png';
 
 const ChangePass = () => {
+    const { email } = useParams();
     const [password, setPassword] = useState(""); // New state for old password
     const [repeatPassword, setRepeatPassword] = useState(""); // New state for new password
     const [visible, setVisible] = useState(false);
     const [visibleRepeat, setVisibleRepeat] = useState(false);
+    const [isSamePassword, setIsSamePassword] = useState(false);
     const navigate = useNavigate();
 
-    const handleChangePassword = () => {
-        navigate("/password-changed", { replace: true })
-    };
+    const handleChangePassword = async (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior
+        checkCorrectPassword();
+        
+        if (isSamePassword) {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}change-password?email=${email}&newPassword=${password}`, {
+                    method: 'POST'
+                });
+        
+                if (response.ok) {
+                  console.log("Successful");
+                  navigate("/password-changed", { replace: true });
+                } else {
+                    // Unsuccessful verification
+                    alert('Unsuccessful');
+                }
+            } catch (error) {
+                alert('Failed connection to the');
+            }
+        } else {
+            alert("Please verify that the password you have input is correct")
+        }
+    }
+        
+    const checkCorrectPassword = () => {
+        if (password == repeatPassword && password !== null) {setIsSamePassword(true);}
+    }
 
     return (
         <div className='changepass-all-container'>

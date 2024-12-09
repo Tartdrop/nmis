@@ -115,7 +115,7 @@ function App() {
                     } 
                 />
                     <Route 
-                        path="/tfa-forgot-pass" 
+                        path="/tfa-forgot-pass/:email" 
                         element={
                             <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                                 <PageTFAForgot />
@@ -123,7 +123,7 @@ function App() {
                         } 
                     />
                         <Route 
-                            path="/change-pass" 
+                            path="/change-pass/:email" 
                             element={
                                 <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                                     <PageChangePass />
