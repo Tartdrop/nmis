@@ -80,7 +80,7 @@ const TFA = ({ onLogin }) => {
                             Authentication
                         </p>
                         <p className="t-c-c-text">
-                        Enter the code from your provided email below.
+                            Enter the code from your provided email below.
                         </p>
                         
                     </div>

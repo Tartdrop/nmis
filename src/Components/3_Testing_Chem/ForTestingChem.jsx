@@ -17,6 +17,7 @@ const ForTestingChem = () => {
     const [analysisDateUpdates, setAnalysisDateUpdates] = useState({});
     const [showPopup] = useState(false);
     const requestListRef = useRef(null);
+    const [activeButtons, setActiveButtons] = useState({}); // Track which button is active
 
     useEffect(() => {
         const requestList = requestListRef.current;
@@ -282,11 +283,28 @@ const ForTestingChem = () => {
 
     const handlePositiveClick = (requestId, testType) => {
         handleRemarkChange(requestId, testType, 'positive');
+        setActiveButtons((prevState) => ({
+            ...prevState,
+            [requestId]: {
+                ...prevState[requestId],
+                [testType]: 'positive', // Set the testType for this requestId to 'positive'
+            },
+        }));
     };
-
+    
     const handleNegativeClick = (requestId, testType) => {
         handleRemarkChange(requestId, testType, 'negative');
+        setActiveButtons((prevState) => ({
+            ...prevState,
+            [requestId]: {
+                ...prevState[requestId],
+                [testType]: 'negative', // Set the testType for this requestId to 'negative'
+            },
+        }));
     };
+
+    const isActive = (requestId, testType, status) => 
+        activeButtons[requestId]?.[testType] === status;
 
     return (
         <div className="fortesting-all-container">
@@ -368,8 +386,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'betaLactams', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'betaLactams')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'betaLactams')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'betaLactams', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'betaLactams', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'betaLactams', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'betaLactams', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'betaLactams')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'betaLactams', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_betaLactams_analysis_date`] || ''}
@@ -390,8 +428,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'tetracyclines', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'tetracyclines')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'tetracyclines')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'tetracyclines', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'tetracyclines', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'tetracyclines', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'tetracyclines', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'tetracyclines')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'tetracyclines', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_tetracyclines_analysis_date`] || ''}
@@ -412,8 +470,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'sulfonamides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'sulfonamides')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'sulfonamides')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'sulfonamides', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'sulfonamides', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'sulfonamides', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'sulfonamides', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'sulfonamides')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'sulfonamides', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_sulfonamides_analysis_date`] || ''}
@@ -426,7 +504,7 @@ const ForTestingChem = () => {
                                                                 {request.aminoglycosides && (
                                                                     <div className="test-result-item-1">
                                                                         <strong>Aminoglycosides:</strong>
-                                                                        <br/>
+                                                                        <br />
                                                                         <div>
                                                                             <input
                                                                                 type="text"
@@ -434,8 +512,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'aminoglycosides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'aminoglycosides')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'aminoglycosides')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'aminoglycosides', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'aminoglycosides')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'aminoglycosides', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'aminoglycosides', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'aminoglycosides')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'aminoglycosides', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_aminoglycosides_analysis_date`] || ''}
@@ -444,7 +542,7 @@ const ForTestingChem = () => {
                                                                             />
                                                                         </div>
                                                                     </div>
-                                                                )}
+                                                                )}    
                                                                 {request.macrolides && (
                                                                     <div className="test-result-item-1">
                                                                         <strong>Macrolides:</strong>
@@ -456,8 +554,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'macrolides', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'macrolides')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'macrolides')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'macrolides', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'macrolides', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'macrolides', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'macrolides', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'macrolides')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'macrolides', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_macrolides_analysis_date`] || ''}
@@ -478,8 +596,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'quinolones', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'quinolones')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'quinolones')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'quinolones', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'quinolones', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'quinolones', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'quinolones', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'quinolones')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'quinolones', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_quinolones_analysis_date`] || ''}
@@ -507,8 +645,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'chloramphenicol', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'chloramphenicol')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'chloramphenicol')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'chloramphenicol', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'chloramphenicol', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'chloramphenicol', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'chloramphenicol', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'chloramphenicol')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'chloramphenicol', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_chloramphenicol_analysis_date`] || ''}
@@ -529,8 +687,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'nitrofuranAoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'nitrofuranAoz')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'nitrofuranAoz')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'nitrofuranAoz', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'nitrofuranAoz', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'nitrofuranAoz', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'nitrofuranAoz', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'nitrofuranAoz')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'nitrofuranAoz', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_nitrofuranAoz_analysis_date`] || ''}
@@ -551,8 +729,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'beta_agonists', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'beta_agonists')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'beta_agonists')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'beta_agonists', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'beta_agonists', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'beta_agonists', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'beta_agonists', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'beta_agonists')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'beta_agonists', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_beta_agonists_analysis_date`] || ''}
@@ -573,8 +771,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'corticosteroids', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'corticosteroids')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'corticosteroids')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'corticosteroids', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'corticosteroids', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'corticosteroids', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'corticosteroids', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'corticosteroids')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'corticosteroids', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_corticosteroids_analysis_date`] || ''}
@@ -595,8 +813,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'olaquindox', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'olaquindox')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'olaquindox')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'olaquindox', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'olaquindox', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'olaquindox', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'olaquindox', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'olaquindox')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'olaquindox', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_olaquindox_analysis_date`] || ''}
@@ -617,8 +855,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'nitrufuranAmoz', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'nitrufuranAmoz')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'nitrufuranAmoz')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'nitrufuranAmoz', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'nitrufuranAmoz', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'nitrufuranAmoz', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'nitrufuranAmoz', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'nitrufuranAmoz')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'nitrufuranAmoz', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_nitrufuranAmoz_analysis_date`] || ''}
@@ -639,8 +897,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'stilbenes', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'stilbenes')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'stilbenes')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'stilbenes', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'stilbenes', 'positive')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'stilbenes', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'stilbenes', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'stilbenes')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'stilbenes', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_stilbenes_analysis_date`] || ''}
@@ -661,8 +939,28 @@ const ForTestingChem = () => {
                                                                                 onChange={(e) => handleTestResultChange(request.requestId, 'ractopamine', e.target.value)}
                                                                                 className="test-result-input"
                                                                             />
-                                                                            <button className='positive' onClick={() => handlePositiveClick(request.requestId, 'ractopamine')}>+</button> 
-                                                                            <button className='negative' onClick={() => handleNegativeClick(request.requestId, 'ractopamine')}>-</button> 
+                                                                            <button
+                                                                                className={`positive ${isActive(request.requestId, 'ractopamine', 'positive') ? 'active' : ''}`}
+                                                                                onClick={() => handlePositiveClick(request.requestId, 'ractopamine')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'ractopamine', 'positive')
+                                                                                        ? '#2BC192'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <button
+                                                                                className={`negative ${isActive(request.requestId, 'ractopamine', 'negative') ? 'active' : ''}`}
+                                                                                onClick={() => handleNegativeClick(request.requestId, 'ractopamine')}
+                                                                                style={{
+                                                                                    backgroundColor: isActive(request.requestId, 'ractopamine', 'negative')
+                                                                                        ? '#E85557'
+                                                                                        : '#5f5f5f71',
+                                                                                }}
+                                                                            >
+                                                                                -
+                                                                            </button>
                                                                             <input
                                                                                 type="date"
                                                                                 value={analysisDateUpdates[`${request.requestId}_ractopamine_analysis_date`] || ''}

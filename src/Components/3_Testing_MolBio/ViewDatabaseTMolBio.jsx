@@ -38,57 +38,59 @@ const ViewDatabase = () => {
   };
 
   return (
-    <div className="database-all-container">
-      <div className='database-container'>
-        <div className='database-title'>Database</div>
-        <div className='database-content'>
-          <div className='table-header'>
-            <h1>Molecular Biology Test Results</h1>
-          </div>
-          <div className='table-wrapper'>
-            <div className='table-container'>
-              <table className='data-table'>
-                <thead>
-                  <tr className='header-row'>
-                    <th className='month-header'>Month</th>
-                    {animals.map(animal => (
-                      <th key={animal} colSpan="2" className='animal-header'>{animal}</th>
-                    ))}
-                    <th className='total-header'>Total</th>
-                  </tr>
-                  <tr className='subheader-row'>
-                    <th></th>
-                    {animals.map(animal => (
-                      <React.Fragment key={animal}>
-                        <th className='result-header'>Positive</th>
-                        <th className='result-header'>Negative</th>
-                      </React.Fragment>
-                    ))}
-                    <th className='total-subheader'>Positive / Negative</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {months.map(month => {
-                    const { totalPositive, totalNegative } = getTotalCountsForMonth(month);
+    <div className="db-all-container">
+      <div className='db-container'>
+        <div className='db-title'>Database</div>
+          <div className="db-tables">
+          <div className='db-content'>
+            <div className='table-header'>
+              <h1>Molecular Biology Test Results</h1>
+            </div>
+            <div className='table-wrapper'>
+              <div className='table-container'>
+                <table className='data-table'>
+                  <thead>
+                    <tr className='header-row'>
+                      <th className='month-header'>Month</th>
+                      {animals.map(animal => (
+                        <th key={animal} colSpan="2" className='animal-header'>{animal}</th>
+                      ))}
+                      <th className='total-header'>Total</th>
+                    </tr>
+                    <tr className='subheader-row'>
+                      <th></th>
+                      {animals.map(animal => (
+                        <React.Fragment key={animal}>
+                          <th className='result-header'>Positive</th>
+                          <th className='result-header'>Negative</th>
+                        </React.Fragment>
+                      ))}
+                      <th className='total-subheader'>Positive / Negative</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {months.map(month => {
+                      const { totalPositive, totalNegative } = getTotalCountsForMonth(month);
 
-                    return (
-                      <tr key={month} className='data-row'>
-                        <td className='month-cell'>{month}</td>
-                        {animals.map(animal => {
-                          const { positive, negative } = getPosNegCounts(animal, month);
-                          return (
-                            <React.Fragment key={animal}>
-                              <td className='result-cell positive'>{positive}</td>
-                              <td className='result-cell negative'>{negative}</td>
-                            </React.Fragment>
-                          );
-                        })}
-                        <td className='total-cell'>{totalPositive} / {totalNegative}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                      return (
+                        <tr key={month} className='data-row'>
+                          <td className='month-cell'>{month}</td>
+                          {animals.map(animal => {
+                            const { positive, negative } = getPosNegCounts(animal, month);
+                            return (
+                              <React.Fragment key={animal}>
+                                <td className='result-cell positive'>{positive}</td>
+                                <td className='result-cell negative'>{negative}</td>
+                              </React.Fragment>
+                            );
+                          })}
+                          <td className='total-cell'>{totalPositive} / {totalNegative}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

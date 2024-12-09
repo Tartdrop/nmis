@@ -68,6 +68,16 @@
     font-size: 36px;
     font-weight: 700;
     color: #004e65;
+    margin-top: -5px;
+}
+
+.pc-text {
+    display: flex;
+    font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
+    'Lucida Sans', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #004e65;
     margin-top: -20px;
 }
 

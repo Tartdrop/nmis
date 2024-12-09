@@ -45,56 +45,58 @@ const ViewDatabase = () => {
 
 
   return (
-    <div className="database-all-container">
-        <div className='database-container'>
-            <div className='database-title'>Database</div>
-            <div className='database-content'>
-                <div className='table-header'>
-                    <h1>Microbio Test Results</h1>
-                </div>
-                <div className='table-wrapper'>
-                    <div className='table-container'>
-                        <table className='data-table'>
-                            <thead>
-                                <tr className='header-row'>
-                                    <th className='month-header'>Month</th>
-                                    {tests.map(test => (
-                                        <th key={test} colSpan="2" className='test-header'>{test}</th>
-                                    ))}
-                                    <th className='total-header'>Total</th>
-                                </tr>
-                                <tr className='subheader-row'>
-                                    <th></th>
-                                    {tests.map(test => (
-                                        <React.Fragment key={test}>
-                                            <th className='result-header'>Positive</th>
-                                            <th className='result-header'>Negative</th>
-                                        </React.Fragment>
-                                    ))}
-                                    <th className='total-subheader'>Positive / Negative</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {months.map(month => {
-                                    const { totalPositive, totalNegative } = getTotalCountsForMonth(month);
-                                    return (
-                                        <tr key={month} className='data-row'>
-                                            <td className='month-cell'>{month}</td>
-                                            {tests.map(test => {
-                                                const { positive, negative } = getPosNegCounts(test, month);
-                                                return (
-                                                    <React.Fragment key={test}>
-                                                        <td className='result-cell positive'>{positive}</td>
-                                                        <td className='result-cell negative'>{negative}</td>
-                                                    </React.Fragment>
-                                                );
-                                            })}
-                                            <td className='total-cell'>{totalPositive} / {totalNegative}</td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
+    <div className="db-all-container">
+        <div className='db-container'>
+            <div className='db-title'>Database</div>
+            <div className="db-tables">
+                <div className='db-content'>
+                    <div className='table-header'>
+                        <h1>Microbiological Test Results</h1>
+                    </div>
+                    <div className='table-wrapper-1'>
+                        <div className='table-container-1'>
+                            <table className='data-table'>
+                                <thead>
+                                    <tr className='header-row'>
+                                        <th className='month-header'>Month</th>
+                                        {tests.map(test => (
+                                            <th key={test} colSpan="2" className='test-header'>{test}</th>
+                                        ))}
+                                        <th className='total-header'>Total</th>
+                                    </tr>
+                                    <tr className='subheader-row'>
+                                        <th></th>
+                                        {tests.map(test => (
+                                            <React.Fragment key={test}>
+                                                <th className='result-header'>Positive</th>
+                                                <th className='result-header'>Negative</th>
+                                            </React.Fragment>
+                                        ))}
+                                        <th className='total-subheader'>Positive / Negative</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {months.map(month => {
+                                        const { totalPositive, totalNegative } = getTotalCountsForMonth(month);
+                                        return (
+                                            <tr key={month} className='data-row'>
+                                                <td className='month-cell'>{month}</td>
+                                                {tests.map(test => {
+                                                    const { positive, negative } = getPosNegCounts(test, month);
+                                                    return (
+                                                        <React.Fragment key={test}>
+                                                            <td className='result-cell positive'>{positive}</td>
+                                                            <td className='result-cell negative'>{negative}</td>
+                                                        </React.Fragment>
+                                                    );
+                                                })}
+                                                <td className='total-cell'>{totalPositive} / {totalNegative}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

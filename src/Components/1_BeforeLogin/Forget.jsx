@@ -20,28 +20,8 @@ const Forget = () => {
         navigate("/register")
     };
 
-    const handleResetPassword = async () => {  // Added function to handle password reset
-        try {
-            const response = await axios.post("http://localhost:8080/changePass/client", null, {
-                params: {
-                    username: email,  // Assuming email is used as username
-                    oldPassword: oldPassword,   // Use the old password from state
-                    newPassword: newPassword // Use the new password from state
-                },
-                headers: {
-                    'Content-Type': 'application/json' // Ensure the content type is set to JSON
-                }
-            });
-            alert(response.data); // Show success message
-        } catch (error) {
-            console.error("Error resetting password:", error);
-            if (error.response) {
-                console.error("Response data:", error.response.data); // Log the response data for debugging
-                alert("Failed to reset password: " + error.response.data.message); // Show server error message
-            } else {
-                alert("Failed to reset password. Please try again.");
-            }
-        }
+    const handleVerifyEmail = () => {
+        navigate("/tfa-forgot-pass")
     };
 
     return (
@@ -70,31 +50,13 @@ const Forget = () => {
                             />
                         </div>
                     </div>
-                    <div className="forget-input">
-                        <input 
-                            className="font-link"
-                            type="password" 
-                            value={oldPassword}
-                            placeholder="Old Password"
-                            onChange={(e) => setOldPassword(e.target.value)} // Handle old password input
-                        />
-                    </div>
-                    <div className="forget-input">
-                        <input 
-                            className="font-link"
-                            type="password" 
-                            value={newPassword}
-                            placeholder="New Password"
-                            onChange={(e) => setNewPassword(e.target.value)} // Handle new password input
-                        />
-                    </div>
     
                     <div className="login-button">
                         <button 
                             className="text-button" 
-                            onClick={handleResetPassword} // Updated to call the reset function
+                            onClick={handleVerifyEmail}
                         >
-                            Reset Your Password
+                            Verify Email
                         </button>
                     </div>
     

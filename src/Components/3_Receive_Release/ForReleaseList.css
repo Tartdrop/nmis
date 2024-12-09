@@ -71,11 +71,10 @@
     gap: 20px;
 }
 
-.empty-2nd-container {
+.empty-3rd-container {
     width: 1200px;
-    height: 485px;
-    margin-top: 20px;
-    padding-top: 40px;
+    height: 525px;
+    padding-top: 80px;
     padding-bottom: 10px;
     align-items: center;
     background-color: #fff;
@@ -83,6 +82,7 @@
     display: flex;
     flex-direction: column;
 }
+
 .empty-2nd-container img {
     margin-top: -10px;
 }

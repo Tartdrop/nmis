@@ -4,10 +4,13 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./Components/0_Head_Foot_BG/Header";
 import PageLogin from "./PageLogin";
 import PageForget from "./PageForget";
+    import PageTFAForgot from "./PageTFA-Forgot-Pass";
+    import PageForgotNIS from "./PageNotInSystem";
+    import PageChangePass from "./PageChangePass";
+        import PagePasswordChanged from "./PagePasswordChanged";
 import PageRegister from "./PageRegister";
 import PageTFA from "./PageTFA";
-import PageForgotES from "./PageEmailSent";
-import PageForgotNIS from "./PageNotInSystem";
+import PageTFAVerify from "./PageTFA-Verify-Reg";
 import PageRegisterTY from "./PageThankYou";
 import PageHomeClient from "./PageHomeClient";
 import PageHomeRecRel from "./PageHomeRecRel";
@@ -34,7 +37,6 @@ import PageGuide from "./PageGuide";
     import PageTestResultsChem from "./PageTestResultsChem";
     import PageTestResultsMicrobio from "./PageTestResultsMicrobio";
     import PageTestResultsMolBio from "./PageTestResultsMolBio";
-import PageTFAVerify from "./PageTFA-Verify-Reg";
 
 import PublicRoute from "./PublicRoute";
 import ProtectedRoute from "./ProtectedRoute";
@@ -64,9 +66,9 @@ function App() {
     }, []);    
 
     const handleLogin = (id, type) => { 
-        localStorage.clear();
         setUserId(null);
         setUserType(null);
+        localStorage.clear();
 
         const storedUserId = localStorage.getItem("userId");
         const storedUserType = localStorage.getItem("userType");
@@ -112,6 +114,38 @@ function App() {
                         </PublicRoute>
                     } 
                 />
+                    <Route 
+                        path="/tfa-forgot-pass" 
+                        element={
+                            <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
+                                <PageTFAForgot />
+                            </PublicRoute>
+                        } 
+                    />
+                        <Route 
+                            path="/change-pass" 
+                            element={
+                                <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
+                                    <PageChangePass />
+                                </PublicRoute>
+                            } 
+                        />
+                        <Route 
+                            path="/password-changed" 
+                            element={
+                                <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
+                                    <PagePasswordChanged />
+                                </PublicRoute>
+                            } 
+                        />
+                    <Route 
+                        path="/not-in-system" 
+                        element={
+                            <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
+                                <PageForgotNIS />
+                            </PublicRoute>
+                        } 
+                    />
                 <Route 
                     path="/register" 
                     element={
@@ -120,43 +154,27 @@ function App() {
                         </PublicRoute>
                     } 
                 />
+                    <Route 
+                        path="/tfaverify" 
+                        element={
+                            <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
+                                <PageTFAVerify />
+                            </PublicRoute>
+                        } 
+                    />
+                    <Route 
+                        path="/registered" 
+                        element={
+                            <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
+                                <PageRegisterTY />
+                            </PublicRoute>
+                        } 
+                    />
                 <Route 
                     path="/tfa/:username" 
                     element={
                         <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
                             <PageTFA onLogin={handleLogin} />
-                        </PublicRoute>
-                    } 
-                />
-                <Route 
-                    path="/email-sent" 
-                    element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
-                            <PageForgotES />
-                        </PublicRoute>
-                    } 
-                />
-                <Route 
-                    path="/not-in-system" 
-                    element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
-                            <PageForgotNIS />
-                        </PublicRoute>
-                    } 
-                />
-                <Route 
-                    path="/registered" 
-                    element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
-                            <PageRegisterTY />
-                        </PublicRoute>
-                    } 
-                />
-                <Route 
-                    path="/tfaverify" 
-                    element={
-                        <PublicRoute isLoggedIn={isLoggedIn} userType={userType} userId={userId}>
-                            <PageTFAVerify />
                         </PublicRoute>
                     } 
                 />

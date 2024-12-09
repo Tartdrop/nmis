@@ -329,7 +329,7 @@ const ForReleasing = () => {
                             })}
                         </div>
                     ) : (
-                        <div className="empty-2nd-container">
+                        <div className="empty-3rd-container">
                             <img src={blue_logo_icon} alt="Blue Logo Icon" className="blue-logo-icon" />
                             <h1 className='msg-noreqres1'>
                                 There are no requests for release at the moment.

@@ -393,41 +393,13 @@
     padding-top: 20px;
 }
 
-.test-result-item-1 div .positive, .test-result-item-2 div .positive, .test-result-item-3 div .positive {
+.test-result-item-1 div .positive, .test-result-item-1 div .negative, .test-result-item-2 div .positive, .test-result-item-2 div .negative, .test-result-item-3 div .positive, .test-result-item-3 div .negative{
     display: flex;
     align-items: center;
     justify-content: center;
     width: 20px;
-    background-color: #2BC192;
-    border: 2px solid #2BC192;
+    background-color: #5f5f5f71;
+    border: 2px solid #5f5f5f00;
     height: 40px;
 }
 
-.test-result-item-1 div .positive:hover, .test-result-item-2 div .positive:hover, .test-result-item-3 div .positive:hover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    background-color: #fff;
-    border: 2px solid #2BC192;
-    color: #2BC192;
-}
-
-.test-result-item-1 div .negative, .test-result-item-2 div .negative, .test-result-item-3 div .negative {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    background-color: #E85557;
-    height: 40px;
-}
-
-.test-result-item-1 div .negative:hover, .test-result-item-2 div .negative:hover, .test-result-item-3 div .negative:hover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    background-color: #fff;
-    border: 2px solid #E85557;
-    color: #E85557;
-}

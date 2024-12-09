@@ -8,7 +8,7 @@ import back_button from '../Assets/BackButton.png';
 
 Userfront.init("jb7ywq8b");
 
-const ForgotES = () => {
+const ForgotNIS = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -22,9 +22,9 @@ const ForgotES = () => {
                     <img src={logo_icon} alt="Logo" />
                 </div>
                 <div className="messages-text">
-                    <p className="es-text">An email</p>
-                    <p className="es-text">has been sent</p>
-                    <p className="es-text">to the provided email</p>
+                    <p className="pc-text">Your password</p>
+                    <p className="pc-text">has been changed</p>
+                    <p className="pc-text">successfully!</p>
                 </div>
 
                 <div className="messages-button">
@@ -38,4 +38,4 @@ const ForgotES = () => {
     );
 }
 
-export default ForgotES;
+export default ForgotNIS;
