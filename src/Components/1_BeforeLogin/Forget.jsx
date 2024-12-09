@@ -8,13 +8,13 @@ Userfront.init("jb7ywq8b");
 
 const Forget = () => {
     const [email, setEmail] = useState("");
-    const [oldPassword, setOldPassword] = useState(""); // New state for old password
-    const [newPassword, setNewPassword] = useState(""); // New state for new password
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleVerifyEmail = async (event) => {
         event.preventDefault(); // Prevent the default form submission behavior
-        
+        setLoading(true);
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}check-user?identifier=${email}`, {
                 method: 'GET'
@@ -25,10 +25,12 @@ const Forget = () => {
               navigate(`/tfa-forgot-pass/${email}`)
             } else {
                 // Unsuccessful verification
-                alert('Failed connection to the server');
+                setLoading(false);
+                navigate(`/not-in-system`);
             }
         } catch (error) {
-            alert('Failed connection to the');
+            setLoading(false);
+            alert('Failed connection to the', error);
         }
     };
 
@@ -71,8 +73,8 @@ const Forget = () => {
                         <button 
                             className="text-button" 
                             onClick={handleVerifyEmail}
-                        >
-                            Verify Email
+                            disabled={loading} >
+                            {loading ? 'Verifying Email...' : 'Verify Email'}
                         </button>
                     </div>
     

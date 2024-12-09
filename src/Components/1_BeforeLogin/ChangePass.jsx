@@ -17,28 +17,29 @@ const ChangePass = () => {
 
     const handleChangePassword = async (event) => {
         event.preventDefault(); // Prevent the default form submission behavior
-        checkCorrectPassword();
         
-        if (isSamePassword) {
+        // Inline password validation
+        if (password === repeatPassword && password !== "") {
             try {
                 const response = await fetch(`${process.env.REACT_APP_API_URL}change-password?email=${email}&newPassword=${password}`, {
                     method: 'POST'
                 });
-        
+    
                 if (response.ok) {
-                  console.log("Successful");
-                  navigate("/password-changed", { replace: true });
+                    console.log("Successful");
+                    navigate("/password-changed", { replace: true });
                 } else {
                     // Unsuccessful verification
                     alert('Unsuccessful');
                 }
             } catch (error) {
-                alert('Failed connection to the');
+                alert('Failed connection to the server: ' + error.message);
             }
         } else {
-            alert("Please verify that the password you have input is correct")
+            alert("Please verify that the password you have input is correct");
         }
-    }
+    };
+    
         
     const checkCorrectPassword = () => {
         if (password == repeatPassword && password !== null) {setIsSamePassword(true);}
