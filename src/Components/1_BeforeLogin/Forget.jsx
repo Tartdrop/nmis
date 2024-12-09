@@ -12,16 +12,32 @@ const Forget = () => {
     const [newPassword, setNewPassword] = useState(""); // New state for new password
     const navigate = useNavigate();
 
+    const handleVerifyEmail = async (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior
+        
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}check-user?identifier=${email}`, {
+                method: 'GET'
+            });
+    
+            if (response.ok) {
+              console.log("Successful");
+              navigate(`/tfa-forgot-pass/${email}`)
+            } else {
+                // Unsuccessful verification
+                alert('Failed connection to the server');
+            }
+        } catch (error) {
+            alert('Failed connection to the');
+        }
+    };
+
     const handleBackToLogin = () => {
         navigate("/login")
     };
 
     const handleRegister = () => {
         navigate("/register")
-    };
-
-    const handleVerifyEmail = () => {
-        navigate("/tfa-forgot-pass")
     };
 
     return (
