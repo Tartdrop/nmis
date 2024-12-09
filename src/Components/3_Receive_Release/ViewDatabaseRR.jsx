@@ -88,8 +88,8 @@ const ViewDatabaseRR = () => {
   };
 
   return (
-    <div className="db-all-container">
-      <div className='db-container'>
+    <div className="database-all-container">
+      <div className='database-container'>
         <h1>All Test Results</h1>
 
         <div className='table-section'>
