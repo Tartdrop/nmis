@@ -138,6 +138,44 @@ const ForReleasing = () => {
     };
 
     const handleReject = async (requestId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/requests/reject/${requestId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to release request');
+            }
+
+            // Refresh the data after successful release
+            const updatedRequestsResponse = await fetch('http://localhost:8080/requests/for-release');
+            const updatedRequestsData = await updatedRequestsResponse.json();
+            setRequests(updatedRequestsData);
+
+            // Update results for remaining requests
+            const resultsPromises = updatedRequestsData.map(request => 
+                fetch(`http://localhost:8080/getResult/${request.requestId}`)
+                    .then(res => res.json())
+            );
+            
+            const results = await Promise.all(resultsPromises);
+            const mappedResults = {};
+            results.forEach(result => {
+                mappedResults[result.requestId] = result;
+            });
+            
+            setTestResults(mappedResults);
+
+            // Optional: Add success message
+            alert('Request has been rejected');
+
+        } catch (error) {
+            console.error('Error releasing request:', error);
+            alert('Failed to release request. Please try again.');
+        }
         // Implement reject logic
         console.log('Rejecting request:', requestId);
     };
