@@ -16,33 +16,31 @@ const ChangePass = () => {
     const navigate = useNavigate();
 
     const handleChangePassword = async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
-        checkCorrectPassword();
-        
-        if (isSamePassword) {
-            try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}change-password?email=${email}&newPassword=${password}`, {
-                    method: 'POST'
-                });
-        
-                if (response.ok) {
-                  console.log("Successful");
-                  navigate("/password-changed", { replace: true });
-                } else {
-                    // Unsuccessful verification
-                    alert('Unsuccessful');
-                }
-            } catch (error) {
-                alert('Failed connection to the');
-            }
-        } else {
-            alert("Please verify that the password you have input is correct")
+        if (password !== repeatPassword || password === "") {
+            alert("Passwords do not match or are empty. Please try again.");
+            return;
         }
-    }
+
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_API_URL}/change-password?email=${email}&newPassword=${password}`,
+                {
+                    method: 'POST'
+                }
+            );
+
+            if (response.ok) {
+                console.log("Password changed successfully.");
+                navigate("/password-changed", { replace: true });
+            } else {
+                alert("Failed to change password. Please try again.");
+            }
+        } catch (error) {
+            alert("Error connecting to the server. Please try again later.");
+        }
+    };
         
-    const checkCorrectPassword = () => {
-        if (password == repeatPassword && password !== null) {setIsSamePassword(true);}
-    }
+    
 
     return (
         <div className='changepass-all-container'>
