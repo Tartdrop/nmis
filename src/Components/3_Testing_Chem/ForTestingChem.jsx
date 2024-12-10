@@ -77,7 +77,7 @@ const ForTestingChem = () => {
         
         const fetchData = async () => {
             try {
-                const requestsResponse = await fetch('http://localhost:8080/requests/for-testing');
+                const requestsResponse = await fetch(`${process.env.REACT_APP_API_URL}requests/for-testing`);
                 if (!requestsResponse.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -85,10 +85,10 @@ const ForTestingChem = () => {
                 setRequests(requestsData);
 
                 const [microbioRes, chemElisaRes, chemMicrobialRes, molBioRes] = await Promise.all([
-                    fetch('http://localhost:8080/microbioTestResults'),
-                    fetch('http://localhost:8080/chemElisaTestResults'),
-                    fetch('http://localhost:8080/chemMicrobialTestResults'),
-                    fetch('http://localhost:8080/molBioTestResults')
+                    fetch(`${process.env.REACT_APP_API_URL}microbioTestResults`),
+                    fetch(`${process.env.REACT_APP_API_URL}chemElisaTestResults`),
+                    fetch(`${process.env.REACT_APP_API_URL}chemMicrobialTestResults`),
+                    fetch(`${process.env.REACT_APP_API_URL}molBioTestResults`)
                 ]);
 
                 const [microbioData, chemElisaData, chemMicrobialData, molBioData] = await Promise.all([
@@ -232,7 +232,7 @@ const ForTestingChem = () => {
 
                 if (Object.keys(elisaData).length > 0) {
                     console.log('Sending ELISA data:', elisaData);
-                    const response = await fetch(`http://localhost:8080/chemTestElisaResults/${sampleId}`, {
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}chemTestElisaResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -257,7 +257,7 @@ const ForTestingChem = () => {
 
                 if (Object.keys(chemMicrobialData).length > 0) {
                     console.log('Sending chemical microbial data:', chemMicrobialData);
-                    const response = await fetch(`http://localhost:8080/chemMicrobialTestResults/${sampleId}`, {
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}chemMicrobialTestResults/${sampleId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ const TrackRequest = () => {
     const [showPopup] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/requests/clientrequest/${userId}`)
+        fetch(`${process.env.REACT_APP_API_URL}requests/clientrequest/${userId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -34,7 +34,7 @@ const TrackRequest = () => {
             try {
                 const releasedRequests = requests.filter(req => req.requestStatus === "RELEASED");
                 const resultsPromises = releasedRequests.map(request =>
-                    fetch(`http://localhost:8080/getResult/${request.requestId}`)
+                    fetch(`${process.env.REACT_APP_API_URL}getResult/${request.requestId}`)
                         .then(res => res.json())
                 );
 

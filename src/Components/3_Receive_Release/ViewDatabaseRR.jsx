@@ -10,17 +10,17 @@ const ViewDatabaseRR = () => {
 
   useEffect(() => {
     // Fetch Chem test results
-    axios.get('http://localhost:8080/chem-results')
+    axios.get(`${process.env.REACT_APP_API_URL}chem-results`)
       .then(response => setChemData(response.data))
       .catch(error => console.error('Error fetching Chem test results:', error));
 
     // Fetch Microbio test results
-    axios.get('http://localhost:8080/microbio-results')
+    axios.get(`${process.env.REACT_APP_API_URL}microbio-results`)
       .then(response => setMicrobioData(response.data))
       .catch(error => console.error('Error fetching Microbio test results:', error));
 
     // Fetch Molbio test results
-    axios.get('http://localhost:8080/molbio-results')
+    axios.get(`${process.env.REACT_APP_API_URL}molbio-results`)
       .then(response => setMolbioData(response.data))
       .catch(error => console.error('Error fetching Molbio test results:', error));
   }, []);

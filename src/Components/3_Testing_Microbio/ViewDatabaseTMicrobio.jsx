@@ -12,7 +12,7 @@ const ViewDatabase = () => {
   
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    axios.get('http://localhost:8080/api/reports/microbioreport')
+    axios.get(`${process.env.REACT_APP_API_URL}api/reports/microbioreport`)
       .then(response => setReportData(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);

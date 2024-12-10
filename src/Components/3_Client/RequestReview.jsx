@@ -60,7 +60,7 @@ const RequestDetails = () => {
     useEffect(() => {
         const fetchRequestData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/requests/pendingrequest/${requestId}`);
+                const response = await fetch(`${process.env.REACT_APP_API_URL}requests/pendingrequest/${requestId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setRequestData(data);
@@ -114,7 +114,7 @@ const RequestDetails = () => {
                             setSheep(data.sheep || '');
                             setSwine(data.swine || '');
 
-                    const requestResponse = await fetch(`http://localhost:8080/request/${requestId}`);
+                    const requestResponse = await fetch(`${process.env.REACT_APP_API_URL}request/${requestId}`);
                     if (requestResponse.ok) {
                         const requestData = await requestResponse.json();
                         

@@ -61,7 +61,7 @@ const RequestDetails = () => {
     useEffect(() => {
         const fetchRequestData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/requests/pendingrequest/${requestId}`);
+                const response = await fetch(`${process.env.REACT_APP_API_URL}requests/pendingrequest/${requestId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setRequestData(data);
@@ -115,7 +115,7 @@ const RequestDetails = () => {
                             setSheep(data.sheep || '');
                             setSwine(data.swine || '');
 
-                    const requestResponse = await fetch(`http://localhost:8080/request/${requestId}`);
+                    const requestResponse = await fetch(`${process.env.REACT_APP_API_URL}request/${requestId}`);
                     if (requestResponse.ok) {
                         const requestData = await requestResponse.json();
                         
@@ -146,7 +146,7 @@ const RequestDetails = () => {
 
     const handleApprove = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/requests/approve/${requestId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}requests/approve/${requestId}`, {
                 method: 'PUT'
             });
     
@@ -163,7 +163,7 @@ const RequestDetails = () => {
 
                 console.log('Sending resultData:', resultData);
 
-                const responseResultGen = await fetch(`http://localhost:8080/createresult/${requestId}`, {
+                const responseResultGen = await fetch(`${process.env.REACT_APP_API_URL}createresult/${requestId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -189,7 +189,7 @@ const RequestDetails = () => {
     
     const handleReject = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/requests/reject/${requestId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}requests/reject/${requestId}`, {
                 method: 'PUT'
             });
     

@@ -12,12 +12,12 @@ const ViewDatabase = () => {
 
   useEffect(() => {
     // Fetch Chem Microbial report
-    axios.get('http://localhost:8080/api/reports/chemmicrobialreport')
+    axios.get(`${process.env.REACT_APP_API_URL}api/reports/chemmicrobialreport`)
       .then(response => setChemMicrobialData(response.data))
       .catch(error => console.error('Error fetching Chem Microbial data:', error));
 
     // Fetch Chem Elisa report
-    axios.get('http://localhost:8080/api/reports/chemelisareport')
+    axios.get(`${process.env.REACT_APP_API_URL}api/reports/chemelisareport`)
       .then(response => setChemElisaData(response.data))
       .catch(error => console.error('Error fetching Chem Elisa data:', error));
   }, []);

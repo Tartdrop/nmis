@@ -64,7 +64,7 @@ const ForReleasing = () => {
         const fetchData = async () => {
             try {
                 // Fetch requests for release
-                const requestsResponse = await fetch('http://localhost:8080/requests/for-release');
+                const requestsResponse = await fetch(`${process.env.REACT_APP_API_URL}requests/for-release`);
                 if (!requestsResponse.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -73,7 +73,7 @@ const ForReleasing = () => {
 
                 // Fetch results for each request
                 const resultsPromises = requestsData.map(request => 
-                    fetch(`http://localhost:8080/getResult/${request.requestId}`)
+                    fetch(`${process.env.REACT_APP_API_URL}getResult/${request.requestId}`)
                         .then(res => res.json())
                 );
                 
@@ -98,7 +98,7 @@ const ForReleasing = () => {
 
     const handleRelease = async (requestId) => {
         try {
-            const response = await fetch(`http://localhost:8080/requests/approveRelease/${requestId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}requests/approveRelease/${requestId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -110,13 +110,13 @@ const ForReleasing = () => {
             }
 
             // Refresh the data after successful release
-            const updatedRequestsResponse = await fetch('http://localhost:8080/requests/for-release');
+            const updatedRequestsResponse = await fetch(`${process.env.REACT_APP_API_URL}requests/for-release`);
             const updatedRequestsData = await updatedRequestsResponse.json();
             setRequests(updatedRequestsData);
 
             // Update results for remaining requests
             const resultsPromises = updatedRequestsData.map(request => 
-                fetch(`http://localhost:8080/getResult/${request.requestId}`)
+                fetch(`${process.env.REACT_APP_API_URL}getResult/${request.requestId}`)
                     .then(res => res.json())
             );
             
@@ -139,7 +139,7 @@ const ForReleasing = () => {
 
     const handleReject = async (requestId) => {
         try {
-            const response = await fetch(`http://localhost:8080/requests/reject/${requestId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}requests/reject/${requestId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -151,13 +151,13 @@ const ForReleasing = () => {
             }
 
             // Refresh the data after successful release
-            const updatedRequestsResponse = await fetch('http://localhost:8080/requests/for-release');
+            const updatedRequestsResponse = await fetch(`${process.env.REACT_APP_API_URL}requests/for-release`);
             const updatedRequestsData = await updatedRequestsResponse.json();
             setRequests(updatedRequestsData);
 
             // Update results for remaining requests
             const resultsPromises = updatedRequestsData.map(request => 
-                fetch(`http://localhost:8080/getResult/${request.requestId}`)
+                fetch(`${process.env.REACT_APP_API_URL}getResult/${request.requestId}`)
                     .then(res => res.json())
             );
             

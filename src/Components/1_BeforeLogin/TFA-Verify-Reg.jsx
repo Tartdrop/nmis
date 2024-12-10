@@ -27,7 +27,7 @@ const TFAVerification = () => {
       event.preventDefault(); // Prevent the default form submission behavior
       
       try {
-          const response = await fetch(`http://localhost:8080/clientverify?email=${storedEmail}&otp=${verificationCode}`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}clientverify?email=${storedEmail}&otp=${verificationCode}`, {
               method: 'POST'
           });
   

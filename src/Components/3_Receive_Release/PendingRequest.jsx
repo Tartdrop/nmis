@@ -12,7 +12,7 @@ const PendingRequest = () => {
 
     useEffect(() => {
         // Fetch data from backend on component mount
-        fetch('http://localhost:8080/requests/pending')
+        fetch(`${process.env.REACT_APP_API_URL}requests/pending`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
