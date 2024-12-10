@@ -16,32 +16,30 @@ const ChangePass = () => {
     const navigate = useNavigate();
 
     const handleChangePassword = async (event) => {
-        if (password !== repeatPassword || password === "") {
-            alert("Passwords do not match or are empty. Please try again.");
-            return;
-        }
-
-        try {
-            const response = await fetch(
-                `${process.env.REACT_APP_API_URL}/change-password?email=${email}&newPassword=${password}`,
-                {
+        event.preventDefault(); // Prevent the default form submission behavior
+        
+        // Inline password validation
+        if (password === repeatPassword && password !== "") {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}change-password?email=${email}&newPassword=${password}`, {
                     method: 'POST'
+                });
+    
+                if (response.ok) {
+                    console.log("Successful");
+                    navigate("/password-changed", { replace: true });
+                } else {
+                    // Unsuccessful verification
+                    alert('Unsuccessful');
                 }
-            );
-
-            if (response.ok) {
-                console.log("Password changed successfully.");
-                navigate("/password-changed", { replace: true });
-            } else {
-                alert("Failed to change password. Please try again.");
+            } catch (error) {
+                alert('Failed connection to the server: ' + error.message);
             }
-        } catch (error) {
-            alert("Error connecting to the server. Please try again later.");
+        } else {
+            alert("Please verify that the password you have input is correct");
         }
     };
-        
     
-
     return (
         <div className='changepass-all-container'>
             <div className='changepass-all-left'>
