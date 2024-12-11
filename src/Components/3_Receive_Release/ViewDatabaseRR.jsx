@@ -1,111 +1,120 @@
 import React, { useState, useEffect } from 'react';
-import './ViewDatabaseRR.css';  // Specific styles for all combined
+import './ViewDatabaseRR.css';
 import axios from 'axios';
 import { useTable } from 'react-table';
 
 const ViewDatabaseRR = () => {
-  const [chemData, setChemData] = useState([]);
   const [microbioData, setMicrobioData] = useState([]);
+  const [chemMicrobialData, setChemMicrobialData] = useState([]);
+  const [chemElisaData, setChemElisaData] = useState([]);
   const [molbioData, setMolbioData] = useState([]);
 
   useEffect(() => {
-    // Fetch Chem test results
-    axios.get(`${process.env.REACT_APP_API_URL}chem-results`)
-      .then(response => setChemData(response.data))
-      .catch(error => console.error('Error fetching Chem test results:', error));
-
     // Fetch Microbio test results
-    axios.get(`${process.env.REACT_APP_API_URL}microbio-results`)
+    axios.get(`${process.env.REACT_APP_API_URL}api/reports/microbioreport`)
       .then(response => setMicrobioData(response.data))
       .catch(error => console.error('Error fetching Microbio test results:', error));
 
+    // Fetch Chem Microbial test results
+    axios.get(`${process.env.REACT_APP_API_URL}api/reports/chemmicrobialreport`)
+      .then(response => setChemMicrobialData(response.data))
+      .catch(error => console.error('Error fetching Chem Microbial test results:', error));
+
+    // Fetch Chem ELISA test results
+    axios.get(`${process.env.REACT_APP_API_URL}api/reports/chemelisareport`)
+      .then(response => setChemElisaData(response.data))
+      .catch(error => console.error('Error fetching Chem ELISA test results:', error));
+
     // Fetch Molbio test results
-    axios.get(`${process.env.REACT_APP_API_URL}molbio-results`)
+    axios.get(`${process.env.REACT_APP_API_URL}api/reports/molbioreport`)
       .then(response => setMolbioData(response.data))
       .catch(error => console.error('Error fetching Molbio test results:', error));
   }, []);
 
-  // Columns for Chem test table
-  const chemColumns = React.useMemo(() => [
-    { Header: 'Sample ID', accessor: 'sampleId' },
-    { Header: 'Chemical Test 1', accessor: 'chemTest1' },  // Adjust as needed
-    { Header: 'Chemical Test 2', accessor: 'chemTest2' },
-    { Header: 'Sample Source', accessor: 'sampleSourceProvince' },
-    { Header: 'Purpose of Testing', accessor: 'testingPurpose' }
-  ], []);
+  const months = ['2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06', '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12'];
 
-  // Columns for Microbio test table
-  const microbioColumns = React.useMemo(() => [
-    { Header: 'Sample ID', accessor: 'sampleId' },
-    { Header: 'Standard Plate Count', accessor: 'standardPlateCount' },
-    { Header: 'Staphylococcus Aureus', accessor: 'staphylococcusAureus' },
-    { Header: 'Sample Source', accessor: 'sampleSourceProvince' },
-    { Header: 'Purpose of Testing', accessor: 'testingPurpose' }
-  ], []);
-
-  // Columns for Molbio test table
-  const molbioColumns = React.useMemo(() => [
-    { Header: 'Sample ID', accessor: 'sampleId' },
-    { Header: 'Dog', accessor: 'dog' },
-    { Header: 'Cat', accessor: 'cat' },
-    { Header: 'Sample Source', accessor: 'sampleSourceProvince' },
-    { Header: 'Purpose of Testing', accessor: 'testingPurpose' }
-  ], []);
-
-  // Table instances for each test type
-  const chemTableInstance = useTable({ columns: chemColumns, data: chemData });
-  const microbioTableInstance = useTable({ columns: microbioColumns, data: microbioData });
-  const molbioTableInstance = useTable({ columns: molbioColumns, data: molbioData });
-
-  // Function to render table
-  const renderTable = (tableInstance) => {
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
-    return (
-      <table {...getTableProps()} className="test-table">
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    );
+  const getPosNegCounts = (data, test, month) => {
+    const countKey = `${test}PosNegCountsByMonthAndYear`;
+    return data[countKey]?.[month] || { positive: 0, negative: 0 };
   };
+
+  const getTotalCountsForMonth = (data, tests, month) => {
+    let totalPositive = 0;
+    let totalNegative = 0;
+
+    tests.forEach(test => {
+      const { positive, negative } = getPosNegCounts(data, test, month);
+      totalPositive += positive;
+      totalNegative += negative;
+    });
+
+    return { totalPositive, totalNegative };
+  };
+
+  const microbioTests = ['standardPlateCount', 'staphylococcusAureus', 'salmonellaSp', 'campylobacter', 'cultureAndSensitivityTest', 'coliformCount', 'eColi', 'eColiAndeColi0O157', 'yeastAndMolds'];
+  const chemMicrobialTests = ['betaLactams', 'tetracyclines', 'sulfonamides', 'aminoglycosides', 'macrolides', 'quinolones'];
+  const chemElisaTests = ['chloramphenicol', 'nitrofuranAoz', 'betaAgonists', 'corticosteroids', 'olaquindox', 'nitrufuranAmoz', 'stilbenes', 'ractopamine'];
+  const molbioTests = ['dog', 'cat', 'chicken', 'buffalo', 'cattle', 'horse', 'goat', 'sheep', 'swine'];
+
+  const renderTable = (data, tests, title) => (
+    <div className='table-section'>
+      <h2>{title}</h2>
+      <div className="table-container">
+        <table className="test-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              {tests.map(test => (
+                <th key={test} colSpan="2">{test}</th>
+              ))}
+              <th>Total</th>
+            </tr>
+            <tr>
+              <th></th>
+              {tests.map(test => (
+                <React.Fragment key={test}>
+                  <th>Positive</th>
+                  <th>Negative</th>
+                </React.Fragment>
+              ))}
+              <th>Positive / Negative</th>
+            </tr>
+          </thead>
+          <tbody>
+            {months.map(month => {
+              const { totalPositive, totalNegative } = getTotalCountsForMonth(data, tests, month);
+
+              return (
+                <tr key={month}>
+                  <td>{month}</td>
+                  {tests.map(test => {
+                    const { positive, negative } = getPosNegCounts(data, test, month);
+                    return (
+                      <React.Fragment key={test}>
+                        <td>{positive}</td>
+                        <td>{negative}</td>
+                      </React.Fragment>
+                    );
+                  })}
+                  <td>{totalPositive} / {totalNegative}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 
   return (
     <div className="database-all-container">
       <div className='database-container'>
         <h1>All Test Results</h1>
 
-        <div className='table-section'>
-          <h2>Chem Test Results</h2>
-          {renderTable(chemTableInstance)}
-        </div>
-
-        <div className='table-section'>
-          <h2>Microbio Test Results</h2>
-          {renderTable(microbioTableInstance)}
-        </div>
-
-        <div className='table-section'>
-          <h2>Molbio Test Results</h2>
-          {renderTable(molbioTableInstance)}
-        </div>
+        {renderTable(microbioData, microbioTests, 'Microbio Test Results')}
+        {renderTable(chemMicrobialData, chemMicrobialTests, 'Chem Microbial Test Results')}
+        {renderTable(chemElisaData, chemElisaTests, 'Chem ELISA Test Results')}
+        {renderTable(molbioData, molbioTests, 'Molbio Test Results')}
       </div>
     </div>
   );
