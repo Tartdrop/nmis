@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../3A_Testing/ViewDatabaseT.css';
-import './ViewDatabaseTChem.css';
-import Userfront from "@userfront/core";
 import axios from 'axios';
-
-Userfront.init("jb7ywq8b");
 
 const ViewDatabase = () => {
   const [chemMicrobialData, setChemMicrobialData] = useState(null);
@@ -25,8 +20,8 @@ const ViewDatabase = () => {
   if (!chemMicrobialData || !chemElisaData) return <p>Loading...</p>;
 
   const months = ['2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06', '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12'];
-  const mtests = ['BetaLactams', 'Tetracyclines', 'Sulfonamides', 'Aminoglycosides', 'Macrolides', 'Quinolones'];
-  const etests = ['Chloramphenicol', 'NitrofuranAoz', 'BetaAgonists', 'Corticosteroids', 'Olaquindox', 'NitrufuranAmoz', 'Stilbenes', 'Ractopamine'];
+  const mtests = ['betaLactams', 'tetracyclines', 'sulfonamides', 'aminoglycosides', 'macrolides', 'quinolones'];
+  const etests = ['chloramphenicol', 'nitrofuranAoz', 'betaAgonists', 'corticosteroids', 'olaquindox', 'nitrufuranAmoz', 'stilbenes', 'ractopamine'];
 
   const MgetPosNegCounts = (mtest, month) => {
     const countKey = `${mtest}PosNegCountsByMonthAndYear`;
@@ -173,10 +168,9 @@ const ViewDatabase = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
-}
+};
 
 export default ViewDatabase;

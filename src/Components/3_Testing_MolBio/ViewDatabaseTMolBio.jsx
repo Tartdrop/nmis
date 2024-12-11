@@ -97,6 +97,6 @@ const ViewDatabase = () => {
       </div>
     </div>
   );
-}
+};
 
 export default ViewDatabase;
