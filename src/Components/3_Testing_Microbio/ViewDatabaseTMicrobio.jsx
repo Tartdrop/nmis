@@ -43,7 +43,6 @@ const ViewDatabase = () => {
     return { totalPositive, totalNegative };
   };
 
-
   return (
     <div className="db-all-container">
         <div className='db-container'>

@@ -55,7 +55,7 @@
     gap: 30px;
 }
 
-.approve-review-text-button, .request-additional-information-review-text-button, .reject-review-text-button {
+.approve-review-text-button, .reject-review-text-button {
     border: none;
     font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 
     'Lucida Sans', Arial, sans-serif;
@@ -71,41 +71,27 @@
 
 .approve-review-text-button {
     height: 70px;
-    width: 180px;
+    width: 490px;
     background-color: #2BC192;
 }
 
 .approve-review-text-button:hover {
     height: 70px;
-    width: 180px;
+    width: 490px;
     color: #2BC192;
     background-color: #ffffff;
     border: 4px solid #2BC192;
 }
 
-.request-additional-information-review-text-button {
-    height: 70px;
-    width: 520px;
-    background-color: #FFA600;
-}
-
-.request-additional-information-review-text-button:hover {
-    height: 70px;
-    width: 520px;
-    color: #FFA600;
-    background-color: #ffffff;
-    border: 4px solid #FFA600;
-}
-
 .reject-review-text-button {
     height: 70px;
-    width: 180px;
+    width: 490px;
     background-color: #E85557;
 }
 
 .reject-review-text-button:hover {
     height: 70px;
-    width: 180px;
+    width: 490px;
     color: #E85557;
     background-color: #ffffff;
     border: 4px solid #E85557;

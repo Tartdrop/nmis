@@ -24,6 +24,11 @@
     height: 650px;
 }
 
+.db-tables-1 {
+    overflow: hidden;
+    height: 650px;
+}
+
 
 .db-title {
     font-weight: 700;

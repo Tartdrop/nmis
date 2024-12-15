@@ -105,6 +105,8 @@ const ForReleasing = () => {
                 }
             });
 
+            console.log('Response:', response);
+
             if (!response.ok) {
                 throw new Error('Failed to release request');
             }

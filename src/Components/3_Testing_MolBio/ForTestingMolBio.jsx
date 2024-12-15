@@ -941,7 +941,7 @@ const ForTestingMolBio = () => {
                                             className="save-changes-btn"
                                             onClick={() => handleSaveChanges(request)}
                                         >
-                                            Save Changes
+                                            Save
                                         </button>
                                         {saveStatus && <div className="save-status">{saveStatus}</div>}
                                     </span>

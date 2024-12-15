@@ -852,9 +852,6 @@ const RequestDetails = () => {
                             <button className="approve-review-text-button" onClick={handleApprove}>
                                 Approve
                             </button>
-                            <button className="request-additional-information-review-text-button" onClick={handleRequestAdditionalInformation}>
-                                Request Additional Information
-                            </button>
                             <button className="reject-review-text-button" onClick={handleReject}>
                                 Reject
                             </button>
