@@ -59,59 +59,53 @@ const TestingList = () => {
         const requestList = requestListRef.current;
         if (!requestList) return;
     
-        let isDown = false;
-        let startY;
-        let scrollTop;
+        let isDragging = false;
+        let startY = 0;
+        let initialScrollTop = 0;
     
-        const handleMouseDown = (e) => {
-            e.preventDefault();
-            isDown = true;
+        const onMouseDown = (e) => {
+            e.preventDefault(); // Prevents text selection
+            isDragging = true;
+            startY = e.pageY;
+            initialScrollTop = requestList.scrollTop;
             requestList.classList.add('grabbing');
-            startY = e.pageY - requestList.offsetTop;
-            scrollTop = requestList.scrollTop;
         };
     
-        const handleMouseLeave = (e) => {
-            e.preventDefault();
-            isDown = false;
+        const onMouseMove = (e) => {
+            if (!isDragging) return;
+            const deltaY = e.pageY - startY;
+            requestList.scrollTop = initialScrollTop - deltaY; // Adjust scrolling
+        };
+    
+        const onMouseUpOrLeave = () => {
+            isDragging = false;
             requestList.classList.remove('grabbing');
         };
     
-        const handleMouseUp = (e) => {
-            e.preventDefault();
-            isDown = false;
-            requestList.classList.remove('grabbing');
-        };
+        // Attach event listeners
+        requestList.addEventListener('mousedown', onMouseDown);
+        requestList.addEventListener('mousemove', onMouseMove);
+        requestList.addEventListener('mouseup', onMouseUpOrLeave);
+        requestList.addEventListener('mouseleave', onMouseUpOrLeave);
     
-        const handleMouseMove = (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const y = e.pageY - requestList.offsetTop;
-            const walk = (y - startY) * 2; // Adjust scrolling speed
-            requestList.scrollTop = scrollTop - walk;
-        };
-    
-        requestList.addEventListener('mousedown', handleMouseDown);
-        requestList.addEventListener('mouseleave', handleMouseLeave);
-        requestList.addEventListener('mouseup', handleMouseUp);
-        requestList.addEventListener('mousemove', handleMouseMove);
-    
+        // Cleanup on component unmount
         return () => {
-            requestList.removeEventListener('mousedown', handleMouseDown);
-            requestList.removeEventListener('mouseleave', handleMouseLeave);
-            requestList.removeEventListener('mouseup', handleMouseUp);
-            requestList.removeEventListener('mousemove', handleMouseMove);
+            requestList.removeEventListener('mousedown', onMouseDown);
+            requestList.removeEventListener('mousemove', onMouseMove);
+            requestList.removeEventListener('mouseup', onMouseUpOrLeave);
+            requestList.removeEventListener('mouseleave', onMouseUpOrLeave);
         };
-    }, [requests.length]);
+    }, []);
+    
 
     return (
         <div className="testresults-all-container">
             <div className="testresults-container">
                 <div className="testresults-title">
                     Molecular Biology Test Results
-                    <div className="trackmyrequest-popup">
+                    <div className="testresults-popup">
                         ⓘ
-                        <div className="popup-container">Drag the sides of the container to scroll!</div>
+                        <div className="popup-container-1">Drag the sides of each container to scroll!</div>
                     </div>
                 </div>
                 

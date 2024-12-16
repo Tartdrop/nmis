@@ -184,3 +184,27 @@
 .db-content {
     margin-bottom: -20px;
 }
+
+.popup-container-1 {
+    position: absolute;
+    top: 3px;
+    right: -210px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(-10px); 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none; 
+    font-size: 14px;
+    width: 160px;
+}
+
+.testresults-popup:hover .popup-container-1 {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
