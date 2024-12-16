@@ -20,6 +20,7 @@ import PageHomeRecRel from "./PageHomeRecRel";
 import PageRequestSubmitted from "./PageRequestSubmitted"; 
 import PageSubmitRequestNew from "./PageSubmitRequestNew";
 import PageSubmitRequestReview from "./PageSubmitRequestReview";
+import PageSubmitRequestResults from "./PageSubmitRequestResults";
 import PageTrackMyRequest from "./PageTrackMyRequest";
 import PagePendingRequest from "./PagePendingRequest";
 import PageForReleaseList from "./PageForReleaseList";
@@ -185,6 +186,7 @@ function App() {
                     <Route path="/home/client/:userId" element={<PageHomeClient />} />
                     <Route path="/submit-a-request/:userId" element={<PageSubmitRequestNew />} />
                     <Route path="/request-review/:userId/:requestId" element={<PageSubmitRequestReview />} />
+                    <Route path="/request-results/:userId/:requestId" element={<PageSubmitRequestResults />} />
                     <Route path="/request-submitted/:userId" element={<PageRequestSubmitted />} />
                     <Route path="/track-my-request/:userId" element={<PageTrackMyRequest />} />
                     <Route path="/guide/:userId" element={<PageGuide />} />

@@ -50,7 +50,7 @@ const ViewDatabase = () => {
             <div className="db-tables">
                 <div className='db-content'>
                     <div className='table-header'>
-                        <h1>Microbiological Test Results</h1>
+                        <h1>Microbiology Test Results</h1>
                     </div>
                     <div className='table-wrapper-1'>
                         <div className='table-container-1'>

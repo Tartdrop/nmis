@@ -7,6 +7,7 @@ const ROUTES = {
         '/submit-a-request',
         '/request-submitted',
         '/request-review',
+        '/request-results',
         '/track-my-request',
         '/guide',
     ],

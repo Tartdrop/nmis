@@ -156,7 +156,12 @@ const RequestDetails = () => {
     return (
         <div className="submit-container-all">
             <div className="s-c-a-right">
-                <div className='s-c-a-r-title'>Request Review</div>
+                <div className='s-c-a-r-title'>
+                    <div className="s-c-a-r-t-back" onClick={handleBack}>
+                    ←
+                    </div>
+                    Request Review
+                </div>
                 <div className='s-c-a-r-container-everything'>
                     <div className='s-c-a-r-c-e-scroll'>
                         <div className='s-c-a-r-c-e-s-numbered'>
